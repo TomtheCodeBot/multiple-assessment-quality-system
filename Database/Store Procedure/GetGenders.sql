@@ -36,8 +36,9 @@ set academic_year=concat(academic_year,'%');
     if class is NULL then 
 		set class = '%';
 	end if;
-    
-    SELECT COUNT(gender) AS Number_of_female_students
+	
+    SELECT
+    (SELECT COUNT(gender)
 	FROM Questionnaire 
 					NATURAL JOIN Aca_Faculty
                     NATURAL JOIN Academic_year
@@ -56,9 +57,9 @@ set academic_year=concat(academic_year,'%');
     AND MName LIKE module    
     AND CName LIKE class
     AND LName LIKE lecturer
-    AND gender = 'Female';
+    AND gender = 'Female') AS FEMALE,
     
-	SELECT COUNT(gender) AS Number_of_male_students
+	(SELECT COUNT(gender)
 	FROM Questionnaire 
 					NATURAL JOIN Aca_Faculty
                     NATURAL JOIN Academic_year
@@ -77,9 +78,9 @@ set academic_year=concat(academic_year,'%');
     AND MName LIKE module    
     AND CName LIKE class
     AND LName LIKE lecturer
-    AND gender = 'Male';
+    AND gender = 'Male') AS MALE,
     
-	SELECT COUNT(gender) AS Number_of_other_students
+	(SELECT COUNT(gender)
 	FROM Questionnaire 
 					NATURAL JOIN Aca_Faculty
                     NATURAL JOIN Academic_year
@@ -98,6 +99,6 @@ set academic_year=concat(academic_year,'%');
     AND MName LIKE module    
     AND CName LIKE class
     AND LName LIKE lecturer
-    AND gender = 'Other';
+    AND gender = 'Other') AS OTHER;
     
 END

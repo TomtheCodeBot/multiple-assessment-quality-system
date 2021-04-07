@@ -37,18 +37,19 @@ set academic_year=concat(academic_year,'%');
 		set class = '%';
 	end if;
     
-    SELECT COUNT(attend) AS Number_of_students_who_never_attend_the_class
-	FROM Questionnaire 
-					NATURAL JOIN Aca_Faculty
-                    NATURAL JOIN Academic_year
-                    NATURAL JOIN Lecturer
-                    NATURAL JOIN Faculty 
-					NATURAL JOIN aca_fac_pro
-					NATURAL JOIN Program
-					NATURAL JOIN aca_pro_mod
-					NATURAL JOIN Module
-					NATURAL JOIN Class
-					NATURAL JOIN Semester 
+    SELECT 
+	(SELECT COUNT(attend) 
+		FROM Questionnaire 
+		NATURAL JOIN Aca_Faculty
+		NATURAL JOIN Academic_year
+		NATURAL JOIN Lecturer
+		NATURAL JOIN Faculty 
+		NATURAL JOIN aca_fac_pro
+		NATURAL JOIN Program
+		NATURAL JOIN aca_pro_mod
+		NATURAL JOIN Module
+		NATURAL JOIN Class
+		NATURAL JOIN Semester 
 	WHERE AYName LIKE academic_year
     AND SName LIKE semester
     AND FName LIKE faculty
@@ -56,20 +57,20 @@ set academic_year=concat(academic_year,'%');
     AND MName LIKE module    
     AND CName LIKE class
     AND LName LIKE lecturer
-    AND attend = 'Never';
+    AND attend = 'Never') AS NEVER,
     
-	SELECT COUNT(attend) AS Number_of_students_who_rarely_attend_the_class
+	(SELECT COUNT(attend) 
 	FROM Questionnaire 
-					NATURAL JOIN Aca_Faculty
-                    NATURAL JOIN Academic_year
-                    NATURAL JOIN Lecturer
-                    NATURAL JOIN Faculty 
-					NATURAL JOIN aca_fac_pro
-					NATURAL JOIN Program
-					NATURAL JOIN aca_pro_mod
-					NATURAL JOIN Module
-					NATURAL JOIN Class
-					NATURAL JOIN Semester 
+		NATURAL JOIN Aca_Faculty
+        NATURAL JOIN Academic_year
+        NATURAL JOIN Lecturer
+        NATURAL JOIN Faculty 
+		NATURAL JOIN aca_fac_pro
+		NATURAL JOIN Program
+		NATURAL JOIN aca_pro_mod
+		NATURAL JOIN Module
+		NATURAL JOIN Class
+		NATURAL JOIN Semester 
 	WHERE AYName LIKE academic_year
     AND SName LIKE semester
     AND FName LIKE faculty
@@ -77,9 +78,9 @@ set academic_year=concat(academic_year,'%');
     AND MName LIKE module    
     AND CName LIKE class
     AND LName LIKE lecturer
-    AND attend = 'Rarely';
+    AND attend = 'Rarely') AS RARELY,
     
-	SELECT COUNT(attend) AS Number_of_students_who_sometimes_attend_the_class
+	(SELECT COUNT(attend)
 	FROM Questionnaire 
 					NATURAL JOIN Aca_Faculty
                     NATURAL JOIN Academic_year
@@ -98,9 +99,9 @@ set academic_year=concat(academic_year,'%');
     AND MName LIKE module    
     AND CName LIKE class
     AND LName LIKE lecturer
-    AND attend = 'Sometimes';
+    AND attend = 'Sometimes') AS SOMETIMES,
     
-	SELECT COUNT(attend) AS Number_of_students_who_often_attend_the_class
+	(SELECT COUNT(attend)
 	FROM Questionnaire 
 					NATURAL JOIN Aca_Faculty
                     NATURAL JOIN Academic_year
@@ -119,9 +120,9 @@ set academic_year=concat(academic_year,'%');
     AND MName LIKE module    
     AND CName LIKE class
     AND LName LIKE lecturer
-    AND attend = 'Often';
+    AND attend = 'Often') AS OFTEN,
     
-	SELECT COUNT(attend) AS Number_of_students_who_always_attend_the_class
+	(SELECT COUNT(attend)
 	FROM Questionnaire 
 					NATURAL JOIN Aca_Faculty
                     NATURAL JOIN Academic_year
@@ -140,6 +141,7 @@ set academic_year=concat(academic_year,'%');
     AND MName LIKE module    
     AND CName LIKE class
     AND LName LIKE lecturer
-    AND attend = 'Always';
+    AND attend = 'Always') AS ALWAYS;
+    
     
 END
