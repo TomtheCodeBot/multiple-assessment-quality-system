@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+
+<body>
+	<canvas id="genderChart" width="300" height="100"></canvas>
+	<br><br>
+	<canvas id="attendChart" width="300" height="100"></canvas>
+<script>
+var ctx = document.getElementById('genderChart');
+var genderChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Male', 'Female', 'Other'],
+        datasets: [{
+            label: 'Percentage of respondents by gender',
+            data: [12, 19, 3,],
+            backgroundColor: [
+                'rgba(255, 159, 64, 0.3)',
+				'rgba(255, 159, 64, 0.3)',
+				'rgba(255, 159, 64, 0.3)'
+            ],
+            borderColor: [
+                'rgba(255, 159, 64, 1)',
+				'rgba(255, 159, 64, 1)',
+				'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+			
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+<script>
+	
+var ctx = document.getElementById('attendChart');
+var genderChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'],
+        datasets: [{
+            label: 'Percentage of respondents by class attendance',
+            data: [ 2, 5, 12, 19, 3,],
+            backgroundColor: [
+                'rgba(255, 159, 64, 0.3)',
+				'rgba(255, 159, 64, 0.3)',
+				'rgba(255, 159, 64, 0.3)',
+				'rgba(255, 159, 64, 0.3)',
+				'rgba(255, 159, 64, 0.3)'
+            ],
+            borderColor: [
+                'rgba(255, 159, 64, 1)',
+				'rgba(255, 159, 64, 1)',
+				'rgba(255, 159, 64, 1)',
+				'rgba(255, 159, 64, 1)',
+				'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+			
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+	
+	
+	
+	
+	<script src="js/script.js"></script>
+</body>
+</html>
