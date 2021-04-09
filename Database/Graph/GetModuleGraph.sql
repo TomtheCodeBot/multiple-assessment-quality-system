@@ -30,7 +30,7 @@ BEGIN
 		set class = '%';
 	end if;
     
-    SELECT COUNT(DISTINCT(MName))
+    SELECT DISTINCT(MName)
     FROM Academic_Year 
 	    NATURAL JOIN Aca_Faculty
         NATURAL JOIN Faculty 

@@ -8,16 +8,6 @@ public class Classes {
 	private String SName;
 	private String CName;
 	private String PName;
-	
-	public Classes(String AYName,String FName,String LName, String MName, String SName, String CName, String PName) {
-		this.AYName=AYName;
-		this.CName=CName;
-		this.LName=LName;
-		this.MName=MName;
-		this.SName=SName;
-		this.CName=CName;
-		this.PName=PName;
-	}
 
 	public String getAYName() {
 		return AYName;

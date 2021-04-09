@@ -9,11 +9,34 @@ $(document).ready(function() {
 		})
 	$("#button1").on("click",
 		function(event) {
-			getTable()
+			apiTest()
 		})
 	
 })
-
+function apiTest(){
+	let Answers = {
+		"ayname":"",
+		"cname":"",
+		"lname":"",
+		"mname":"",
+		"sname":"",
+		"fname":"",
+		"pname":""
+	}
+	$.ajax({
+		type: 'POST',
+		contentType: "application/json",
+		url: "rest/graph/semester",
+		data: JSON.stringify(Answers),
+		dataType: "text",
+		error: function(e) {
+ 		   console.log(e);
+ 		 },
+		success : function(data, textStatus, jqXHR){
+			alert(data);
+			}
+	})
+}
 
 function getExample() {
 	$.ajax({
