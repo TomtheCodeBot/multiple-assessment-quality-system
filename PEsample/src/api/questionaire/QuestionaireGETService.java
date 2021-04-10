@@ -51,7 +51,8 @@ public class QuestionaireGETService {
 		Connection db = Configuration.getAcademiaConnection();
 		try {
 			PreparedStatement st = db.prepareStatement(
-					"call GetClassesInfo(\""+id+"\")");
+					"{ call GetClassesInfo(?) }");
+			st.setString(1, id);
 			ResultSet rs = st.executeQuery();		
 			JsonObjectBuilder builder = Json.createObjectBuilder();
 			if(rs.next()) {
@@ -76,7 +77,8 @@ public class QuestionaireGETService {
 			JsonArrayBuilder classInfoArrayBuilder = Json.createArrayBuilder();
 			
 			PreparedStatement st = db.prepareStatement(
-					"call GetClassesLecturer(\""+CName+"\")");
+					"{ call GetClassesLecturer(?) }");
+			st.setString(1, CName);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				JsonObject entry = Json.createObjectBuilder()									

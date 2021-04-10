@@ -1,6 +1,7 @@
 
 package api.graph;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,17 +43,22 @@ public class GraphGETService {
 			@DefaultValue("") @QueryParam("lname") String lname, 
 			@DefaultValue("") @QueryParam("cname") String cname
 			) throws SQLException, NamingException {
+		if (filter.isEmpty()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave filter empty").build();
+		}
+		
 		if (filter.equals("attends")) {
 			Connection db = (Connection) Configuration.getAcademiaConnection();
 			try {			
-				PreparedStatement st = db.prepareStatement(
-						"call GetAttends(\"" + ayname + "\", "
-								+ "\"" + sname + "\", "
-								+ "\"" + fname + "\", "
-								+ "\"" + pname + "\", "
-								+ "\"" + mname + "\", "
-								+ "\"" + lname + "\", "
-								+ "\"" + cname + "\" )");
+				PreparedStatement st = db.prepareStatement("{ call GetAttends(?,?,?,?,?,?,?) }");
+				st.setString(1, ayname);
+				st.setString(2, sname);
+				st.setString(3, fname);
+				st.setString(4, pname);
+				st.setString(5, mname);
+				st.setString(6, lname);
+				st.setString(7, cname);
+				
 				ResultSet rs = st.executeQuery();
 				JsonObjectBuilder builder = Json.createObjectBuilder();
 				if(rs.next()) {
@@ -71,15 +77,17 @@ public class GraphGETService {
 		} else if (filter.equals("gender")) {
 			Connection db = (Connection) Configuration.getAcademiaConnection();
 			try {			
-				PreparedStatement st = db.prepareStatement(
-						"call GetGenders(\"" + ayname + "\", "
-								+ "\"" + sname + "\", "
-								+ "\"" + fname + "\", "
-								+ "\"" + pname + "\", "
-								+ "\"" + mname + "\", "
-								+ "\"" + lname + "\", "
-								+ "\"" + cname + "\" )");
+				PreparedStatement st = db.prepareStatement("{ call GetGenders(?,?,?,?,?,?,?) }");
+				st.setString(1, ayname);
+				st.setString(2, sname);
+				st.setString(3, fname);
+				st.setString(4, pname);
+				st.setString(5, mname);
+				st.setString(6, lname);
+				st.setString(7, cname);
+				
 				ResultSet rs = st.executeQuery();
+				System.out.println(st);
 				JsonObjectBuilder builder = Json.createObjectBuilder();
 				if(rs.next()) {
 					builder.add("Female", rs.getString(1))
@@ -109,147 +117,33 @@ public class GraphGETService {
 			@DefaultValue("") @QueryParam("lname") String lname, 
 			@DefaultValue("") @QueryParam("cname") String cname
 			) throws SQLException, NamingException {
+		if (selector.isEmpty()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave selector empty").build();
+		}
+		
 		Connection db = (Connection) Configuration.getAcademiaConnection();
-		try {			
-			switch(selector) 
-			{
-				case "class": 
-				{
-					PreparedStatement st = db.prepareStatement(
-							"call GetClassGraph(\"" + ayname + "\", "
-									+ "\"" + sname + "\", "
-									+ "\"" + fname + "\", "
-									+ "\"" + pname + "\", "
-									+ "\"" + mname + "\", "
-									+ "\"" + lname + "\" )");
-					ResultSet result = st.executeQuery();
-					JsonArrayBuilder builder = Json.createArrayBuilder();
-					while (result.next()) {
-						builder.add(Json.createObjectBuilder().add("Class", result.getString(1)).build());
-					}
-					return Response.ok().entity(builder.build().toString()).build();
-				}
-				case "academic_year": 
-				{
-					JsonArrayBuilder academicYearArrayBuilder = Json.createArrayBuilder();
-					PreparedStatement st = db.prepareStatement(
-							"call GetAcademicYearGraph(\"" + sname + "\", "
-									+ "\"" + fname + "\", "
-									+ "\"" + pname + "\", "
-									+ "\"" + mname + "\", "
-									+ "\"" + lname + "\", "
-									+ "\"" + cname + "\" )");
-					ResultSet result = st.executeQuery();
-					while (result.next()) {
-						academicYearArrayBuilder.add(Json.createObjectBuilder().add("Academic_Year", result.getString(1)).build());
-					}
-					return Response.ok().entity(academicYearArrayBuilder.build().toString()).build();
-				}
-				case "module":
-				{
-					JsonArrayBuilder moduleArrayBuilder = Json.createArrayBuilder();
-					PreparedStatement st = db.prepareStatement(
-							"call GetModuleGraph(\"" + ayname + "\", "
-									+ "\"" + sname + "\", "
-									+ "\"" + pname + "\", "
-									+ "\"" + fname + "\", "
-									+ "\"" + lname + "\", "
-									+ "\"" + cname + "\" )");
-					ResultSet result = st.executeQuery();
-					while (result.next()) {
-						moduleArrayBuilder.add(Json.createObjectBuilder().add("Module", result.getString(1)).build());
-					}
-					return Response.ok().entity(moduleArrayBuilder.build().toString()).build();
-				}
-				case "lecturer":
-				{
-					JsonArrayBuilder lecturerArrayBuilder = Json.createArrayBuilder();
-					PreparedStatement st = db.prepareStatement(
-							"call GetLecturerGraph(\"" + ayname + "\", "
-									+ "\"" + sname + "\", "
-									+ "\"" + fname + "\", "
-									+ "\"" + pname + "\", "
-									+ "\"" + mname + "\", "
-									+ "\"" + cname + "\" )");
-					ResultSet result = st.executeQuery();
-					while (result.next()) {
-						lecturerArrayBuilder.add(Json.createObjectBuilder().add("Lecturer", result.getString(1)).build());
-					}
-					return Response.ok().entity(lecturerArrayBuilder.build().toString()).build();
-				}
-				
-				case "faculty":
-				{
-					PreparedStatement st = db.prepareStatement(
-							"call GetFacultyGraph(\""+ ayname + "\", "
-									+ "\"" + sname + "\","
-									+ "\"" + pname + "\","
-									+ "\"" + mname + "\","
-									+ "\"" + lname + "\","
-									+ "\"" + cname + "\""
-							+ ")"
-					);
-					System.out.println(st);
-					ResultSet rs = st.executeQuery();
-					JsonArrayBuilder faculty = Json.createArrayBuilder();
-					while(rs.next()) {
-						faculty.add( Json.createObjectBuilder()									
-								.add("Faculty", rs.getString(1)).build());
-					}
-					JsonArray entry = faculty.build();
-					return Response.ok().entity(entry.toString()).build();
-				}
-				
-				case "semester":
-				{
-					PreparedStatement st = db.prepareStatement(
-							"call GetSemesterGraph(\""+ ayname + "\", "
-									+ "\"" + fname + "\","
-									+ "\"" + pname + "\","
-									+ "\"" + mname + "\","
-									+ "\"" + lname + "\","
-									+ "\"" + cname + "\""
-							+ ")"
-					);
-					System.out.println(st);
-					ResultSet rs = st.executeQuery();
-					JsonArrayBuilder faculty = Json.createArrayBuilder();
-					while(rs.next()) {
-						faculty.add( Json.createObjectBuilder()									
-								.add("Semester", rs.getString(1)).build());
-					}
-					JsonArray entry = faculty.build();
-					return Response.ok().entity(entry.toString()).build();
-				}
-				
-				case "program":
-				{
-					PreparedStatement st = db.prepareStatement(
-							"call GetProgramGraph(\""+ ayname + "\", "
-									+ "\"" + sname + "\","
-									+ "\"" + fname + "\","
-									+ "\"" + mname + "\","
-									+ "\"" + lname + "\","
-									+ "\"" + cname + "\""
-							+ ")"
-					);
-					System.out.println(st);
-					ResultSet rs = st.executeQuery();
-					JsonArrayBuilder faculty = Json.createArrayBuilder();
-					while(rs.next()) {
-						faculty.add( Json.createObjectBuilder()									
-								.add("Program", rs.getString(1)).build());
-					}
-					JsonArray entry = faculty.build();
-					return Response.ok().entity(entry.toString()).build();
-				}
-					
+		try {		
+			
+			PreparedStatement st = db.prepareStatement("{ call GetInfoGraph(?,?,?,?,?,?,?,?) }");
+			st.setString(1, ayname);
+			st.setString(2, sname);
+			st.setString(3, fname);
+			st.setString(4, pname);
+			st.setString(5, mname);
+			st.setString(6, lname);
+			st.setString(7, cname);
+			st.setString(8, selector);
+			System.out.print(st);
+			ResultSet result = st.executeQuery();
+			JsonArrayBuilder builder = Json.createArrayBuilder();
+			while (result.next()) {
+				builder.add(Json.createObjectBuilder().add(selector, result.getString(1)).build());
 			}
+			return Response.ok().entity(builder.build().toString()).build();
 		}
 		finally {
 			db.close();
 		}
-		return null;
 	}
 }
 		

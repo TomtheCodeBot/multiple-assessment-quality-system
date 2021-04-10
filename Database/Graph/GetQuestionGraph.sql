@@ -1,5 +1,5 @@
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetQuestionGraph`(academic_year VARCHAR(50), semester VARCHAR(50),
- faculty VARCHAR(50), program VARCHAR(50), module VARCHAR(50), lecturer VARCHAR(50), class VARCHAR(50),question VARCHAR(2))
+ faculty VARCHAR(50), program VARCHAR(50), module VARCHAR(50), lecturer VARCHAR(50), class VARCHAR(50),question VARCHAR(3))
 BEGIN
 	set academic_year=concat(academic_year,'%'); 
     if academic_year is NULL then 

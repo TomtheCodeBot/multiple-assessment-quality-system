@@ -35,29 +35,26 @@ public class QuestionairePOSTService {
 	public Response submitQuestionaire(Answers Answers)throws SQLException, NamingException{
 		Connection db= Configuration.getAcademiaConnection();
 		try {
-			PreparedStatement st = db.prepareStatement("call StoreQuestionnaireDetail(\""+Answers.getCname()+"\","
-					+ "\""+Answers.getLname()+"\","
-					+ "\""+Answers.getAttend()+"\","
-					+ "\""+Answers.getGender()+"\","
-					+ "\""+Answers.getQ1()+"\","
-					+ "\""+Answers.getQ2()+"\","
-					+ "\""+Answers.getQ3()+"\","
-					+ "\""+Answers.getQ4()+"\","
-					+ "\""+Answers.getQ5()+"\","
-					+ "\""+Answers.getQ6()+"\","
-					+ "\""+Answers.getQ7()+"\","
-					+ "\""+Answers.getQ8()+"\","
-					+ "\""+Answers.getQ9()+"\","
-					+ "\""+Answers.getQ10()+"\","
-					+ "\""+Answers.getQ11()+"\","
-				    + "\""+Answers.getQ12()+"\","
-					+ "\""+Answers.getQ13()+"\","
-					+ "\""+Answers.getQ14()+"\","
-					+ "\""+Answers.getQ15()+"\","
-					+ "\""+Answers.getQ16()+"\","
-					+ "\""+Answers.getQ17()+"\","
-					+ "\""+Answers.getQ18()+"\")");
-			System.out.print(st);
+			PreparedStatement st = db.prepareStatement("{ call StoreQuestionnaireDetail(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }");			
+			st.setString(1, Answers.getQ1());
+			st.setString(2, Answers.getQ2());
+			st.setString(3, Answers.getQ3());
+			st.setString(4, Answers.getQ4());
+			st.setString(5, Answers.getQ5());
+			st.setString(6, Answers.getQ6());
+			st.setString(7, Answers.getQ7());
+			st.setString(8, Answers.getQ8());
+			st.setString(9, Answers.getQ9());
+			st.setString(10, Answers.getQ10());
+			st.setString(11, Answers.getQ11());
+			st.setString(12, Answers.getQ12());
+			st.setString(13, Answers.getQ13());
+			st.setString(14, Answers.getQ14());
+			st.setString(15, Answers.getQ15());
+			st.setString(16, Answers.getQ16());
+			st.setString(17, Answers.getQ17());
+			st.setString(18, Answers.getQ18());
+			
 			st.executeQuery();
 			return Response.ok().entity("New academic year successfully inserted").build();
 		}catch(SQLException e) {

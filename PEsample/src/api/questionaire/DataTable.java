@@ -34,7 +34,7 @@ public class DataTable {
 			ResultSet rs = st.executeQuery();
 			List<Classes> data = new ArrayList<Classes>();
 			while (rs.next()) {
-		        data.add(new Classes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6),rs.getString(7)));
+		        //data.add(new Classes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6),rs.getString(7)));
 		        jsonArray.add((javax.json.JsonValue) Json.createObjectBuilder().add("academic_year", rs.getString(1))
 		        													.add("Faculty", rs.getString(2))
 		        													.add("Lecturer", rs.getString(3))
