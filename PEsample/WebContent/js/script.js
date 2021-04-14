@@ -9,34 +9,11 @@ $(document).ready(function() {
 		})
 	$("#button1").on("click",
 		function(event) {
-			apiTest()
+			getTable()
 		})
 	
 })
-function apiTest(){
-	let Answers = {
-		"ayname":"",
-		"cname":"",
-		"lname":"",
-		"mname":"",
-		"sname":"",
-		"fname":"",
-		"pname":""
-	}
-	$.ajax({
-		type: 'POST',
-		contentType: "application/json",
-		url: "rest/graph/semester",
-		data: JSON.stringify(Answers),
-		dataType: "text",
-		error: function(e) {
- 		   console.log(e);
- 		 },
-		success : function(data, textStatus, jqXHR){
-			alert(data);
-			}
-	})
-}
+
 
 function getExample() {
 	$.ajax({
@@ -100,6 +77,7 @@ function getClasses(){
 function getClassesLecturer(){
 	$("#class_name").change(function(){	
 		$("#lecturer_name").children("option").remove();
+		$("#class_name option[value = '']").remove();
        	var name = new String($(this).children("option:selected").val());
 	$.ajax({
 		type:'GET',
@@ -117,8 +95,10 @@ function getClassesLecturer(){
 function getClassInfo(){
 	$("#class_name").change(function(){
 		$("#aca,#sem,#fal,#mod,#pro").children("h3").remove();
+//		$("#class_name option[value = '']").remove();
 		var name = new String($(this).children("option:selected").val());
 		console.log(name);
+		
 		$.ajax({
 			type: 'GET',
 			url: "rest/questionaire/info/" + name,
@@ -180,7 +160,88 @@ function submitQuestionaire(){
 		"q17" : value17,
 		"q18" : value18
 	}
-	$.ajax({
+	console.log(Answers)
+// if there is no answer, the border will be red color	
+	if( value1 === ""){
+		$("#num1").css("border-color", "red")
+	}
+	if( value2 === ""){
+		$("#num2").css("border-color", "red")
+	}
+	if( value3 === ""){
+		$("#num3").css("border-color", "red")
+	}
+	if( value4 === ""){
+		$("#num4").css("border-color", "red")
+	}
+	if( value5 === ""){
+		$("#num5").css("border-color", "red")
+	}
+	if( value6 === ""){
+		$("#num6").css("border-color", "red")
+	}
+	if( value7 === ""){
+		$("#num7").css("border-color", "red")
+	}
+	if( value8 === ""){
+		$("#num8").css("border-color", "red")
+	}
+	if( value9 === ""){
+		$("#num9").css("border-color", "red")
+	}
+	if( value10 === ""){
+		$("#num10").css("border-color", "red")
+	}
+	if( value11 === ""){
+		$("#num11").css("border-color", "red")
+	}
+	if( value12 === ""){
+		$("#num12").css("border-color", "red")
+	}
+	if( value13 === ""){
+		$("#num13").css("border-color", "red")
+	}
+	if( value14 === ""){
+		$("#num14").css("border-color", "red")
+	}
+	if( value15 === ""){
+		$("#num15").css("border-color", "red")
+	}
+	if( value16 === ""){
+		$("#num16").css("border-color", "red")
+	}
+	if( value17 === ""){
+		$("#num17").css("border-color", "red")
+	}
+	if( gender === ""){
+		$("#gender1").css("border-color", "red")
+	}
+	if( attend === ""){
+		$("#attend1").css("border-color", "red")
+	}
+	console.log(Object.keys(cname).length)
+	if( Object.keys(cname).length === 0){
+		alert("Enter Class Name Please")
+	}
+	if( Object.keys(lname).length === 0){
+		alert("Enter Lecturer Name Please")
+	}
+	
+	
+// alert to user ( cannot submit) and return black border for selection
+if((value1 === "") || (value2 === "") || (value3 === "") || (value4 === "") || (value5=== "") || (value6 === "") ||
+	(value7 === "") || (value8 === "") || (value9 === "") || (value10 === "") || (value11 === "") || (value12 === "") ||
+	(value13 === "") || (value14 === "") || (value15 === "") || (value16 === "") || (value17 === "")  ||(cname === "") ||
+	 (lname === "") || (gender === "") || (attend === "") || Object.keys(cname).length === 0 || Object.keys(gender).length === 0)
+{
+	alert("CANNOT SUBMIT") 
+	$("#num1,#num2,#num3,#num4,#num5,#num6,#num7,#num8,#num9,#num10,#num11,#num12,#num13,#num14,#num15,#num16,#num17,#gender1,#attend1").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	
+	
+}
+else { $.ajax({
 		type: 'POST',
 		contentType: "application/json",
 		url: "rest/questionaire/answers",
@@ -191,7 +252,11 @@ function submitQuestionaire(){
  		 },
 		success : function(data, textStatus, jqXHR){
 			alert("Submit successful");
+			alert(data)
 			}
 	})
+	}	
 }
+
+
 	
