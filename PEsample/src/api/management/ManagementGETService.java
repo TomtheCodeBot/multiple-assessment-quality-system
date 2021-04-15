@@ -35,6 +35,9 @@ public class ManagementGETService {
 			@DefaultValue("") @QueryParam("filter") String filter,
 			@DefaultValue("") @QueryParam("choice") String choice 		
 			)throws SQLException, NamingException {
+		if (filter.isEmpty()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave filter empty").build();
+		}
 		if (filter.equals("infodatabase")) {
 		Connection db = (Connection) Configuration.getAcademiaConnection();
 		try {
