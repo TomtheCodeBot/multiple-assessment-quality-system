@@ -118,7 +118,7 @@ public class ManagementGETService {
 				db.close();
 			}
 		}
-	@Path("AcaProFacMod")
+	@Path("AcaFacProMod")
 	@GET
 	public Response GetInfoYearFacProMod() throws SQLException, NamingException {
 			Connection db = (Connection) Configuration.getAcademiaConnection();
