@@ -29,11 +29,13 @@ public class ManagementGETService {
 	public String getMessage() throws SQLException, NamingException {
 		return "Hello from api.management";
 	}
-	@Path("infodatabase")
+	@Path("/resources")
 	@GET
 	public Response GetInfoDatabase(
+			@DefaultValue("") @QueryParam("filter") String filter,
 			@DefaultValue("") @QueryParam("choice") String choice 		
 			)throws SQLException, NamingException {
+		if (filter.equals("infodatabase")) {
 		Connection db = (Connection) Configuration.getAcademiaConnection();
 		try {
 			PreparedStatement st = db.prepareStatement("{ call GetInfoDatabase(?) }");
@@ -80,11 +82,8 @@ public class ManagementGETService {
 			db.close();
 		
 		}
-	}
-
-	@Path("AcaFac")
-	@GET
-	public Response GetInfoYearFac() throws SQLException, NamingException {
+		
+		} else	if (filter.equals("AcaFac")) {
 			Connection db = (Connection) Configuration.getAcademiaConnection();
 			try {
 				PreparedStatement st = db.prepareStatement("{ call getInfoYearFac() }");
@@ -100,9 +99,7 @@ public class ManagementGETService {
 				db.close();
 			}
 		}
-	@Path("AcaFacPro")
-	@GET
-	public Response GetInfoYearFacPro() throws SQLException, NamingException {
+	   else	if (filter.equals("AcaFacPro")) {
 			Connection db = (Connection) Configuration.getAcademiaConnection();
 			try {
 				PreparedStatement st = db.prepareStatement("{ call getInfoYearFacPro() }");
@@ -118,9 +115,7 @@ public class ManagementGETService {
 				db.close();
 			}
 		}
-	@Path("AcaFacProMod")
-	@GET
-	public Response GetInfoYearFacProMod() throws SQLException, NamingException {
+	   else	if (filter.equals("AcaProFacMod")) {
 			Connection db = (Connection) Configuration.getAcademiaConnection();
 			try {
 				PreparedStatement st = db.prepareStatement("{ call getInfoYearFacProMod() }");
@@ -137,4 +132,6 @@ public class ManagementGETService {
 				db.close();
 			}
 		}
+		return null;
 	}
+}
