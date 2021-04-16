@@ -9,11 +9,21 @@ $(document).ready(function() {
 		})
 	$("#button1").on("click",
 		function(event) {
-			getTable()
+			testAPI()
 		})
 	
 })
-
+function testAPI() {
+	$.ajax({
+		type: 'DELETE',
+		contentType: "application/json",
+		url: "rest/management/resources?filter=single&col1=academic_year&id=AY2020&name=2020" ,
+		dataType: "text",
+		success: function(data, textStatus, jqXHR) {
+			alert(data)
+		}
+	})
+}
 
 function getExample() {
 	$.ajax({
