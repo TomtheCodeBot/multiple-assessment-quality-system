@@ -2,6 +2,6 @@
 <Context>               
 <Resource name="jdbc/pedatabase" auth="Container" type="javax.sql.DataSource"
                maxTotal="100" maxIdle="30" maxWaitMillis="10000"
-               username="newuser" password="password" driverClassName="com.mysql.cj.jdbc.Driver"
+               username="root" password="1234" driverClassName="com.mysql.cj.jdbc.Driver"
                url="jdbc:mysql://localhost:3306/pedatabase"/>        
 </Context>
