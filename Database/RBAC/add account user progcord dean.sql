@@ -98,22 +98,22 @@ INSERT INTO user (Username, Login) VALUES   ('Gawr Gura','FArt');
 
 
 
-INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','PCHistory','P10001');
-INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','PCGeography','P10002');
-INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','PCFinancial','P20001');
-INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','PCBusiness','P20002');
-INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','PCAutomation','P30001');
-INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','PCMechanic','P30002');
- INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','PCSoftware','P40001');
- INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','PCAI','P40002');
- INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','PCDP','P50001');
- INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','PCSculpture','P50002');
+INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','Josh Walkman','P10001');
+INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','John Runnman','P10002');
+INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','Joe Headman','P20001');
+INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','Joel Oman','P20002');
+INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','Tim Burton','P30001');
+INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES     ('2020-09-15','2021-07-15','Jim Burrow','P30002');
+ INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','Mark Regson','P40001');
+ INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','Jack Sparrow','P40002');
+ INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','Miranda Alonso','P50001');
+ INSERT INTO Prog_Cordinator (StartDate, EndDate,	Username, PCode) VALUES    ('2020-09-15','2021-07-15','Angelia Carlos','P50002');
  
  
  
  
- INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','FSocial','F00001');
-INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','FEconomic','F00002');
-INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','FEngineering','F00003');
-INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','FIT','F00004');
-INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','FArt','F00005');
+ INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','Tarzan Jungle','F00001');
+INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','Harry Apemann','F00002');
+INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','Alex Mercer','F00003');
+INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','Amelia Watson','F00004');
+INSERT INTO dean (StartDate, EndDate,	Username, FCode)VALUES    ('2020-09-15','2021-07-15','Gawr Gur','F00005');
