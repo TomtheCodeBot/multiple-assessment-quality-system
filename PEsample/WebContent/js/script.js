@@ -17,7 +17,7 @@ function testAPI() {
 	$.ajax({
 		type: 'DELETE',
 		contentType: "application/json",
-		url: "rest/management/resources?filter=single&col1=academic_year&id=AY2020&name=2020" ,
+		url: "rest/management/resources?filter=single&col1=academic_year&id=A02012&name=2012" ,
 		dataType: "text",
 		success: function(data, textStatus, jqXHR) {
 			alert(data)

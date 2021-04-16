@@ -31,9 +31,8 @@ public class ManagementDELETEService {
 			@DefaultValue("") @QueryParam("col2") String col2, 
 			@DefaultValue("") @QueryParam("col3") String col3, 
 			@DefaultValue("") @QueryParam("col4") String col4,
-			@DefaultValue("") @QueryParam("aycode") String aycode,
-			@DefaultValue("") @QueryParam("fcode") String fcode,
-			@DefaultValue("") @QueryParam("pcode") String pcode, 
+			@DefaultValue("") @QueryParam("afcode") String afcode,
+			@DefaultValue("") @QueryParam("pfcode") String pfcode,
 			@DefaultValue("") @QueryParam("mcode") String mcode, 
 			@DefaultValue("") @QueryParam("id") String id,
 			@DefaultValue("") @QueryParam("name") String name) throws SQLException, NamingException{
@@ -45,33 +44,26 @@ public class ManagementDELETEService {
 		try {
 			int noOfAffectedRows = 0;
 			if (filter.equals("single")){
-				PreparedStatement st = db.prepareStatement("{ call deleteInfoDatabase(?,?,?) }");
+				PreparedStatement st = db.prepareStatement("{ call DeleteInfoDatabase(?,?,?) }");
 				st.setString(1, col1);
 				st.setString(2, id);
 				st.setString(3, name);
-				
+				System.out.println(st);
 				noOfAffectedRows = st.executeUpdate();
 			} else {
 				if (col1.equals("year") && col2.equals("faculty") && col3.equals("program") && col4.equals("module")) {
-					PreparedStatement st = db.prepareStatement("{ call deleteInfoYearFacProMod(?,?,?,?) }");
-					st.setString(1, aycode);
-					st.setString(2, fcode);
-					st.setString(3, pcode);
-					st.setString(4, mcode);
+					PreparedStatement st = db.prepareStatement("{ call DeleteInfoYearFacProMod(?,?) }");
+					st.setString(1, pfcode);
+					st.setString(2, mcode);
 					
 					noOfAffectedRows = st.executeUpdate();
 				} else if (col3.isEmpty() && col4.isEmpty()) {
-					PreparedStatement st = db.prepareStatement("{ call deleteInfoYearFac(?,?) }");
-					st.setString(1, aycode);
-					st.setString(2, fcode);		
-					
+					PreparedStatement st = db.prepareStatement("{ call DeleteInfoYearFac(?) }");
+					st.setString(1, afcode);			
 					noOfAffectedRows = st.executeUpdate();
 				} else if (col4.isEmpty()) {
-					PreparedStatement st = db.prepareStatement("{ call deleteInfoYearFacPro(?,?,?) }");
-					st.setString(1, aycode);
-					st.setString(2, fcode);
-					st.setString(3, pcode);
-					
+					PreparedStatement st = db.prepareStatement("{ call DeleteInfoYearFacPro(?) }");
+					st.setString(1, pfcode);
 					noOfAffectedRows = st.executeUpdate();
 				} else {
 					return Response.status(Response.Status.BAD_REQUEST).entity("Invalid table request").build();

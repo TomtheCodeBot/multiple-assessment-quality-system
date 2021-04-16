@@ -86,7 +86,7 @@ public class ManagementGETService {
 				db.close();
 			}
 		}
-	   else	if (filter.equals("AcaProFacMod")) {
+	   else	if (filter.equals("AcaFacProMod")) {
 			Connection db = (Connection) Configuration.getAcademiaConnection();
 			try {
 				PreparedStatement st = db.prepareStatement("call getInfoYearFacProMod();");
