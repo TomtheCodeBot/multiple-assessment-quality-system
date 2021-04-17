@@ -17,4 +17,5 @@ DECLARE lecturer varchar(20);
 			 	AND A.Login = U.Login 
 			 	AND A.Login = Login);
 	END IF;
+	SELECT lecturer;
 END
