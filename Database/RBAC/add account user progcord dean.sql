@@ -43,7 +43,7 @@ INSERT INTO user (Username, Login)  VALUES  ('Lina Mirana','LinaM');
 INSERT INTO user (Username, Login)  VALUES  ('Jim Raynor','JimR');
 INSERT INTO user (Username, Login)  VALUES  ('Elizabeth Ezalor','ElizabethE');
 INSERT INTO user (Username, Login)  VALUES  ('Sarah Kerrigan','SarahK');
-INSERT INTO user (Username, Login)  VALUES  ('Syvannas Windrunner','SylvannasW');
+INSERT INTO user (Username, Login)  VALUES  ('Sylvannas Windrunner','SylvannasW');
 INSERT INTO user (Username, Login)  VALUES  ('Tim Johnson','TimJ');
 INSERT INTO user (Username, Login)   VALUES ('Jones McDonald','JonesM');
 INSERT INTO user (Username, Login)  VALUES ('Tran Cao Duy','CaoDuyH');
