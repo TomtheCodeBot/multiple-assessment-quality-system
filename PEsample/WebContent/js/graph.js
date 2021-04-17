@@ -1,6 +1,5 @@
 graph =[]
-	var selector = ['cname','ayname','fname','sname','mname','lname','pname']
-	var column = ['cla-select','aca-select','fal-select','sem-select','mod-select','lec-select','pro-select']
+	
 $(document).ready(function() {
     getFilterResources();
 	getInitialize();
@@ -41,9 +40,9 @@ for (var init in id){
 									'rgba(255, 159, 64, 1)',
 									'rgba(255, 159, 64, 1)',
 									'rgba(255, 159, 64, 1)'
-					            ],
+					            ], 
 					            borderWidth:1}
-						]
+								]
 					    },
 					    options: {
 							title: {
@@ -458,84 +457,23 @@ function getInitialize(){
 	$("#mod-select").append($('<option>').val("").text("module"));
 	$("#cla-select").append($('<option>').val("").text("class"));
 	$("#lec-select").append($('<option>').val("").text("lecturer"));
-
-		$.ajax({
+	let resetLabel = ['cname','ayname','sname','fname','mname','pname','lname']
+	let queryLabel = ['cla-select','aca-select','sem-select','fal-select','mod-select','pro-select','lec-select']
+		for(const init in resetLabel){
+			$.ajax({
 		type: 'GET',
-		url: "rest/graph/resources?selector=cname&ayname=" + ayname +"&sname=" + sname + "&fname=" + fname + "&pname=" + pname + "&mname=" + mname + "&lname=" + lname,
+		url: "rest/graph/resources?selector=" + `${resetLabel[init]}`,
 		success: function (data, textStatus, jqXHR) {
 			var obj = JSON.parse(data);
 			for (var i = 0; i < obj.length; i++){
-				cla = new String(obj[i].cname);
-				$("#cla-select").append('<option value="'+ cla +'">'+ cla +'</option>')
+				cla = new String(obj[i][`${resetLabel[init]}`]);
+				console.log(cla)
+				$("#" + `${queryLabel[init]}`+"").append('<option value="'+ cla +'">'+ cla +'</option>')
 			}
 		}
 	})
-		$.ajax({
-		type: 'GET',
-		url: "rest/graph/resources?selector=ayname&ayname=" + ayname +"&sname=" + sname + "&fname=" + fname + "&pname=" + pname + "&mname=" + mname + "&lname=" + lname,
-		success: function (data, textStatus, jqXHR) {
-			var obj = JSON.parse(data);
-			for (var i = 0; i < obj.length; i++){
-				cla = new String(obj[i].ayname);
-				$("#aca-select").append('<option value="'+ cla +'">'+ cla +'</option>')
-			}
 		}
-	})
-	$.ajax({
-		type: 'GET',
-		url: "rest/graph/resources?selector=sname&ayname=" + ayname +"&sname=" + sname + "&fname=" + fname + "&pname=" + pname + "&mname=" + mname + "&lname=" + lname,
-		success: function (data, textStatus, jqXHR) {
-			var obj = JSON.parse(data);
-			for (var i = 0; i < obj.length; i++){
-				cla = new String(obj[i].sname);
-				$("#sem-select").append('<option value="'+ cla +'">'+ cla +'</option>')
-			}
-		}
-	})
-	$.ajax({
-		type: 'GET',
-		url: "rest/graph/resources?selector=fname&ayname=" + ayname +"&sname=" + sname + "&fname=" + fname + "&pname=" + pname + "&mname=" + mname + "&lname=" + lname,
-		success: function (data, textStatus, jqXHR) {
-			var obj = JSON.parse(data);
-			for (var i = 0; i < obj.length; i++){
-				cla = new String(obj[i].fname);
-				$("#fal-select").append('<option value="'+ cla +'">'+ cla +'</option>')
-			}
-		}
-	})
-	$.ajax({
-		type: 'GET',
-		url: "rest/graph/resources?selector=mname&mname=" + ayname +"&sname=" + sname + "&fname=" + fname + "&pname=" + pname + "&mname=" + mname + "&lname=" + lname,
-		success: function (data, textStatus, jqXHR) {
-			var obj = JSON.parse(data);
-			for (var i = 0; i < obj.length; i++){
-				cla = new String(obj[i].mname);
-				$("#mod-select").append('<option value="'+ cla +'">'+ cla +'</option>')
-			}
-		}
-	})
-	$.ajax({
-		type: 'GET',
-		url: "rest/graph/resources?selector=pname&ayname=" + ayname +"&sname=" + sname + "&fname=" + fname + "&pname=" + pname + "&mname=" + mname + "&lname=" + lname,
-		success: function (data, textStatus, jqXHR) {
-			var obj = JSON.parse(data);
-			for (var i = 0; i < obj.length; i++){
-				cla = new String(obj[i].pname);
-				$("#pro-select").append('<option value="'+ cla +'">'+ cla +'</option>')
-			}
-		}
-	})
-	$.ajax({
-		type: 'GET',
-		url: "rest/graph/resources?selector=lname&ayname=" + ayname +"&sname=" + sname + "&fname=" + fname + "&pname=" + pname + "&mname=" + mname + "&lname=" + lname,
-		success: function (data, textStatus, jqXHR) {
-			var obj = JSON.parse(data);
-			for (var i = 0; i < obj.length; i++){
-				cla = new String(obj[i].lname);
-				$("#lec-select").append('<option value="'+ cla +'">'+ cla +'</option>')
-			}
-		}
-	})
+		
 	
 }
 function removePrevdata(){
@@ -579,6 +517,7 @@ function getaca(){
 				$(`#aca-select option`).not(":first").remove()
 			for (var i = 0; i < obj.length; i++){
 				a = new String(obj[i].ayname);
+				console.log(a)
 				$("#aca-select").append('<option value="'+ a +'">'+ a +'</option>')
 			}
 			}
