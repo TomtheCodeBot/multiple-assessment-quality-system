@@ -22,3 +22,6 @@ Lưu ý khi cài database cho MySQL:
 4. Chạy file add data.sql để tạo data cho table (nhớ chú ý tên của schema, nếu có lỗi foreign contraint thì quay về bước 1)
 5. Tạo store procedure (khác với SQL querry)
 6. Nhập lệnh Call /tên của store procedure/ để thực thi.
+
+Notice: (for data management)
+- Execute: ```SET GLOBAL log_bin_trust_function_creators = 1;```
