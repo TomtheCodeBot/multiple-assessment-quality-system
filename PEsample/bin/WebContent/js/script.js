@@ -9,11 +9,21 @@ $(document).ready(function() {
 		})
 	$("#button1").on("click",
 		function(event) {
-			getTable()
+			testAPI()
 		})
 	
 })
-
+function testAPI() {
+	$.ajax({
+		type: 'DELETE',
+		contentType: "application/json",
+		url: "rest/management/resources?filter=single&col1=academic_year&id=A02012&name=2012" ,
+		dataType: "text",
+		success: function(data, textStatus, jqXHR) {
+			alert(data)
+		}
+	})
+}
 
 function getExample() {
 	$.ajax({
@@ -77,6 +87,7 @@ function getClasses(){
 function getClassesLecturer(){
 	$("#class_name").change(function(){	
 		$("#lecturer_name").children("option").remove();
+		$("#class_name option[value = '']").remove();
        	var name = new String($(this).children("option:selected").val());
 	$.ajax({
 		type:'GET',
@@ -94,8 +105,10 @@ function getClassesLecturer(){
 function getClassInfo(){
 	$("#class_name").change(function(){
 		$("#aca,#sem,#fal,#mod,#pro").children("h3").remove();
+//		$("#class_name option[value = '']").remove();
 		var name = new String($(this).children("option:selected").val());
 		console.log(name);
+		
 		$.ajax({
 			type: 'GET',
 			url: "rest/questionaire/info/" + name,
@@ -157,7 +170,146 @@ function submitQuestionaire(){
 		"q17" : value17,
 		"q18" : value18
 	}
-	$.ajax({
+// if there is no answer, the border will be red color	
+	if( value1 === ""){
+		$("#num1").css("border-color", "red")
+	}
+	if( value2 === ""){
+		$("#num2").css("border-color", "red")
+	}
+	if( value3 === ""){
+		$("#num3").css("border-color", "red")
+	}
+	if( value4 === ""){
+		$("#num4").css("border-color", "red")
+	}
+	if( value5 === ""){
+		$("#num5").css("border-color", "red")
+	}
+	if( value6 === ""){
+		$("#num6").css("border-color", "red")
+	}
+	if( value7 === ""){
+		$("#num7").css("border-color", "red")
+	}
+	if( value8 === ""){
+		$("#num8").css("border-color", "red")
+	}
+	if( value9 === ""){
+		$("#num9").css("border-color", "red")
+	}
+	if( value10 === ""){
+		$("#num10").css("border-color", "red")
+	}
+	if( value11 === ""){
+		$("#num11").css("border-color", "red")
+	}
+	if( value12 === ""){
+		$("#num12").css("border-color", "red")
+	}
+	if( value13 === ""){
+		$("#num13").css("border-color", "red")
+	}
+	if( value14 === ""){
+		$("#num14").css("border-color", "red")
+	}
+	if( value15 === ""){
+		$("#num15").css("border-color", "red")
+	}
+	if( value16 === ""){
+		$("#num16").css("border-color", "red")
+	}
+	if( value17 === ""){
+		$("#num17").css("border-color", "red")
+	}
+	if( gender === ""){
+		$("#gender1").css("border-color", "red")
+	}
+	if( attend === ""){
+		$("#attend1").css("border-color", "red")
+	}
+	console.log(Object.keys(cname).length)
+	if( Object.keys(cname).length === 0){
+		alert("Enter Class Name Please")
+	}
+	if( Object.keys(lname).length === 0){
+		alert("Enter Lecturer Name Please")
+	}
+	
+	
+// alert to user ( cannot submit) and return black border for selection
+if((value1 === "") || (value2 === "") || (value3 === "") || (value4 === "") || (value5=== "") || (value6 === "") ||
+	(value7 === "") || (value8 === "") || (value9 === "") || (value10 === "") || (value11 === "") || (value12 === "") ||
+	(value13 === "") || (value14 === "") || (value15 === "") || (value16 === "") || (value17 === "")  ||(cname === "") ||
+	 (lname === "") || (gender === "") || (attend === "") || Object.keys(cname).length === 0 || Object.keys(gender).length === 0)
+{
+	alert("CANNOT SUBMIT") 
+	$("#num1").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num2").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num3").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num4").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num5").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num6").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num7").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num8").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num9").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num10").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num11").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num12").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num13").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num14").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num15").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num16").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#num17").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#class_name").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#lecturer_name").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#gender1").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	$("#attend1").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	
+}
+else { $.ajax({
 		type: 'POST',
 		contentType: "application/json",
 		url: "rest/questionaire/answers",
@@ -170,5 +322,10 @@ function submitQuestionaire(){
 			alert("Submit successful");
 			}
 	})
+	}	
 }
+function NoAnswer(){
+	
+}
+
 	

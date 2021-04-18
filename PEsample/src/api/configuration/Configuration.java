@@ -3,10 +3,14 @@ package api.configuration;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.crypto.SecretKey;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 public class Configuration {
 	public static Connection getAcademiaConnection() throws SQLException, NamingException {
@@ -15,4 +19,8 @@ public class Configuration {
 		DataSource ds = (DataSource) envContext.lookup("jdbc/pedatabase");
 		return ds.getConnection();
 	} 
+	
+	public static String getSecretKey() {
+		return "aisjdnglk12jnm,slkjdJJKKL;;LKDAJJF03-2-9348JIEWREKJLDF";					
+	}
 }
