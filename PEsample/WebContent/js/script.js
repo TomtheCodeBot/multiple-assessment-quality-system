@@ -9,6 +9,7 @@ $(document).ready(function() {
 		})
 	$("#button1").on("click",
 		function(event) {
+<<<<<<< HEAD
 			testAPI()
 		})
 	
@@ -33,6 +34,13 @@ function testAPI() {
 			}
 	})
 }
+=======
+			getTable()
+		})
+	
+})
+
+>>>>>>> Dat_FrontEnd
 
 function getExample() {
 	$.ajax({
@@ -179,6 +187,10 @@ function submitQuestionaire(){
 		"q17" : value17,
 		"q18" : value18
 	}
+<<<<<<< HEAD
+=======
+	console.log(Answers)
+>>>>>>> Dat_FrontEnd
 // if there is no answer, the border will be red color	
 	if( value1 === ""){
 		$("#num1").css("border-color", "red")
@@ -253,6 +265,7 @@ if((value1 === "") || (value2 === "") || (value3 === "") || (value4 === "") || (
 	 (lname === "") || (gender === "") || (attend === "") || Object.keys(cname).length === 0 || Object.keys(gender).length === 0)
 {
 	alert("CANNOT SUBMIT") 
+<<<<<<< HEAD
 	$("#num1").on('input', function(e){
 		$(this).css("border-color","black")
 	})
@@ -317,6 +330,13 @@ if((value1 === "") || (value2 === "") || (value3 === "") || (value4 === "") || (
 		$(this).css("border-color","black")
 	})
 	
+=======
+	$("#num1,#num2,#num3,#num4,#num5,#num6,#num7,#num8,#num9,#num10,#num11,#num12,#num13,#num14,#num15,#num16,#num17,#gender1,#attend1").on('input', function(e){
+		$(this).css("border-color","black")
+	})
+	
+	
+>>>>>>> Dat_FrontEnd
 }
 else { $.ajax({
 		type: 'POST',
@@ -329,12 +349,17 @@ else { $.ajax({
  		 },
 		success : function(data, textStatus, jqXHR){
 			alert("Submit successful");
+			alert(data)
 			}
 	})
 	}	
 }
+<<<<<<< HEAD
 function NoAnswer(){
 	
 }
+=======
+
+>>>>>>> Dat_FrontEnd
 
 	
