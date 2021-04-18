@@ -14,14 +14,23 @@ $(document).ready(function() {
 	
 })
 function testAPI() {
+	let Answers = {
+		'username':'CaoDuyT',
+		'password':'Xs!*qpll',
+		'role':'Lecturer-021'
+	}
 	$.ajax({
-		type: 'DELETE',
+		type: 'POST',
 		contentType: "application/json",
-		url: "rest/management/resources?filter=single&col1=academic_year&id=A02012&name=2012" ,
+		url: "rest/login/user",
+		data: JSON.stringify(Answers),
 		dataType: "text",
-		success: function(data, textStatus, jqXHR) {
-			alert(data)
-		}
+		error: function(e) {
+ 		   console.log(e);
+ 		 },
+		success : function(data, textStatus, jqXHR){
+			alert(data);
+			}
 	})
 }
 

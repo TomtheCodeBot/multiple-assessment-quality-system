@@ -20,7 +20,7 @@ public class Configuration {
 		return ds.getConnection();
 	} 
 	
-	public static SecretKey getSecretKey() {
-		return Keys.secretKeyFor(SignatureAlgorithm.HS512);					
+	public static String getSecretKey() {
+		return "aisjdnglk12jnm,slkjdJJKKL;;LKDAJJF03-2-9348JIEWREKJLDF";					
 	}
 }

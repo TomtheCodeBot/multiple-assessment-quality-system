@@ -2,6 +2,7 @@ package api.login;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.crypto.SecretKey;
@@ -22,7 +23,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class LoginPOSTService {
 	
 	private String issueToken(User authUser) throws NamingException {
-		SecretKey key = Configuration.getSecretKey();
+		String key = Configuration.getSecretKey();
         String authToken = Jwts.builder()
 	       	.claim("role", authUser.getRole())
 	       	.signWith(SignatureAlgorithm.HS512, key)
@@ -39,8 +40,12 @@ public class LoginPOSTService {
 			PreparedStatement st = db.prepareStatement("{ call CheckLogin(?,?) }");
 			st.setString(1, user.getUsername());
 			st.setString(2, user.getPassword());
-			
-			int flag = st.executeQuery().getInt(1);
+			System.out.println(st);
+			ResultSet rs2 = st.executeQuery();
+			int flag=0;
+			if(rs2.next()) {
+				flag=rs2.getInt(1);
+			}
 			if (flag == 0) { 
 				return Response.status(Response.Status.FORBIDDEN).entity("Invalid username or password").build();				
 			}
