@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 
 import javax.naming.NamingException;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,19 +16,11 @@ import javax.ws.rs.PathParam;
 
 import api.configuration.Configuration;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.lang.String;
 
 @Path("/management")
-public class ManagementPOSTService extends HttpServlet {
+public class ManagementPOSTService{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Path("/post")
 	@GET
 	public String getMessage(){
@@ -35,23 +29,32 @@ public class ManagementPOSTService extends HttpServlet {
 	
 	@Path("/insert/{colName}")
 	@POST
-	public void doPost(
-			@PathParam("colName") String colName,
-			HttpServletRequest req,
-            HttpServletResponse res) throws IOException, SQLException, NamingException{
+	public void insertDataManagements(
+			@DefaultValue("") @PathParam("colName") String colName,
+			@DefaultValue("") @FormParam("CName") String CName,
+			@DefaultValue("") @FormParam("CCode") String CCode,
+			@DefaultValue("") @FormParam("CSize") String CSize,
+			@DefaultValue("") @FormParam("MCode") String MCode,
+			@DefaultValue("") @FormParam("SCode") String SCode,
+			@DefaultValue("") @FormParam("SName") String SName,
+			@DefaultValue("") @FormParam("AYCode") String AYCode,
+			@DefaultValue("") @FormParam("LCode") String LCode,
+			@DefaultValue("") @FormParam("LName") String LName,
+			@DefaultValue("") @FormParam("AYName") String AYName,
+			@DefaultValue("") @FormParam("FCode") String FCode,
+			@DefaultValue("") @FormParam("FName") String FName,
+			@DefaultValue("") @FormParam("MName") String MName,
+			@DefaultValue("") @FormParam("PCode") String PCode,
+			@DefaultValue("") @FormParam("PName") String PName) throws IOException, SQLException, NamingException{
 		Connection db = (Connection) Configuration.getAcademiaConnection(); 
 		switch(colName) {
 		  case "class":
-			  String CName = req.getParameter("CName");
-			  String CCode = req.getParameter("Ccode");
-			  String CSize = req.getParameter("CSize");
-			  String MCode = req.getParameter("MCode");
-			  String SCode = req.getParameter("SCode");
+			  System.out.println(CName + "\n" + CCode + "\n" + CSize + "\n" + MCode + "\n" + SCode);
 			  try {
 			  PreparedStatement st = db.prepareStatement("{ call InsertClass(?,?,?,?,?) }");
 				st.setString(1, CName);
 				st.setString(2, CCode);
-				st.setString(3, CSize);
+				st.setInt(3, Integer.parseInt(CSize));
 				st.setString(4, MCode);
 				st.setString(5, SCode);
 			  st.executeQuery();	
@@ -60,71 +63,64 @@ public class ManagementPOSTService extends HttpServlet {
 			  }
 		    break;
 		  case "semester":
-			  String SCode1 = req.getParameter("SCode");
-			  String SName = req.getParameter("SName");
-			  String AYCode = req.getParameter("AYCode");
+			  System.out.println(SCode + "\n" + SName + "\n" + AYCode );
 			  try {
-			  PreparedStatement st = db.prepareStatement("{ call InsertClass(?,?,?) }");
-				st.setString(1, SCode1);
+			  PreparedStatement st = db.prepareStatement("{ call InsertSemester(?,?,?) }");
+				st.setString(1, SCode);
 				st.setString(2, SName);
 				st.setString(3, AYCode);
+				st.executeQuery();
 			  } finally{
 				db.close();
 			  }
 		    break;
 		  case "lecturer":
-			  String LCode = req.getParameter("LCode");
-			  String LName = req.getParameter("LName");
-			  String CCode1 = req.getParameter("CCode");
 			  try {
 			  PreparedStatement st = db.prepareStatement("{ call InsertLecturer(?,?,?) }");
 				st.setString(1, LCode);
 				st.setString(2, LName);
-				st.setString(3, CCode1);
+				st.setString(3, CCode);
+			st.executeQuery();
 			  } finally{
 				db.close();
 			  }
 		    break;
 		  case "AcadYear":
-			  String AYCode1 = req.getParameter("AYCode");
-			  String AYName = req.getParameter("AYName");
 			  try {
 			  PreparedStatement st = db.prepareStatement("{ call InsertAcdemicYear(?,?) }");
-				st.setString(1, AYCode1);
+				st.setString(1, AYCode);
 				st.setString(2, AYName);
+				st.executeQuery();
 			  } finally{
 				db.close();
 			  }
 			  break;
 		  case "Faculty":
-			  String FCode = req.getParameter("FCode");
-			  String FName = req.getParameter("FName ");
 			  try {
 			  PreparedStatement st = db.prepareStatement("{ call InsertFaculty(?,?) }");
 				st.setString(1, FCode);
 				st.setString(2, FName);
+				st.executeQuery();
 			  } finally{
 				db.close();
 			  }
 			  break;		 
 		  case "Module":
-			  String MCode1 = req.getParameter("MCode");
-			  String MName = req.getParameter("MName");
 			  try {
 			  PreparedStatement st = db.prepareStatement("{ call InsertModule(?,?) }");
-				st.setString(1, MCode1);
+				st.setString(1, MCode);
 				st.setString(2, MName);
+				st.executeQuery();
 			  } finally{
 				db.close();
 			  }
 			  break;		
 		  case "Program":
-			  String PCode = req.getParameter("PCode");
-			  String PName = req.getParameter("PName");
 			  try {
 			  PreparedStatement st = db.prepareStatement("{ call InsertProgram(?,?) }");
 				st.setString(1, PCode);
 				st.setString(2, PName);
+				st.executeQuery();
 			  } finally{
 				db.close();
 			  }
