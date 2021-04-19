@@ -25,8 +25,8 @@ if parameter = "semester" then
 set parameter = 'S';
 end if;
 SET @Query:=CONCAT("DELETE FROM ",choice,"
-	WHERE ",parameter,"Code LIKE '",Code,"' 
-    AND ",parameter,"Name LIKE '",Name,"'");
+	WHERE ",parameter,"Code = '",Code,"' 
+    AND ",parameter,"Name = '",Name,"'");
 Prepare stmt FROM @Query;  
 EXECUTE stmt;
 
