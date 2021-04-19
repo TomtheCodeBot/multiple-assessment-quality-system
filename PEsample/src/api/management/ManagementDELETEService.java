@@ -2,6 +2,7 @@ package api.management;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -42,37 +43,37 @@ public class ManagementDELETEService {
 		
 		Connection db = Configuration.getAcademiaConnection();
 		try {
-			int noOfAffectedRows = 0;
+			ResultSet rs = null;
 			if (filter.equals("single")){
 				PreparedStatement st = db.prepareStatement("{ call DeleteInfoDatabase(?,?,?) }");
 				st.setString(1, col1);
 				st.setString(2, id);
 				st.setString(3, name);
-				System.out.println(st);
-				noOfAffectedRows = st.executeUpdate();
+				rs = st.executeQuery();
 			} else {
 				if (col1.equals("year") && col2.equals("faculty") && col3.equals("program") && col4.equals("module")) {
 					PreparedStatement st = db.prepareStatement("{ call DeleteInfoYearFacProMod(?,?) }");
 					st.setString(1, pfcode);
 					st.setString(2, mcode);
 					
-					noOfAffectedRows = st.executeUpdate();
+					rs = st.executeQuery();
 				} else if (col3.isEmpty() && col4.isEmpty()) {
 					PreparedStatement st = db.prepareStatement("{ call DeleteInfoYearFac(?) }");
 					st.setString(1, afcode);			
-					noOfAffectedRows = st.executeUpdate();
+					rs = st.executeQuery();
 				} else if (col4.isEmpty()) {
 					PreparedStatement st = db.prepareStatement("{ call DeleteInfoYearFacPro(?) }");
 					st.setString(1, pfcode);
-					noOfAffectedRows = st.executeUpdate();
+					rs = st.executeQuery();
 				} else {
 					return Response.status(Response.Status.BAD_REQUEST).entity("Invalid table request").build();
 				}
 			}
-			if (noOfAffectedRows == 0) {
-				return Response.status(Response.Status.NOT_MODIFIED).entity("There is no affected row in database").build();
+			if (rs.getInt(1) == 1) {				
+				return Response.status(Response.Status.OK).entity("deleted successfully").build();
 			}	
-			return Response.status(Response.Status.OK).entity("deleted successfully").build();
+			return Response.status(Response.Status.NOT_MODIFIED).entity("There are no affected rows in database").build();
+			
 		} finally {
 			db.close();
 		}

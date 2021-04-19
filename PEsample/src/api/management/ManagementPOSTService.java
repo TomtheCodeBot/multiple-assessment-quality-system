@@ -3,6 +3,7 @@ package api.management;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -13,6 +14,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 
 import api.configuration.Configuration;
 
@@ -29,7 +31,7 @@ public class ManagementPOSTService{
 	
 	@Path("/insert/{colName}")
 	@POST
-	public void insertDataManagements(
+	public Response insertDataManagements(
 			@DefaultValue("") @PathParam("colName") String colName,
 			@DefaultValue("") @FormParam("CName") String CName,
 			@DefaultValue("") @FormParam("CCode") String CCode,
@@ -46,7 +48,9 @@ public class ManagementPOSTService{
 			@DefaultValue("") @FormParam("MName") String MName,
 			@DefaultValue("") @FormParam("PCode") String PCode,
 			@DefaultValue("") @FormParam("PName") String PName) throws IOException, SQLException, NamingException{
-		Connection db = (Connection) Configuration.getAcademiaConnection(); 
+		
+		Connection db = (Connection) Configuration.getAcademiaConnection();
+		ResultSet rs = null;
 		switch(colName) {
 		  case "class":
 			  System.out.println(CName + "\n" + CCode + "\n" + CSize + "\n" + MCode + "\n" + SCode);
@@ -57,7 +61,8 @@ public class ManagementPOSTService{
 				st.setInt(3, Integer.parseInt(CSize));
 				st.setString(4, MCode);
 				st.setString(5, SCode);
-			  st.executeQuery();	
+				
+				rs = st.executeQuery();			
 			  } finally{
 				db.close();
 			  }
@@ -69,7 +74,7 @@ public class ManagementPOSTService{
 				st.setString(1, SCode);
 				st.setString(2, SName);
 				st.setString(3, AYCode);
-				st.executeQuery();
+				rs = st.executeQuery();
 			  } finally{
 				db.close();
 			  }
@@ -80,7 +85,7 @@ public class ManagementPOSTService{
 				st.setString(1, LCode);
 				st.setString(2, LName);
 				st.setString(3, CCode);
-			st.executeQuery();
+				rs = st.executeQuery();
 			  } finally{
 				db.close();
 			  }
@@ -90,7 +95,7 @@ public class ManagementPOSTService{
 			  PreparedStatement st = db.prepareStatement("{ call InsertAcdemicYear(?,?) }");
 				st.setString(1, AYCode);
 				st.setString(2, AYName);
-				st.executeQuery();
+				rs = st.executeQuery();
 			  } finally{
 				db.close();
 			  }
@@ -100,7 +105,7 @@ public class ManagementPOSTService{
 			  PreparedStatement st = db.prepareStatement("{ call InsertFaculty(?,?) }");
 				st.setString(1, FCode);
 				st.setString(2, FName);
-				st.executeQuery();
+				rs = st.executeQuery();
 			  } finally{
 				db.close();
 			  }
@@ -110,7 +115,7 @@ public class ManagementPOSTService{
 			  PreparedStatement st = db.prepareStatement("{ call InsertModule(?,?) }");
 				st.setString(1, MCode);
 				st.setString(2, MName);
-				st.executeQuery();
+				rs = st.executeQuery();
 			  } finally{
 				db.close();
 			  }
@@ -120,13 +125,17 @@ public class ManagementPOSTService{
 			  PreparedStatement st = db.prepareStatement("{ call InsertProgram(?,?) }");
 				st.setString(1, PCode);
 				st.setString(2, PName);
-				st.executeQuery();
+				rs = st.executeQuery();
 			  } finally{
 				db.close();
 			  }
 			  break;	
 		  default:
-			  break;
-		}				
+			  return Response.status(Response.Status.FORBIDDEN).entity("Invalid resources").build();
+		}
+		if (rs.getInt(1) == 1) {
+			return Response.status(Response.Status.OK).entity("insert successfully").build();
+		}
+		return Response.status(Response.Status.NOT_MODIFIED).entity("duplicate values").build();
 	}
 }
