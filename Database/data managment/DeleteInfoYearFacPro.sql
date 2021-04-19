@@ -3,7 +3,7 @@ BEGIN
 	IF ((pro_fac_code) IN (SELECT PFCode FROM aca_fac_pro)) THEN
 		SELECT '1';
 		DELETE FROM aca_fac_pro 
-		WHERE pro_fac_code=PFCode;
+		WHERE PFCode=pro_fac_code;
 	ELSE
 		SELECT '0';
 	END IF;
