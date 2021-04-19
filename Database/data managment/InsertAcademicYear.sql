@@ -1,12 +1,14 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertAcdemicYear`(AYCode VARCHAR(6), AYName VARCHAR(50))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertAcdemicYear`(AYName VARCHAR(50))
 BEGIN
-	DECLARE flag INT;
-    SET flag=0;
-	SET flag =(SELECT SUM(CheckAcademicYear(AYCode,AYName)) FROM academic_year);
-    IF flag=0 THEN
-		SELECT 'Success';
-		INSERT INTO academic_year (AYCode, AYName) VALUES (AYCode, AYName);
-	ELSE 
-		SELECT 'Duplicate';
-    END IF;
+	DECLARE AYCode VARCHAR(6);
+    DECLARE a INT;
+    SET a = 0;
+    SET AYCode = concat(floor(rand()*1000000));
+	IF AYName NOT IN (SELECT A.AYName FROM academic_year A)
+    THEN IF AYCode NOT IN (SELECT A.AYCode FROM academic_year A) 
+		THEN INSERT INTO academic_year VALUES (AYCode, AYName);
+        SET a = 1;
+		END IF;
+	END IF;
+    SELECT a;
 END
