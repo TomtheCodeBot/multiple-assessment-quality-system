@@ -15,4 +15,7 @@ public class Configuration {
 		DataSource ds = (DataSource) envContext.lookup("jdbc/pedatabase");
 		return ds.getConnection();
 	} 
+	public static String getSecretKey() {
+		return "aisjdnglk12jnm,slkjdJJKKL;;LKDAJJF03-2-9348JIEWREKJLDF";					
+	}
 }
