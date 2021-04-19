@@ -1,11 +1,10 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteInfoYearFac`(aca_fac_code VARCHAR(6))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteInfoYearFac`(academic_year_code VARCHAR(6), faculty_code VARCHAR(6))
 BEGIN
-	DECLARE flag INT;
-    DECLARE size1 INT;
-    SET size1 = (SELECT COUNT(*) FROM aca_faculty);
-	DELETE FROM aca_faculty
-	WHERE AFCode = aca_fac_code;
-    IF size1 = (SELECT COUNT(*) FROM aca_faculty) THEN SELECT 0;
-    ELSE SELECT 1;
+	IF ((academic_year_code,faculty_code) IN (SELECT AYCode,FCode FROM aca_faculty)) THEN
+		SELECT '1';
+		DELETE FROM aca_faculty WHERE AYCode = academic_year_code AND FCode = faculty_code;
+    ELSE
+		SELECT '0';
     END IF;
+	
 END

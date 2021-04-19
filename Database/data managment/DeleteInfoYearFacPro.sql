@@ -1,11 +1,14 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteInfoYearFacPro`(pro_fac_code VARCHAR(6))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteInfoYearFacPro`(academic_year_code VARCHAR(6), faculty_code VARCHAR(6), program_code VARCHAR(7))
 BEGIN
-	DECLARE flag INT;
-    DECLARE size1 INT;
-    SET size1 = (SELECT COUNT(*) FROM aca_fac_pro);
-	DELETE FROM aca_fac_pro 
-	WHERE PFCode = pro_fac_code;
-    IF size1 = (SELECT COUNT(*) FROM aca_fac_pro) THEN SELECT 0;
-    ELSE SELECT 1;
-    END IF;
+	IF ((academic_year_code,faculty_code,program_code) IN (SELECT AYCode,FCode,PCode FROM aca_fac_pro NATURAL JOIN aca_faculty)) THEN
+		SELECT '1';
+		DELETE FROM aca_fac_pro 
+		WHERE AFCode LIKE (SELECT A.AFCode
+							FROM aca_faculty A
+							WHERE A.AYCODE LIKE academic_year_code 
+							AND A.FCode LIKE faculty_code)
+		AND PCode LIKE program_code;
+	ELSE
+		SELECT '0';
+	END IF;
 END
