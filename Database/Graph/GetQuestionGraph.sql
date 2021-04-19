@@ -1,6 +1,13 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetQuestionGraph`(academic_year VARCHAR(50), semester VARCHAR(50),
- faculty VARCHAR(50), program VARCHAR(50), module VARCHAR(50), lecturer VARCHAR(50), class VARCHAR(50),question VARCHAR(3))
-BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetQuestionGraph`(
+academic_year VARCHAR(50), 
+semester VARCHAR(50),
+faculty VARCHAR(50), 
+program VARCHAR(50), 
+module VARCHAR(50), 
+lecturer VARCHAR(50), 
+class VARCHAR(50), 
+question VARCHAR(3))
+ BEGIN
 	set academic_year=concat(academic_year,'%'); 
     if academic_year is NULL then 
 		set academic_year = '%';
@@ -35,11 +42,11 @@ BEGIN
     if class is NULL then 
 		set class = '%';
 	end if;
-	
+    
   CALL GetTotalClassesSize(academic_year,semester,faculty,program,module,lecturer,class,@total);
 	SET @Query:=CONCAT("SELECT 
-        COUNT(*) AS N,
-        ROUND((COUNT(*)/(SELECT @total))*100,2) AS RESP_RATE,
+        SUM(case when ",question," = 'Not' then 0 else 1 end) AS N,
+        ROUND((SUM(case when ",question," = 'Not' then 0 else 1 end)/(SELECT @total))*100,2) AS RESP_RATE,
         ROUND(AVG(",question,"),2) AS MEAN,
         ROUND(stddev_samp(",question,"),2) AS SD,
         ROUND((SUM(case when ",question," = '1' then 1 else 0 end)/COUNT(*))*100,2) AS PERCENTAGE_OF_1,
