@@ -2,6 +2,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteInfoYearFac`(aca_fac_code VAR
 BEGIN
 	
 	DELETE FROM aca_faculty 
-	WHERE AFCode LIKE aca_fac_code;
+	WHERE AFCode = aca_fac_code;
 	
 END
