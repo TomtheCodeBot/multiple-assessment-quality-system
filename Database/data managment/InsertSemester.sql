@@ -1,12 +1,18 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertSemester`(SCode VARCHAR(6), SName VARCHAR(50), AYCode VARCHAR(6))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertSemester`(SName VARCHAR(50), AYCode VARCHAR(6))
 BEGIN
-	DECLARE flag INT;
-    SET flag=0;
-	SET flag =(SELECT SUM(CheckSemester(SCode, SName, AYCode)) FROM semester);
-    IF flag=0 THEN
-		SELECT 'Success';
-		INSERT INTO semester (SCode, SName, AYCode) VALUES (SCode, SName, AYCode);
-	ELSE 
-		SELECT 'Duplicate';
-    END IF;
+	DECLARE SCode VARCHAR(6);
+    DECLARE a INT;
+    SET a = 0;
+    SET SCode = concat('S', floor(rand()*100000));
+    WHILE SCode IN (SELECT S.SCode FROM semester S)
+		DO
+			SET SCode = concat('S', floor(rand()*100000));
+		END WHILE;
+	IF AYCode IN (SELECT A.AYCode FROM academic_year A)
+    THEN IF SName NOT IN (SELECT S.SName FROM semester S) 
+		THEN INSERT INTO semester VALUES (SCode, SName, AYCode);
+        SET a = 1;
+		END IF;
+	END IF;
+    SELECT a;
 END
