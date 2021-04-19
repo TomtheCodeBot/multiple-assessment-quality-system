@@ -3,7 +3,11 @@ BEGIN
 	DECLARE FCode VARCHAR(6);
     DECLARE a INT;
     SET a = 0;
-    SET FCode = concat(floor(rand()*1000000));
+    SET FCode = concat('F', floor(rand()*100000));
+    WHILE FCode IN (SELECT F.FCode FROM faculty F)
+		DO
+			SET FCode = concat('F', floor(rand()*100000));
+		END WHILE;
 	IF FName NOT IN (SELECT F.FName FROM faculty F)
     THEN IF FCode NOT IN (SELECT F.FCode FROM faculty F) 
 		THEN INSERT INTO faculty VALUES (FCode, FName);
