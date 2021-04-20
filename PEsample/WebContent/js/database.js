@@ -175,3 +175,41 @@ String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.split(search).join(replacement);
 };
+
+function display_insert(id){
+	var x = document.getElementById(id);
+	x.style.display = "block";
+}
+
+$(document).ready(function(){
+	$("#acad-show").click(function(){
+		getSelection('academic_year','AYCode')
+	});
+});
+
+
+function getSelection(id, code){
+	$.ajax({
+				type: 'GET',
+				url: "rest/management/resources?filter=infodatabase" + "&choice=" + id,
+				success: function(data){
+					obj = JSON.parse(data)
+					obj.sort(function(a, b) {
+	 					 var nameA = a.Code.toUpperCase();
+	 					 var nameB = b.Code.toUpperCase();
+						  if (nameA < nameB) {
+						    return -1;
+						  }
+						  if (nameA > nameB) {
+						    return 1;
+						  }
+						  return 0;
+						});	
+					for (var i = 0; i<obj.length;i++){
+					$("#"+id).append("<option name="+ code +" value="+ obj[i].Code +">"+ obj[i].Name + "</option>")
+							
+					}
+				} 			
+			})
+	
+}

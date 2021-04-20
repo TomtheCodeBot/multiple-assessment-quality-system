@@ -1,9 +1,8 @@
-
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>Untitled Document</title>
+<title>InsertData</title>
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -19,57 +18,129 @@
 	<div class="clear"></div>
 	<div class="db-tablebox" id="academic_year-db">
 	<h1 for="aca-db">Academic Year</h1>
-
+	<button type="submit" onclick="display_insert('acad-insert')">Add Data</button>
+	
 	<table class="db-table">
 		<tr>
 			<th>Academic Year Code</th>
 			<th> Academic Year</th>
 		</tr>
 	</table>
-		
+	<table class="db-insert"  id="acad-insert">
+		<tr>
+			<th></th>
+			<th> Academic Year</th>
+		</tr>
+		<tr>
+		<form method="post">
+			<td></td>
+			<td><input type="text" name="AYName"></td>
+			<td><input type="submit" value="Add"></td>
+		</form>
+		</tr>
+	</table>	
 	</div>
 	<div class="db-tablebox" id="faculty-db">
 		<h1 for="fal-db">Faculty</h1>
+		<button type="submit" onclick="display_insert('faculty-insert')">Add Data</button>
 		<table class="db-table">
 			<tr>
 				<th>Faculty Code</th>
 				<th>Faculty Name</th>
 			</tr>
 		</table>
-	
+	<table class="db-insert"  id="faculty-insert">
+		<tr>
+			<th></th>
+			<th>Faculty Name</th>
+		</tr>
+		<tr>
+		<form method="post">
+			<td></td>
+			<td><input type="text" name="FName"></td>
+			<td><input type="submit" value="Add"></td>
+		</form>
+		</tr>
+	</table>
 		
 	</div>
 	<div class="db-tablebox" id="semester-db">
 		<h1 for="sem-db">Semester</h1>
-		
+		<button type="submit" onclick="display_insert('semester-insert')">Add Data</button>
 		<table class="db-table">
 			<tr>
 				<th>Semester Code</th>
 				<th>Semester Name</th>
 			</tr>
 		</table>
-	
+		<table class="db-insert"  id="semester-insert">
+		<tr>
+			<th></th>
+			<th>Semester Name</th>
+			<th>Academic Year 	<button id="acad-show" type="submit">Choose</button></th>
+			<th></th>
+		</tr>
+		<tr>
+		<form method="post">
+			<td></td>
+			<td><input type="text" name="SName"></td>
+			<td>
+				<select id="academic_year">
+				</select>
+			</td>
+			<td><input type="submit" value="Add"></td>
+		</form>
+		</tr>
+	</table>
 		
 	</div>
 	<div class="db-tablebox" id="program-db">
 		<h1 for="pro-db">Program</h1>
+		<button type="submit" onclick="display_insert('program-insert')">Add Data</button>
 		<table class="db-table">
 			<tr>
 				<th>Program Code</th>
 				<th>Program Name</th>
 			</tr>
 		</table>
+		<table class="db-insert"  id="program-insert">
+		<tr>
+			<th></th>
+			<th>Program Name</th>
+		</tr>
+		<tr>
+		<form method="post">
+			<td></td>
+			<td><input type="text" name="PName"></td>
+			<td><input type="submit" value="Add"></td>
+		</form>
+		</tr>
+	</table>
 	
 		
 	</div>
 	<div class="db-tablebox" id="module-db">
 		<h1 for="mod-db">Module</h1>
+		<button type="submit" onclick="display_insert('module-insert')">Add Data</button>
 		<table class="db-table">
 			<tr>
 				<th>Module Code</th>
 				<th>Module Name</th>
 			</tr>
 		</table>
+		<table class="db-insert"  id="module-insert">
+		<tr>
+			<th></th>
+			<th>Module Name</th>
+		</tr>
+		<tr>
+		<form method="post">
+			<td></td>
+			<td><input type="text" name="FName"></td>
+			<td><input type="submit" value="Add"></td>
+		</form>
+		</tr>
+	</table>
 	
 		
 	</div>
@@ -82,7 +153,7 @@
 				<th>Class Name</th>
 			</tr>
 		</table>
-	
+		
 		
 	</div>
 	<div class="db-tablebox" id="lecturer-db">
