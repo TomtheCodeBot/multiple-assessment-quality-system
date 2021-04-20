@@ -345,11 +345,17 @@ hr {
 	border: solid 1px rgba(65,64,64,1.00);
 	border-radius: 3px;
 	
-<<<<<<< HEAD
-=======
 }
 .db-table
 {
+	border-collapse: collapse;
+	width: 80%;
+	border: rgba(97,97,97,1.00) 2px solid;
+	text-align:left;
+}
+.db-insert
+{
+	display:none;
 	border-collapse: collapse;
 	width: 80%;
 	border: rgba(97,97,97,1.00) 2px solid;
@@ -361,6 +367,14 @@ hr {
 	font-size: 20px;
 	font-weight: bold;
 	border: rgba(97,97,97,1.00) 2px solid;
+	text-align:left
 	
->>>>>>> Dat_FrontEnd
+}
+.db-insert tr th td
+{
+	
+	font-size: 20px;
+	font-weight: bold;
+	border: rgba(97,97,97,1.00) 2px solid;
+	
 }
