@@ -34,6 +34,7 @@ function testAPI() {
 	})
 }
 
+
 function getExample() {
 	$.ajax({
 		type: 'GET',
@@ -179,6 +180,7 @@ function submitQuestionaire(){
 		"q17" : value17,
 		"q18" : value18
 	}
+
 // if there is no answer, the border will be red color	
 	if( value1 === ""){
 		$("#num1").css("border-color", "red")
@@ -253,67 +255,7 @@ if((value1 === "") || (value2 === "") || (value3 === "") || (value4 === "") || (
 	 (lname === "") || (gender === "") || (attend === "") || Object.keys(cname).length === 0 || Object.keys(gender).length === 0)
 {
 	alert("CANNOT SUBMIT") 
-	$("#num1").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num2").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num3").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num4").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num5").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num6").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num7").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num8").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num9").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num10").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num11").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num12").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num13").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num14").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num15").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num16").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#num17").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#class_name").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#lecturer_name").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#gender1").on('input', function(e){
-		$(this).css("border-color","black")
-	})
-	$("#attend1").on('input', function(e){
+	$("#num1,#num2,#num3,#num4,#num5,#num6,#num7,#num8,#num9,#num10,#num11,#num12,#num13,#num14,#num15,#num16,#num17,#gender1,#attend1").on('input', function(e){
 		$(this).css("border-color","black")
 	})
 	
@@ -329,12 +271,10 @@ else { $.ajax({
  		 },
 		success : function(data, textStatus, jqXHR){
 			alert("Submit successful");
+			alert(data)
 			}
 	})
 	}	
-}
-function NoAnswer(){
-	
 }
 
 	

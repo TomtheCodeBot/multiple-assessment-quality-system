@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.crypto.SecretKey;
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

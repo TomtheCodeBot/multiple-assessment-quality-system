@@ -2,6 +2,7 @@ package api.management;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -35,45 +36,55 @@ public class ManagementDELETEService {
 			@DefaultValue("") @QueryParam("pfcode") String pfcode,
 			@DefaultValue("") @QueryParam("mcode") String mcode, 
 			@DefaultValue("") @QueryParam("id") String id,
-			@DefaultValue("") @QueryParam("name") String name) throws SQLException, NamingException{
+			@DefaultValue("") @QueryParam("name") String name) throws NamingException, SQLException{
+		
+		// to make sure filter query param is used correctly
 		if (filter.isEmpty() || !filter.equals("single") && !filter.equals("combine")) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Invalid request").build();
 		}
 		
 		Connection db = Configuration.getAcademiaConnection();
+		ResultSet rs = null;
+		PreparedStatement st = null;
 		try {
-			int noOfAffectedRows = 0;
 			if (filter.equals("single")){
-				PreparedStatement st = db.prepareStatement("{ call DeleteInfoDatabase(?,?,?) }");
+				st = db.prepareStatement("{ call DeleteInfoDatabase(?,?,?) }");
 				st.setString(1, col1);
 				st.setString(2, id);
 				st.setString(3, name);
-				System.out.println(st);
-				noOfAffectedRows = st.executeUpdate();
 			} else {
 				if (col1.equals("year") && col2.equals("faculty") && col3.equals("program") && col4.equals("module")) {
-					PreparedStatement st = db.prepareStatement("{ call DeleteInfoYearFacProMod(?,?) }");
+					st = db.prepareStatement("{ call DeleteInfoYearFacProMod(?,?) }");
 					st.setString(1, pfcode);
 					st.setString(2, mcode);
 					
-					noOfAffectedRows = st.executeUpdate();
 				} else if (col3.isEmpty() && col4.isEmpty()) {
-					PreparedStatement st = db.prepareStatement("{ call DeleteInfoYearFac(?) }");
+					st = db.prepareStatement("{ call DeleteInfoYearFac(?) }");
 					st.setString(1, afcode);			
-					noOfAffectedRows = st.executeUpdate();
 				} else if (col4.isEmpty()) {
-					PreparedStatement st = db.prepareStatement("{ call DeleteInfoYearFacPro(?) }");
+					st = db.prepareStatement("{ call DeleteInfoYearFacPro(?) }");
 					st.setString(1, pfcode);
-					noOfAffectedRows = st.executeUpdate();
 				} else {
 					return Response.status(Response.Status.BAD_REQUEST).entity("Invalid table request").build();
 				}
 			}
-			if (noOfAffectedRows == 0) {
-				return Response.status(Response.Status.NOT_MODIFIED).entity("There is no affected row in database").build();
-			}	
-			return Response.status(Response.Status.OK).entity("deleted successfully").build();
-		} finally {
+			
+			// to make sure catch all exception from database 
+			try {
+				rs = st.executeQuery();
+			} catch (SQLException e) {
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+			}
+			
+			if (rs.next()){
+				if (rs.getInt(1) == 1) {				
+					return Response.status(Response.Status.OK).entity("deleted successfully").build();
+				}	
+			}
+			return Response.status(Response.Status.NOT_MODIFIED).entity("There are no affected rows in database").build();
+			
+		}
+		finally {
 			db.close();
 		}
 	}
