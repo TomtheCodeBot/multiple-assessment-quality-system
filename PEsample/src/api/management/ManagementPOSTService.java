@@ -50,12 +50,12 @@ public class ManagementPOSTService{
 			@DefaultValue("") @FormParam("PName") String PName) throws IOException, SQLException, NamingException{
 		
 		Connection db = (Connection) Configuration.getAcademiaConnection();
+		PreparedStatement st = null;				
 		ResultSet rs = null;
 		switch(colName) {
-		  case "class":
-			  System.out.println(CName + "\n" + CCode + "\n" + CSize + "\n" + MCode + "\n" + SCode);
+		  case "class":			  
 			  try {
-			  PreparedStatement st = db.prepareStatement("{ call InsertClass(?,?,?,?,?) }");
+				st = db.prepareStatement("{ call InsertClass(?,?,?,?,?) }");
 				st.setString(1, CName);
 				st.setString(2, CCode);
 				st.setInt(3, Integer.parseInt(CSize));
@@ -70,7 +70,7 @@ public class ManagementPOSTService{
 		  case "semester":
 			  System.out.println(SCode + "\n" + SName + "\n" + AYCode );
 			  try {
-			  PreparedStatement st = db.prepareStatement("{ call InsertSemester(?,?,?) }");
+				st = db.prepareStatement("{ call InsertSemester(?,?,?) }");
 				st.setString(1, SCode);
 				st.setString(2, SName);
 				st.setString(3, AYCode);
@@ -81,7 +81,7 @@ public class ManagementPOSTService{
 		    break;
 		  case "lecturer":
 			  try {
-			  PreparedStatement st = db.prepareStatement("{ call InsertLecturer(?,?,?) }");
+			    st = db.prepareStatement("{ call InsertLecturer(?,?,?) }");
 				st.setString(1, LCode);
 				st.setString(2, LName);
 				st.setString(3, CCode);
@@ -92,7 +92,7 @@ public class ManagementPOSTService{
 		    break;
 		  case "AcadYear":
 			  try {
-			  PreparedStatement st = db.prepareStatement("{ call InsertAcdemicYear(?,?) }");
+			    st = db.prepareStatement("{ call InsertAcdemicYear(?,?) }");
 				st.setString(1, AYCode);
 				st.setString(2, AYName);
 				rs = st.executeQuery();
@@ -102,7 +102,7 @@ public class ManagementPOSTService{
 			  break;
 		  case "Faculty":
 			  try {
-			  PreparedStatement st = db.prepareStatement("{ call InsertFaculty(?,?) }");
+			    st = db.prepareStatement("{ call InsertFaculty(?,?) }");
 				st.setString(1, FCode);
 				st.setString(2, FName);
 				rs = st.executeQuery();
@@ -112,7 +112,7 @@ public class ManagementPOSTService{
 			  break;		 
 		  case "Module":
 			  try {
-			  PreparedStatement st = db.prepareStatement("{ call InsertModule(?,?) }");
+			    st = db.prepareStatement("{ call InsertModule(?,?) }");
 				st.setString(1, MCode);
 				st.setString(2, MName);
 				rs = st.executeQuery();
@@ -133,8 +133,10 @@ public class ManagementPOSTService{
 		  default:
 			  return Response.status(Response.Status.FORBIDDEN).entity("Invalid resources").build();
 		}
-		if (rs.getInt(1) == 1) {
-			return Response.status(Response.Status.OK).entity("insert successfully").build();
+		if (rs.next()) {
+			if (rs.getInt(1) == 1) {
+				return Response.status(Response.Status.OK).entity("insert successfully").build();
+			}
 		}
 		return Response.status(Response.Status.NOT_MODIFIED).entity("duplicate values").build();
 	}
