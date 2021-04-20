@@ -1,9 +1,7 @@
 $(document).ready(function (){
 		$("#login-btn").click(function () {
-			username = $("#login").val()
 	console.log('Make fake request for questionaire')
 	postQuestionaire();
-	
 });
 })
 
