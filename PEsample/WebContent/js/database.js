@@ -5,6 +5,7 @@
 //single choice column
 	let LabelChoice = ['aca-choice','fal-choice','sem-choice','pro-choice','mod-choice','cla-choice','lec-choice']
 //combine choice column	
+	let t;
 	let labelChoice1 = ['aca-fal-choice', 'aca-fal-pro-choice', 'aca-fal-pro-mod-choice1', 'aca-fal-pro-mod-choice2']
 $(document).ready(function(){
 	$("#db-show").click(function(){
@@ -40,21 +41,27 @@ function getTable(){
 					});	
 				for (var i = 0; i<obj.length;i++){
 				console.log(i)
-				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].Code + '</td><td>' + obj[i].Name +'</td><td>'+ '<button type="submit" class ='+ select[init]  +' id='+ obj[i].Code + ' name=' + obj[i].Name +'>' + 'Delete'+ '</button>'+'</td> </tr>')
+				console.log(obj[i].Name)
+				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].Code + '</td><td>' + `${obj[i].Name}` +'</td><td>'+ '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].Code  + ' name='+ obj[i].Name.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td> </tr>')
 				$("#" + LabelChoice[init] + "").append(new Option(obj[i].Name,obj[i].Name));
-				console.log(select[init])
-			
-				$("." + select[init]).click(function(){
+				console.log(select[init])		
+				}
+				$("."+ select[init]+"-delete").click(function(){
+					console.log(`${init}`)
+					
+					var t  = this.name.replaceAll("_"," ")
 					$.ajax({
 						type: 'DELETE',
-						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + `${this.name}`,
+						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
 						success: function(data){
 							alert("successfully deleted")
-						}
+							getTable()
+						},
+						error: function(data){
+							alert("cannot delete")						
+						}							
 					})
-					getTable()
-				})				
-				}
+				})
 			} 			
 		})
 }
@@ -70,11 +77,23 @@ function getTable(){
 				console.log(obj)
 				for (var i = 0; i <obj.length;i++){
 					console.log(i)
-					$("#" + select1[0]+"").children(".db-table").append('<tr><td>' + obj[i].AFCode + '</td><td>' + obj[i].AYName + '</td><td>' + obj[i].FName + '</td></tr>')
+					console.log(obj[i].FName)
+					$("#" + select1[0]+"").children(".db-table").append('<tr><td>' + obj[i].AFCode + '</td><td>' + obj[i].AYName + '</td><td>'+  obj[i].FName + '</td><td>'+ '<button class=' + select1[0] + '-delete' + ' id=' + obj[i].AFCode +  '>'+'Delete' + '</button>'+'</td></tr>')
 					$("#" + labelChoice1[0] +"").append(new Option(obj[i].AFCode,obj[i].AFCode))		
 				}
+				$("." + select1[0]+ '-delete').click(function(){
+						$.ajax({
+							type: 'DELETE',
+							url: "rest/management/resources?filter=combine&col1=year&col2=faculty&col3=&col4=" + "&afcode=" + `${this.id}`,
+							success: function(data){
+								alert("delete succesfully")
+								getTable()
+							}
+						})
+					})
 			}			
 		})
+					
 		}
 		if( init == 1){
 		$.ajax({
@@ -88,9 +107,20 @@ function getTable(){
 
 				for (var i = 0; i <obj.length;i++){
 					console.log(i)
-					$("#" + select1[1]+"").children(".db-table").append('<tr><td>' + obj[i].PFCode + '</td><td>' + obj[i].AYName + '</td><td>'+ obj[i].FName + '</td><td>' + obj[i].PName +'</td></tr>')
+					$("#" + select1[1]+"").children(".db-table").append('<tr><td>' + obj[i].PFCode + '</td><td>' + obj[i].AYName + '</td><td>'+ obj[i].FName  + '</td><td>' + obj[i].PName + '</td><td>'+ '<button class=' + select1[1] + '-delete' + ' id=' + obj[i].PFCode +'>'+'Delete' + '</button>'+'</td></tr>')
 					$("#" + labelChoice1[1] +"").append(new Option(obj[i].PFCode,obj[i].PFCode))
 				}
+				$("." + select1[1]+'-delete').click(function(){
+						console.log(this.id)
+						$.ajax({
+							type: 'DELETE',
+							url: "rest/management/resources?filter=combine&col1=year&col2=faculty&col3=program&col4=" + "&pfcode=" + `${this.id}`,
+							success: function(data){
+								alert("delete succesfully")
+								getTable()
+							}
+						})
+					})
 			}			
 		})	
 		}
@@ -104,15 +134,27 @@ function getTable(){
 				obj.sort(function(a, b){  return a.PFCode - b.PFCode;});
 				for (var i = 0; i <obj.length;i++){
 					console.log(i)
-					$("#" + select1[2]+"").children(".db-table").append('<tr><td>' + obj[i].PFCode + '</td><td>' + obj[i].MCode + '</td><td>'+ obj[i].AYName + '</td><td>' + obj[i].FName + '</td><td>'+ obj[i].PName +'</td><td>'+ obj[i].MName +'</td></tr>')
+					$("#" + select1[2]+"").children(".db-table").append('<tr><td>' + obj[i].PFCode + '</td><td>' + obj[i].MCode + '</td><td>'+ obj[i].AYName + '</td><td>' + obj[i].FName + '</td><td>'+ obj[i].PName +'</td><td>'+ obj[i].MName +  '</td><td>'+ '<button class=' + select1[2] + '-delete'+ ' id=' + obj[i].PFCode + '_' + obj[i].MCode  +'>'+'Delete' + '</button>'+'</td></tr>')
 					$("#" + labelChoice1[2] +"").append(new Option(obj[i].PFCode,obj[i].PFCode))
 					$("#" + labelChoice1[3] +"").append(new Option(obj[i].MCode,obj[i].MCode))
 				}
+					$("." + select1[2] +'-delete').click(function(){
+						let t  = this.id.split("_");
+						console.log(t)
+					$.ajax({
+						type: 'DELETE',
+						url: "rest/management/resources?filter=combine&col1=year&col2=faculty&col3=program&col4=module" + "&pfcode=" + `${t[0]}` + "&mcode=" + `${t[1]}`,
+						success: function(data){
+							alert("successfully deleted")
+							getTable()
+						}
+					})
+					})
 			}			
 		})	
 		}
 	}
-	 
+		 
 }
 
 function clear(){
@@ -129,3 +171,7 @@ function clear(){
 	$(`#aca-fal-pro-mod-choice1 option`).not(":first").remove()
 	$(`#aca-fal-pro-mod-choice2 option`).not(":first").remove()
 }
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};

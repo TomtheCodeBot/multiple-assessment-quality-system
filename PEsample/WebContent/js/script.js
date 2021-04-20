@@ -9,10 +9,30 @@ $(document).ready(function() {
 		})
 	$("#button1").on("click",
 		function(event) {
-			getTable()
+			testAPI()
 		})
 	
 })
+function testAPI() {
+	let Answers = {
+		'username':'CaoDuyT',
+		'password':'Xs!*qpll',
+		'role':'Lecturer-021'
+	}
+	$.ajax({
+		type: 'POST',
+		contentType: "application/json",
+		url: "rest/login/user",
+		data: JSON.stringify(Answers),
+		dataType: "text",
+		error: function(e) {
+ 		   console.log(e);
+ 		 },
+		success : function(data, textStatus, jqXHR){
+			alert(data);
+			}
+	})
+}
 
 
 function getExample() {
@@ -160,7 +180,7 @@ function submitQuestionaire(){
 		"q17" : value17,
 		"q18" : value18
 	}
-	console.log(Answers)
+
 // if there is no answer, the border will be red color	
 	if( value1 === ""){
 		$("#num1").css("border-color", "red")
@@ -239,7 +259,6 @@ if((value1 === "") || (value2 === "") || (value3 === "") || (value4 === "") || (
 		$(this).css("border-color","black")
 	})
 	
-	
 }
 else { $.ajax({
 		type: 'POST',
@@ -257,6 +276,5 @@ else { $.ajax({
 	})
 	}	
 }
-
 
 	
