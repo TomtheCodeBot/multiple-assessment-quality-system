@@ -51,6 +51,11 @@ public class ManagementGETService {
 				}
 				rs = st.executeQuery();
 				while (rs.next()) {
+					if(rs.getString(2)==null) {
+						System.out.println("gotem");
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+
+					}
 					builder.add(Json.createObjectBuilder().add("Code", rs.getString(1)).add("Name", rs.getString(2)).build());
 				}		
 				break;

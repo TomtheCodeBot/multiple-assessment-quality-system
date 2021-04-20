@@ -55,15 +55,29 @@ public class GraphGETService {
 			ResultSet rs = st.executeQuery();	
 			JsonObjectBuilder builder = Json.createObjectBuilder();
 			if(rs.next()) {
-				builder.add("Count", rs.getString(1))
-					.add("Rate", rs.getString(2))
-					.add("Average", rs.getString(3))
-					.add("Standard_Deviation", rs.getString(4))
-					.add("Percentage_of_1", rs.getString(5))
-					.add("Percentage_of_2", rs.getString(6))
-					.add("Percentage_of_3", rs.getString(7))
-					.add("Percentage_of_4", rs.getString(8))
-					.add("Percentage_of_5", rs.getString(9));				
+				String count = rs.getString(1);
+				String rate = rs.getString(2);
+				String average = rs.getNString(3);
+				String standard_deviation = rs.getString(4);
+				String percentage1 = rs.getString(5);
+				String percentage2 = rs.getString(6);
+				String percentage3 = rs.getString(7);
+				String percentage4 = rs.getString(8);
+				String percentage5 = rs.getString(9);
+				
+				if (rs.wasNull()) {
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				}
+				
+				builder.add("Count", count)
+					.add("Rate", rate )
+					.add("Average", average)
+					.add("Standard_Deviation", standard_deviation)
+					.add("Percentage_of_1", percentage1)
+					.add("Percentage_of_2", percentage2)
+					.add("Percentage_of_3", percentage3)
+					.add("Percentage_of_4", percentage4)
+					.add("Percentage_of_5", percentage5);				
 			} else {
 				// catch not return any value at all.
 				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
@@ -111,11 +125,22 @@ public class GraphGETService {
 				
 				rs = st.executeQuery();
 				if(rs.next()) {
-					builder.add("Never", rs.getString(1))
-					.add("Rarely", rs.getString(2))
-					.add("Sometime", rs.getString(3))
-					.add("Often", rs.getString(4))
-					.add("Always", rs.getString(5));
+					// if return null values
+					String never = rs.getString(1);
+					String rarely = rs.getString(2);
+					String sometimes = rs.getString(3);
+					String often = rs.getString(4);
+					String always = rs.getString(5);
+					
+					if (rs.wasNull()) {
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
+					builder.add("Never", never)
+					.add("Rarely", rarely)
+					.add("Sometime", sometimes)
+					.add("Often", often)
+					.add("Always", always);
 				} else {
 					// catch not return any value at all.
 					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
@@ -187,14 +212,22 @@ public class GraphGETService {
 			
 			ResultSet result = st.executeQuery();
 			JsonArrayBuilder builder = Json.createArrayBuilder();
+			
+			if(result.next()) {
+				String value=result.getString(1);
+				if(result.wasNull()) {
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				}
+				builder.add(Json.createObjectBuilder().add(selector, value).build());
+			} else {
+				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+			}
 			while (result.next()) {
 				builder.add(Json.createObjectBuilder().add(selector, result.getString(1)).build());
 			}			
-			// if there is nothing to return 
-			// in case someone finds the api and tries to mess it up.
-			if (!result.next()) {
-				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
-			}
+			
+		
+			
 			
 			// if nothing goes wrong
 			return Response.ok().entity(builder.build().toString()).build();
