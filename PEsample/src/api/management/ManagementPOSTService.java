@@ -52,87 +52,68 @@ public class ManagementPOSTService{
 		Connection db = (Connection) Configuration.getAcademiaConnection();
 		PreparedStatement st = null;				
 		ResultSet rs = null;
-		switch(colName) {
-		  case "class":			  
-			  try {
-				st = db.prepareStatement("{ call InsertClass(?,?,?,?,?) }");
-				st.setString(1, CName);
-				st.setString(2, CCode);
-				st.setInt(3, Integer.parseInt(CSize));
-				st.setString(4, MCode);
-				st.setString(5, SCode);
-				
-				rs = st.executeQuery();			
-			  } finally{
-				db.close();
-			  }
-		    break;
-		  case "semester":
-			  System.out.println(SCode + "\n" + SName + "\n" + AYCode );
-			  try {
-				st = db.prepareStatement("{ call InsertSemester(?,?,?) }");
-				st.setString(1, SCode);
-				st.setString(2, SName);
-				st.setString(3, AYCode);
+		
+		try {
+			// call relevant case regarding the resources stated in the query param
+			switch(colName) {
+			  case "class":			  				 
+					st = db.prepareStatement("{ call InsertClass(?,?,?,?,?) }");
+					st.setString(1, CName);
+					st.setString(2, CCode);
+					st.setInt(3, Integer.parseInt(CSize));
+					st.setString(4, MCode);
+					st.setString(5, SCode);						 
+					break;
+			  case "semester":	
+					st = db.prepareStatement("{ call InsertSemester(?,?,?) }");
+					st.setString(1, SCode);
+					st.setString(2, SName);
+					st.setString(3, AYCode);			  
+					break;
+			  case "lecturer":				  
+				    st = db.prepareStatement("{ call InsertLecturer(?,?,?) }");
+					st.setString(1, LCode);
+					st.setString(2, LName);
+					st.setString(3, CCode);			
+					break;
+			  case "AcadYear":				  
+				    st = db.prepareStatement("{ call InsertAcdemicYear(?,?) }");
+					st.setString(1, AYCode);
+					st.setString(2, AYName);			  
+					break;
+			  case "Faculty":				 
+				    st = db.prepareStatement("{ call InsertFaculty(?,?) }");
+					st.setString(1, FCode);
+					st.setString(2, FName);			  
+					break;		 
+			  case "Module":				  
+				    st = db.prepareStatement("{ call InsertModule(?,?) }");
+					st.setString(1, MCode);
+					st.setString(2, MName);
+					break;		
+			  case "Program":				  
+				  st = db.prepareStatement("{ call InsertProgram(?,?) }");
+					st.setString(1, PCode);
+					st.setString(2, PName);	
+					break;	
+			  // if the 'colName' receives null or other values
+			  default:
+				  return Response.status(Response.Status.FORBIDDEN).entity("Invalid resources").build();
+			}
+			
+			// handling SQLException
+			try {
 				rs = st.executeQuery();
-			  } finally{
-				db.close();
-			  }
-		    break;
-		  case "lecturer":
-			  try {
-			    st = db.prepareStatement("{ call InsertLecturer(?,?,?) }");
-				st.setString(1, LCode);
-				st.setString(2, LName);
-				st.setString(3, CCode);
-				rs = st.executeQuery();
-			  } finally{
-				db.close();
-			  }
-		    break;
-		  case "AcadYear":
-			  try {
-			    st = db.prepareStatement("{ call InsertAcdemicYear(?,?) }");
-				st.setString(1, AYCode);
-				st.setString(2, AYName);
-				rs = st.executeQuery();
-			  } finally{
-				db.close();
-			  }
-			  break;
-		  case "Faculty":
-			  try {
-			    st = db.prepareStatement("{ call InsertFaculty(?,?) }");
-				st.setString(1, FCode);
-				st.setString(2, FName);
-				rs = st.executeQuery();
-			  } finally{
-				db.close();
-			  }
-			  break;		 
-		  case "Module":
-			  try {
-			    st = db.prepareStatement("{ call InsertModule(?,?) }");
-				st.setString(1, MCode);
-				st.setString(2, MName);
-				rs = st.executeQuery();
-			  } finally{
-				db.close();
-			  }
-			  break;		
-		  case "Program":
-			  try {
-			  PreparedStatement st = db.prepareStatement("{ call InsertProgram(?,?) }");
-				st.setString(1, PCode);
-				st.setString(2, PName);
-				rs = st.executeQuery();
-			  } finally{
-				db.close();
-			  }
-			  break;	
-		  default:
-			  return Response.status(Response.Status.FORBIDDEN).entity("Invalid resources").build();
+			} catch (SQLException e) {
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+			}
+			
+		} finally {
+			db.close();
 		}
+		
+		// check the ResultSet value 
+		// make sure there is a value returned.
 		if (rs.next()) {
 			if (rs.getInt(1) == 1) {
 				return Response.status(Response.Status.OK).entity("insert successfully").build();

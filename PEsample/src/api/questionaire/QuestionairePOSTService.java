@@ -59,13 +59,16 @@ public class QuestionairePOSTService {
 			st.setString(21, Answers.getQ17());
 			st.setString(22, Answers.getQ18());
 			
-			st.executeQuery();
-			return Response.ok().entity("New academic year successfully inserted").build();
-		}catch(SQLException e) {
-			e.printStackTrace();
-			return Response.ok().entity(e.toString()).build();
+			int noOfAffectedRows = st.executeUpdate();
+			if (noOfAffectedRows == 0) {
+				// catch if there are no affected rows
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("There is something wrong").build(); 
 			}
-		finally {
+			
+			return Response.ok().entity("New academic year successfully inserted").build();
+		} catch(SQLException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		} finally {
 			db.close();			
 		}
 	}

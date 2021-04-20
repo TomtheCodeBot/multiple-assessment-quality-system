@@ -25,10 +25,11 @@ public class QuestionaireGETService {
 	public String getMessage() throws SQLException, NamingException   {
 		return "Hello Package Api.Questionaire GET Service!";
 	}	
+	
 	@Path("/classes")
 	@GET
 	public Response getClasses()throws SQLException, NamingException{
-		Connection db= Configuration.getAcademiaConnection();
+		Connection db = Configuration.getAcademiaConnection();		
 		try {
 			PreparedStatement st = db.prepareStatement("call GetClasses()");
 			ResultSet rs = st.executeQuery();
@@ -37,8 +38,16 @@ public class QuestionaireGETService {
 				CName.add( Json.createObjectBuilder()									
 						.add("Class", rs.getString(1)).build());
 			}
+			
+			// if the database has no entries. 
+			if (!rs.next()) {
+				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+			}
+			
 			JsonArray entry = CName.build();
 			return Response.ok().entity(entry.toString()).build();
+		} catch (SQLException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build(); 
 		}
 		finally {
 			db.close();			
@@ -48,6 +57,10 @@ public class QuestionaireGETService {
 	@Path("/info/{CName}")
 	@GET
 	public Response getClassInfo(@PathParam("CName") String id) throws SQLException, NamingException{
+		if (id.isEmpty()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave class name empty").build(); 
+		}
+		
 		Connection db = Configuration.getAcademiaConnection();
 		try {
 			PreparedStatement st = db.prepareStatement(
@@ -56,14 +69,19 @@ public class QuestionaireGETService {
 			ResultSet rs = st.executeQuery();		
 			JsonObjectBuilder builder = Json.createObjectBuilder();
 			if(rs.next()) {
-			builder.add("academic_name", rs.getString(1))
-			.add("semester_name", rs.getString(2))
-			.add("faculty_name", rs.getString(3))
-			.add("program_name", rs.getString(4))
-			.add("module_name", rs.getString(5));
+				builder.add("academic_name", rs.getString(1))
+				.add("semester_name", rs.getString(2))
+				.add("faculty_name", rs.getString(3))
+				.add("program_name", rs.getString(4))
+				.add("module_name", rs.getString(5));
+			} else {
+				// catch not return any value at all or invalid class name
+				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 			}
 			JsonObject entry = builder.build();
 			return Response.ok().entity(entry.toString()).build();
+		} catch (SQLException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 		finally {
 			db.close();
@@ -71,7 +89,11 @@ public class QuestionaireGETService {
 	}
 	@Path("/lecturer/{CName}")
 	@GET
-	public Response GetClassesLecturer(@PathParam("CName") String CName) throws SQLException, NamingException{
+	public Response GetClassesLecturer(@PathParam("CName") String CName) throws SQLException, NamingException{		
+		if (CName.isEmpty()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave class name empty").build(); 
+		}
+		
 		Connection db = Configuration.getAcademiaConnection();
 		try {
 			JsonArrayBuilder classInfoArrayBuilder = Json.createArrayBuilder();
@@ -85,11 +107,19 @@ public class QuestionaireGETService {
 						.add("Lecturer_Name", rs.getString(1)).build();
 				classInfoArrayBuilder.add(entry);
 			}
+			
+			if (!rs.next()) {
+				// catch not return any value at all or invalid class name
+				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+			}
+			
+			// if nothing goes wrong
 			return Response.ok().entity(classInfoArrayBuilder.build().toString()).build();
+		} catch (SQLException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 		finally {
 			db.close();
-		}
-		
+		}		
 	}
 }
