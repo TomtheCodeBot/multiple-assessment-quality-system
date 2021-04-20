@@ -19,6 +19,9 @@ function testAPI() {
 		contentType: "application/json",
 		url: "rest/management/resources?filter=single&col1=academic_year&id=A02012&name=2012" ,
 		dataType: "text",
+		error: function(e) {
+ 		   console.log(e);
+ 		 },
 		success: function(data, textStatus, jqXHR) {
 			alert(data)
 		}

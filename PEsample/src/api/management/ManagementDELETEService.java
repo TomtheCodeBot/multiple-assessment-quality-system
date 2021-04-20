@@ -36,7 +36,7 @@ public class ManagementDELETEService {
 			@DefaultValue("") @QueryParam("pfcode") String pfcode,
 			@DefaultValue("") @QueryParam("mcode") String mcode, 
 			@DefaultValue("") @QueryParam("id") String id,
-			@DefaultValue("") @QueryParam("name") String name) throws SQLException, NamingException{
+			@DefaultValue("") @QueryParam("name") String name) throws NamingException, SQLException{
 		if (filter.isEmpty() || !filter.equals("single") && !filter.equals("combine")) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Invalid request").build();
 		}
@@ -69,12 +69,15 @@ public class ManagementDELETEService {
 					return Response.status(Response.Status.BAD_REQUEST).entity("Invalid table request").build();
 				}
 			}
-			if (rs.getInt(1) == 1) {				
-				return Response.status(Response.Status.OK).entity("deleted successfully").build();
-			}	
+			if(rs.next()){
+				if (rs.getInt(1) == 1) {				
+					return Response.status(Response.Status.OK).entity("deleted successfully").build();
+				}	
+			}
 			return Response.status(Response.Status.NOT_MODIFIED).entity("There are no affected rows in database").build();
 			
-		} finally {
+		}
+		finally {
 			db.close();
 		}
 	}

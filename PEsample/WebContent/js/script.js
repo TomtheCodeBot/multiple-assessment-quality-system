@@ -14,25 +14,17 @@ $(document).ready(function() {
 	
 })
 function testAPI() {
-	let Answers = {
-		'username':'CaoDuyT',
-		'password':'Xs!*qpll',
-		'role':'Lecturer-021'
-	}
 	$.ajax({
-		type: 'POST',
+		type: 'DELETE',
 		contentType: "application/json",
-		url: "rest/login/user",
-		data: JSON.stringify(Answers),
+		url: "rest/management/resources?filter=single&col1=academic_year&id=A02020&name=2020" ,
 		dataType: "text",
-		error: function(e) {
- 		   console.log(e);
- 		 },
-		success : function(data, textStatus, jqXHR){
-			alert(data);
-			}
+		success: function(data, textStatus, jqXHR) {
+			alert(data)
+		}
 	})
 }
+
 
 function getExample() {
 	$.ajax({
