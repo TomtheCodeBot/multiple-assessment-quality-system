@@ -38,7 +38,7 @@ public class ManagementDELETEService {
 			@DefaultValue("") @QueryParam("id") String id,
 			@DefaultValue("") @QueryParam("name") String name) throws NamingException, SQLException{
 		
-		// to make sure filter query param is used correctly
+		// to make sure filter query parameter is used correctly
 		if (filter.isEmpty() || !filter.equals("single") && !filter.equals("combine")) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Invalid request").build();
 		}
