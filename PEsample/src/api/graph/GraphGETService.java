@@ -43,14 +43,15 @@ public class GraphGETService {
 		Connection db = (Connection) Configuration.getAcademiaConnection();
 		try {
 			PreparedStatement st = db.prepareStatement("{ call GetQuestionGraph(?,?,?,?,?,?,?,?) }");
-				st.setString(1, ayname);
-				st.setString(2, sname);
-				st.setString(3, fname);
-				st.setString(4, pname);
-				st.setString(5, mname);
-				st.setString(6, lname);
-				st.setString(7, cname);
-				st.setString(8, qname);
+			st.setString(1, ayname);
+			st.setString(2, sname);
+			st.setString(3, fname);
+			st.setString(4, pname);
+			st.setString(5, mname);
+			st.setString(6, lname);
+			st.setString(7, cname);
+			st.setString(8, qname);
+				
 			ResultSet rs = st.executeQuery();	
 			JsonObjectBuilder builder = Json.createObjectBuilder();
 			if(rs.next()) {

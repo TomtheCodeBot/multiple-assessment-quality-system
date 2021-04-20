@@ -31,8 +31,8 @@ public class ManagementGETService {
 			@DefaultValue("") @QueryParam("choice") String choice 		
 			)throws SQLException, NamingException {
 		
-		if (filter.isEmpty() || choice.isEmpty()) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave filter and/or choice empty").build();
+		if (filter.isEmpty()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave filter empty").build();
 		}
 		
 		Connection db = (Connection) Configuration.getAcademiaConnection();
@@ -45,6 +45,10 @@ public class ManagementGETService {
 			case "infodatabase":
 				st = db.prepareStatement("{ call GetInfoDatabase(?) }");
 				st.setString(1, choice);
+				
+				if (choice.isEmpty()) {					
+					return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave choice empty").build();					
+				}
 				rs = st.executeQuery();
 				while (rs.next()) {
 					builder.add(Json.createObjectBuilder().add("Code", rs.getString(1)).add("Name", rs.getString(2)).build());

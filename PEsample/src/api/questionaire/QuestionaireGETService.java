@@ -34,15 +34,17 @@ public class QuestionaireGETService {
 			PreparedStatement st = db.prepareStatement("call GetClasses()");
 			ResultSet rs = st.executeQuery();
 			JsonArrayBuilder CName = Json.createArrayBuilder();
-			while(rs.next()) {
-				CName.add( Json.createObjectBuilder()									
-						.add("Class", rs.getString(1)).build());
-			}
 			
 			// if the database has no entries. 
 			if (!rs.next()) {
 				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 			}
+			while(rs.next()) {
+				CName.add( Json.createObjectBuilder()									
+						.add("Class", rs.getString(1)).build());
+			}
+			
+			
 			
 			JsonArray entry = CName.build();
 			return Response.ok().entity(entry.toString()).build();
@@ -102,16 +104,16 @@ public class QuestionaireGETService {
 					"{ call GetClassesLecturer(?) }");
 			st.setString(1, CName);
 			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				JsonObject entry = Json.createObjectBuilder()									
-						.add("Lecturer_Name", rs.getString(1)).build();
-				classInfoArrayBuilder.add(entry);
-			}
-			
 			if (!rs.next()) {
 				// catch not return any value at all or invalid class name
 				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 			}
+			
+			while (rs.next()) {
+				JsonObject entry = Json.createObjectBuilder()									
+						.add("Lecturer_Name", rs.getString(1)).build();
+				classInfoArrayBuilder.add(entry);
+			}					
 			
 			// if nothing goes wrong
 			return Response.ok().entity(classInfoArrayBuilder.build().toString()).build();
