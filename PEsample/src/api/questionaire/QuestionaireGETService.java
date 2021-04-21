@@ -95,7 +95,11 @@ public class QuestionaireGETService {
 				.add("faculty_name", fName)
 				.add("program_name", pName)
 				.add("module_name", mName);
+			} else {
+				// if there is no row returned 
+				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 			}
+			
 			JsonObject entry = builder.build();
 			return Response.ok().entity(entry.toString()).build();
 		} catch (SQLException e) {
@@ -119,7 +123,12 @@ public class QuestionaireGETService {
 			PreparedStatement st = db.prepareStatement(
 					"{ call GetClassesLecturer(?) }");
 			st.setString(1, CName);
-			ResultSet rs = st.executeQuery();			
+			ResultSet rs = st.executeQuery();		
+			
+			if (!rs.next()) {
+				// if there is no row returned 
+				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+			}
 			
 			while (rs.next()) {
 				String lName = rs.getString(1);
@@ -130,7 +139,7 @@ public class QuestionaireGETService {
 				}
 				
 				JsonObject entry = Json.createObjectBuilder()									
-						.add("Lecturer_Name", rs.getString(1)).build();
+						.add("Lecturer_Name", lName).build();
 				classInfoArrayBuilder.add(entry);
 			}					
 			

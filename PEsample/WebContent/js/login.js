@@ -1,4 +1,4 @@
-$(document).ready(function (){
+	$(document).ready(function (){
 		$("#login-btn").click(function () {
 	console.log('Make fake request for questionaire')
 	postQuestionaire();
