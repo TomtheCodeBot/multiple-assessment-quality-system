@@ -4,7 +4,7 @@ BEGIN
 	DECLARE PFCode VARCHAR(6);
     DECLARE a INT;
     SET a = 0;
-    SET code = (SELECT max(num)FROM(SELECT CAST(A.AFCode AS UNSIGNED)AS num FROM aca_faculty as A)as number);
+    SET code = (SELECT max(num)FROM(SELECT CAST(A.PFCode AS UNSIGNED)AS num FROM aca_fac_pro as A)as number);
     SET PFCode= CAST((code+1)as char(6));
 	IF AFCode IN (SELECT A.AFCode FROM aca_faculty A)
     THEN IF PCode IN (SELECT A.PCode FROM program A) 
