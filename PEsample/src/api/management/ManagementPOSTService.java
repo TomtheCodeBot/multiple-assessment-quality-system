@@ -101,7 +101,7 @@ public class ManagementPOSTService{
 					st.setString(1, AFCode);
 					st.setString(2, PCode);
 					break;	
-			  case "AcaFacProMode":				  
+			  case "AcaFacProMod":				  
 				  st = db.prepareStatement("{ call InsertAcaFacProMod(?,?) }");
 					st.setString(1, PFCode);
 					st.setString(2, MCode);
