@@ -1,16 +1,18 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertAcaFacPro`(AFCode VARCHAR(6),PCode VARCHAR(6))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertAcaFacPro`(NEWAFCode VARCHAR(6),NEWPCode VARCHAR(6))
 BEGIN
     DECLARE code int;
-	DECLARE PFCode VARCHAR(6);
+	DECLARE NEWPFCode VARCHAR(6);
     DECLARE a INT;
     SET a = 0;
-    SET code = (SELECT max(num)FROM(SELECT CAST(A.PFCode AS UNSIGNED)AS num FROM aca_fac_pro as A)as number);
-    SET PFCode= CAST((code+1)as char(6));
-	IF AFCode IN (SELECT A.AFCode FROM aca_faculty A)
-    THEN IF PCode IN (SELECT A.PCode FROM program A) 
-		THEN IF (AFCode,PCode) NOT IN (SELECT A.AFCode, A.PCode from aca_fac_pro as A)
+    SET code = (SELECT max(num)FROM(SELECT CAST(PFCode AS UNSIGNED)AS num FROM aca_fac_pro)as number);
+    SET NEWPFCode= CAST((code+1)as char(6));
+	IF NEWAFCode IN (SELECT A.AFCode FROM aca_faculty A)
+    THEN IF NEWPCode IN (SELECT A.PCode FROM program A) 
+		THEN IF (SELECT AYName FROM academic_year NATURAL JOIN 
+        aca_faculty WHERE AFCode=NEWAFCode) NOT IN (SELECT AYName FROM academic_year NATURAL JOIN 
+        aca_faculty NATURAL JOIN aca_fac_pro  WHERE PCode=NEWPCode)
 			THEN
-				INSERT INTO aca_fac_pro VALUES (PFCode,AFCode, PCode);
+				INSERT INTO aca_fac_pro VALUES (NEWPFCode,NEWAFCode, NEWPCode);
 				SET a = 1;
 			END IF;
 		END IF;
