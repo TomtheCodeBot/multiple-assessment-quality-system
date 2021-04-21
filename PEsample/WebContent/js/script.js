@@ -14,18 +14,24 @@ $(document).ready(function() {
 	
 })
 function testAPI() {
+	let Answers = {
+		'username':'CaoDuyT',
+		'password':'Xs!*qpll',
+		'role':'Lecturer-021'
+	}
 	$.ajax({
-		type: 'DELETE',
+		type: 'POST',
 		contentType: "application/json",
-		url: "rest/management/resources?filter=single&col1=academic_year&id=A02012&name=2012",
+		url: "rest/login/user",
+		data: JSON.stringify(Answers),
 		dataType: "text",
 		error: function(e) {
  		   console.log(e);
  		 },
 		success : function(data, textStatus, jqXHR){
+			alert(data);
 			}
 	})
-	;
 }
 
 
@@ -51,18 +57,26 @@ function getProgramsCount() {
 }
 function getTable(){
     $.ajax({
-		type: 'DELETE',
-		contentType: "application/json",
-		url: "rest/management/resources?filter=single&col1=academic_year&code=A02012&id=2012",
-		dataType: "text",
-		error: function(e) {
- 		   console.log(e);
- 		 },
-		success : function(data, textStatus, jqXHR){
-			alert("Submit successful");
-			}
-	})
-	;
+    type : 'GET',
+    url : "rest/programs/table",
+    success : function(obj, textStatus, jqXHR) {
+		obj = JSON.parse(obj);
+        $("#mytable1").html("");
+        for (var i = 0; i < obj.length; i++) {
+            var tr = "<tr>";
+            var td0 = "<td>" + (i + 1) + "</td>";
+            var td1 = "<td>" + obj[i].academic_year + "</td>";
+            var td2 = "<td>" + obj[i].Faculty + "</td>";
+            var td3 = "<td>" + obj[i].Lecturer + "</td>";
+            var td4 = "<td>" + obj[i].Module + "</td>";
+			var td5 = "<td>" + obj[i].Semester + "</td>";
+            var td6 = "<td>" + obj[i].Class + "</td>";
+			var td7 = "<td>" + obj[i].Programm + "</td></tr>";
+            $("#mytable1").append(tr + td0 + td1 + td2 + td3 + td4 + td5 +td6+td7);
+	        	}
+	    	}
+		}
+	);
 }
 function getClasses(){
 	$.ajax({

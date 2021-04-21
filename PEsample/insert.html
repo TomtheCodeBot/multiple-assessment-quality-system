@@ -151,9 +151,6 @@
 			<tr>
 				<th>Class Code</th>
 				<th>Class Name</th>
-				<th>Size</th>
-				<th>Module Name</th>
-				<th>Semester</th>
 			</tr>
 		</table>
 		<table class="db-insert"  id="class-insert">
@@ -194,19 +191,16 @@
 		<table class="db-insert"  id="lecturer-insert">
 		<tr>
 			<th></th>
-			<th>Lecturer Name <button id="lecturer-user-show" type="submit">Choose</button></th>
-			<th>Class Name <button id="lecturer-class-show" type="submit">Choose</button></th>
+			<th>Lecturer Name</th>
+			<th>Class Name <button id="class-show" type="submit">Choose</button></th>
 			<th></th>
 		</tr>
 		<tr>
 		<div id = "lecturer-insert-form">
 			<td></td>
+			<td><input type="text" name="LName" class="Lecturer-insert-box" id="LName"></td>
 			<td>
-				<select name= "LName" id="lecturer-user" class="Lecturer-insert-box"> 
-				</select>
-			</td>
-			<td>
-				<select name= "CCode" id="lecturer-class" class="Lecturer-insert-box"> 
+				<select name= "CCode" id="class" class="Lecturer-insert-box"> 
 				</select>
 			</td>
 			<td><button id = "Lecturer" class = "insert-button">Add</button></td>

@@ -109,7 +109,7 @@ public class ManagementGETService {
 					builder.add(Json.createObjectBuilder()
 							.add("SCode", sCode)
 							.add("SName", sName)
-							.add("AYName", ayName)).build();
+							.add("AYName", ayName).build());
 					
 					while (rs.next()) {
 						sCode = rs.getString(1);
@@ -125,7 +125,7 @@ public class ManagementGETService {
 						builder.add(Json.createObjectBuilder()
 								.add("SCode", sCode)
 								.add("SName", sName)
-								.add("AYName", ayName)).build();
+								.add("AYName", ayName).build());
 					}
 				} else if (choice.equals("lecturer")) {
 					st = db.prepareStatement("{ call GetLecturerDatabase() }");	

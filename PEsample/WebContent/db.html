@@ -8,28 +8,41 @@
 </head>
 
 <body>
-	
-	
+	<label for="db-choice">Please select Database table you want to see</label>
+	<select id="db-choice" name="db-choice">
+		<option value="aca-db">Academic year</option>
+		<option value="fal-db">Faculty</option>
+		<option value="sem-db">Semester</option>
+		<option value="pro-db">Program</option>
+		<option value="mod-db">Module</option>
+		<option value="cla-db">Class</option>
+		<option value="lec-db">Lecturer</option>
+		<option value="aca-fal-db">Academic Year - Faculty</option>
+		<option value="aca-fal-pro-db"> Academic Year - Faculty - Program </option>
+		<option value="aca-fal-pro-mod-db"> Academic Year - Faculty - Program - Module</option>
+	</select>
 	<button type="submit" id="db-show">Show</button>
 	<button type="submit" id="db-clear">Clear</button>
-	<form method="get" action="./insert.html" style="float:right">
-		<button type="submit">Add Data</button>
-	</form>
 	
 	<div class="clear"></div>
 	<div class="db-tablebox" id="academic_year-db">
-	<h1 for="aca-db">Academic Year</h1>
-
-	<table class="db-table">
-		<tr>
-			<th>Academic Year Code</th>
-			<th> Academic Year</th>
-		</tr>
-	</table>
+		<label for="aca-db">Academic Year</label>
+		<select id="aca-choice" name="db-choice">
+		<option value="">Academic year</option>
+	</select>
+		<table class="db-table">
+			<tr>
+				<th>Academic Year Code</th>
+				<th> Academic Year</th>
+			</tr>
+		</table>
 		
 	</div>
 	<div class="db-tablebox" id="faculty-db">
-		<h1 for="fal-db">Faculty</h1>
+		<label for="fal-db">Faculty</label>
+		<select id="fal-choice" name="db-choice">
+		<option value="">Faculty</option>
+	</select>
 		<table class="db-table">
 			<tr>
 				<th>Faculty Code</th>
@@ -40,8 +53,10 @@
 		
 	</div>
 	<div class="db-tablebox" id="semester-db">
-		<h1 for="sem-db">Semester</h1>
-		
+		<label for="sem-db">Semester</label>
+		<select id="sem-choice" name="db-choice">
+		<option value="">Semester</option>
+	</select>
 		<table class="db-table">
 			<tr>
 				<th>Semester Code</th>
@@ -52,7 +67,10 @@
 		
 	</div>
 	<div class="db-tablebox" id="program-db">
-		<h1 for="pro-db">Program</h1>
+		<label for="pro-db">Program</label>
+		<select id="pro-choice" name="db-choice">
+		<option value="">Program</option>
+	</select>
 		<table class="db-table">
 			<tr>
 				<th>Program Code</th>
@@ -63,7 +81,10 @@
 		
 	</div>
 	<div class="db-tablebox" id="module-db">
-		<h1 for="mod-db">Module</h1>
+		<label for="mod-db">Module</label>
+		<select id="mod-choice" name="db-choice">
+		<option value="">Module</option>
+	</select>
 		<table class="db-table">
 			<tr>
 				<th>Module Code</th>
@@ -74,8 +95,10 @@
 		
 	</div>
 	<div class="db-tablebox" id="class-db">
-		<h1 for="cla-db">Class</h1>
-		
+		<label for="cla-db">Class</label>
+		<select id="cla-choice" name="db-choice">
+		<option value="">Class</option>
+	</select>
 		<table class="db-table">
 			<tr>
 				<th>Class Code</th>
@@ -86,8 +109,10 @@
 		
 	</div>
 	<div class="db-tablebox" id="lecturer-db">
-		<h1 for="lec-db">Lecturer</h1>
-		
+		<label for="lec-db">Lecturer</label>
+		<select id="lec-choice" name="db-choice">
+		<option value="">Lecture</option>
+	</select>
 		<table class="db-table">
 			<tr>
 				<th>Lecturer code</th>
@@ -98,7 +123,10 @@
 		
 	</div>
 	<div class="db-tablebox" id="aca-fal-db">
-		<h1 for="aca-fal-db">Academic year and Faculty</h1>
+		<label for="aca-fal-db">Academic year and Faculty</label>
+			<select id="aca-fal-choice" name="db-choice">
+		<option value="">AFCode</option>
+	</select>
 		<table class="db-table">
 			<tr>
 				<th>AFCode</th>
@@ -110,7 +138,10 @@
 		
 	</div>
 	<div class="db-tablebox" id="aca-fal-pro-db">
-		<h1 for="aca-fal-pro-db">Academic year, faculty and program</h1>
+		<label for="aca-fal-pro-db">Academic year, faculty and program</label>
+		<select id="aca-fal-pro-choice" name="db-choice">
+		<option value="">PFCode</option>
+	</select>
 		
 		<table class="db-table">
 			<tr>
@@ -124,8 +155,13 @@
 		
 	</div>
 	<div class="db-tablebox" id="aca-fal-pro-mod-db">
-		<h1 for="lec-db">Academic year, faculty, program and Module</h1>
-			
+		<label for="lec-db">Academic year, faculty, program and Module</label>
+			<select id="aca-fal-pro-mod-choice1" name="db-choice">
+		<option value="">PFCode for aca-fal-pro-mod</option>
+	</select>
+			<select id="aca-fal-pro-mod-choice2" name="db-choice">
+		<option value="">Module Code for aca-fal-pro-mod </option>
+	</select>
 		<table class="db-table">
 			<tr>
 				<th>PFCode</th>
