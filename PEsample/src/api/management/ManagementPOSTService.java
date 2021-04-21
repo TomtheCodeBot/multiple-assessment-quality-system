@@ -9,7 +9,6 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 import javax.ws.rs.DefaultValue;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

@@ -158,13 +158,18 @@ public class GraphGETService {
 				
 				rs = st.executeQuery();
 				if(rs.next()) {
-					builder.add("Female", rs.getString(1))
-					.add("Male", rs.getString(2))
-					.add("Other", rs.getString(3));					
-				} else {
-					// catch not return any value at all.
-					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
-				}				
+					String female = rs.getString(1);
+					String male = rs.getString(2);
+					String other = rs.getString(3);
+					
+					if (rs.wasNull()) {
+						// catch not return any value at all.
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}					
+					builder.add("Female", female)
+					.add("Male", male)
+					.add("Other", other);					
+				}			
 				break;
 			default:
 				// catch invalid filter names.

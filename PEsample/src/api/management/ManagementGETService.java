@@ -51,11 +51,14 @@ public class ManagementGETService {
 				}
 				rs = st.executeQuery();
 				while (rs.next()) {
-					if(rs.getString(2)==null) {
-						System.out.println("gotem");
+					String code = rs.getString(1);
+					String name = rs.getString(2);
+					
+					if (rs.wasNull()) {
+						// if null values are returned
 						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
-
 					}
+					
 					builder.add(Json.createObjectBuilder().add("Code", rs.getString(1)).add("Name", rs.getString(2)).build());
 				}		
 				break;
@@ -63,27 +66,58 @@ public class ManagementGETService {
 				st = db.prepareStatement("{ call getInfoYearFac() }");			
 				rs = st.executeQuery();
 				while (rs.next()) {
-					builder.add(Json.createObjectBuilder().add("AFCode", rs.getString(1)).add("AYName", rs.getString(2)).add("FName", rs.getString(3)).build());
+					String afCode = rs.getString(1);
+					String ayName = rs.getString(2);
+					String fName = rs.getString(3);
+					
+					if (rs.wasNull()) {
+						// if null values are returned 
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();					
+					}
+					
+					builder.add(Json.createObjectBuilder().add("AFCode", afCode).add("AYName", ayName).add("FName", fName).build());
 				}
 				break;
 			case "AcaFacPro":
 				st = db.prepareStatement("{ call getInfoYearFacPro() }");
 				rs = st.executeQuery();
 				while (rs.next()) {
-					builder.add(Json.createObjectBuilder().add("PFCode", rs.getString(1)).add("AYName", rs.getString(2)).add("FName", rs.getString(3)).add("PName", rs.getString(4)).build());
+					String pfCode = rs.getString(1);
+					String ayName = rs.getString(2);
+					String fName = rs.getString(3);
+					String pName = rs.getString(4);
+					
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
+					builder.add(Json.createObjectBuilder().add("PFCode", pfCode).add("AYName", ayName).add("FName", fName).add("PName", pName).build());
 				}
 				break;
 			case "AcaFacProMod":
 				st = db.prepareStatement("{ call getInfoYearFacProMod() }");
 				rs = st.executeQuery();
 				while (rs.next()) {
+					String pfCode = rs.getString(1);
+					String mCode = rs.getString(2);
+					String ayName = rs.getString(3);
+					String fName = rs.getString(4);
+					String pName = rs.getString(5);
+					String mName = rs.getString(6);
+					
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
 					builder.add(Json.createObjectBuilder()
-							.add("PFCode", rs.getString(1))
-							.add("MCode", rs.getString(2))
-							.add("AYName", rs.getString(3))
-							.add("FName", rs.getString(4))
-							.add("PName", rs.getString(5))
-							.add("MName", rs.getString(6)).build());
+							.add("PFCode", pfCode)
+							.add("MCode", mCode)
+							.add("AYName", ayName)
+							.add("FName", fName)
+							.add("PName", pName)
+							.add("MName", mName).build());
 				}
 				break;
 			default:

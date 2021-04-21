@@ -40,8 +40,15 @@ public class QuestionaireGETService {
 				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 			}
 			while(rs.next()) {
+				String cName = rs.getString(1);
+				
+				if (rs.wasNull()) {
+					// if null values are returned
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				}
+				
 				CName.add( Json.createObjectBuilder()									
-						.add("Class", rs.getString(1)).build());
+						.add("Class", cName).build());
 			}
 			
 			
@@ -71,14 +78,23 @@ public class QuestionaireGETService {
 			ResultSet rs = st.executeQuery();		
 			JsonObjectBuilder builder = Json.createObjectBuilder();
 			if(rs.next()) {
-				builder.add("academic_name", rs.getString(1))
-				.add("semester_name", rs.getString(2))
-				.add("faculty_name", rs.getString(3))
-				.add("program_name", rs.getString(4))
-				.add("module_name", rs.getString(5));
-			} else {
-				// catch not return any value at all or invalid class name
-				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				String acaName = rs.getString(1);
+				String sName = rs.getString(2);
+				String fName = rs.getString(3);
+				String pName = rs.getString(4);
+				String mName = rs.getNString(5);
+				
+				if (rs.wasNull()) {
+					// if null values are returned
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				}
+				
+				
+				builder.add("academic_name", acaName)
+				.add("semester_name", sName)
+				.add("faculty_name", fName)
+				.add("program_name", pName)
+				.add("module_name", mName);
 			}
 			JsonObject entry = builder.build();
 			return Response.ok().entity(entry.toString()).build();
@@ -103,13 +119,16 @@ public class QuestionaireGETService {
 			PreparedStatement st = db.prepareStatement(
 					"{ call GetClassesLecturer(?) }");
 			st.setString(1, CName);
-			ResultSet rs = st.executeQuery();
-			if (!rs.next()) {
-				// catch not return any value at all or invalid class name
-				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
-			}
+			ResultSet rs = st.executeQuery();			
 			
 			while (rs.next()) {
+				String lName = rs.getString(1);
+				
+				if (rs.wasNull()) {
+					// if null values are returned
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				}
+				
 				JsonObject entry = Json.createObjectBuilder()									
 						.add("Lecturer_Name", rs.getString(1)).build();
 				classInfoArrayBuilder.add(entry);
