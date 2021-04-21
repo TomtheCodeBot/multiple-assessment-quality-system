@@ -91,14 +91,17 @@ public class ManagementPOSTService{
 			  case "Program":				  
 				  st = db.prepareStatement("{ call InsertProgram(?) }");
 					st.setString(1, PName);
+					break;	
 			  case "AcaFac":				  
 				  st = db.prepareStatement("{ call InsertAcaFac(?,?) }");
 					st.setString(1, AYCode);
 					st.setString(2, FCode);
+					break;	
 			  case "AcaFacPro":				  
 				  st = db.prepareStatement("{ call InsertAcaFacPro(?,?) }");
 					st.setString(1, AFCode);
 					st.setString(2, PCode);
+					break;	
 			  case "AcaFacProMode":				  
 				  st = db.prepareStatement("{ call InsertAcaFacProMod(?,?) }");
 					st.setString(1, PFCode);
