@@ -8,10 +8,12 @@ BEGIN
 		DO
 			SET PCode = concat('P', floor(rand()*100000));
 		END WHILE;
-	IF PName NOT IN (SELECT P.PName FROM program P)
-    THEN IF PCode NOT IN (SELECT P.PCode FROM program P) 
-		THEN INSERT INTO program VALUES (PCode, PName);
-        SET a = 1;
+	IF PName!="" THEN
+		IF PName NOT IN (SELECT P.PName FROM program P)
+		THEN IF PCode NOT IN (SELECT P.PCode FROM program P) 
+			THEN INSERT INTO program VALUES (PCode, PName);
+			SET a = 1;
+			END IF;
 		END IF;
 	END IF;
     SELECT a;
