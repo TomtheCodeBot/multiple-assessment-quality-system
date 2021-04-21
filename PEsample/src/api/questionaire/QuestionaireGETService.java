@@ -35,10 +35,7 @@ public class QuestionaireGETService {
 			ResultSet rs = st.executeQuery();
 			JsonArrayBuilder CName = Json.createArrayBuilder();
 			
-			// if the database has no entries. 
-			if (!rs.next()) {
-				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
-			}
+			
 			while(rs.next()) {
 				String cName = rs.getString(1);
 				
@@ -124,12 +121,6 @@ public class QuestionaireGETService {
 					"{ call GetClassesLecturer(?) }");
 			st.setString(1, CName);
 			ResultSet rs = st.executeQuery();		
-			
-			if (!rs.next()) {
-				// if there is no row returned 
-				return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
-			}
-			
 			while (rs.next()) {
 				String lName = rs.getString(1);
 				
