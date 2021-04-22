@@ -70,6 +70,7 @@
 			<tr>
 				<th>Semester Code</th>
 				<th>Semester Name</th>
+				<th>Academic Year</th>
 			</tr>
 		</table>
 		<table class="db-insert"  id="semester-insert">
@@ -189,12 +190,13 @@
 			<tr>
 				<th>Lecturer code</th>
 				<th>Lecturer name</th>
+				<th>Class name</th>
 			</tr>
 		</table>
 		<table class="db-insert"  id="lecturer-insert">
 		<tr>
 			<th></th>
-			<th>Lecturer Name <button id="lecturer-user-show" type="submit">Choose</button></th>
+			<th>Lecturer Name</th>
 			<th>Class Name <button id="lecturer-class-show" type="submit">Choose</button></th>
 			<th></th>
 		</tr>
@@ -202,8 +204,7 @@
 		<div id = "lecturer-insert-form">
 			<td></td>
 			<td>
-				<select name= "LName" id="lecturer-user" class="Lecturer-insert-box"> 
-				</select>
+				<input name= "LName" id="lecturer-user" class="Lecturer-insert-box"> 
 			</td>
 			<td>
 				<select name= "CCode" id="lecturer-class" class="Lecturer-insert-box"> 
