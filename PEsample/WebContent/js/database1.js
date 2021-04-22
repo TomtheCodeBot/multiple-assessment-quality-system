@@ -28,8 +28,8 @@ function getTable(){
 				obj = JSON.parse(data)
 				console.log(obj)
 				obj.sort(function(a, b) {
- 					 var nameA = a.CCode.toUpperCase(); // bỏ qua hoa thường
- 					 var nameB = b.CCode.toUpperCase(); // bỏ qua hoa thường
+ 					 var nameA = a.ccode.toUpperCase(); // bỏ qua hoa thường
+ 					 var nameB = b.ccode.toUpperCase(); // bỏ qua hoa thường
 					  if (nameA < nameB) {
 					    return -1;
 					  }
@@ -42,9 +42,9 @@ function getTable(){
 					});	
 				for (var i = 0; i<obj.length;i++){
 				console.log(i)
-				console.log(obj[i].CName)
-				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].CCode + '</td><td>'+ obj[i].CName +'</td><td>' + obj[i].Size +'</td><td>'+  obj[i].MName +'</td><td>' +  obj[i].SName +'</td><td>' +  '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].CCode  + ' name='+ obj[i].CName.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td> </tr>')
-				$("#" + LabelChoice[init] + "").append(new Option(obj[i].CName,obj[i].CName));
+				console.log(obj[i].cname)
+				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].ccode + '</td><td>'+ obj[i].cname +'</td><td>' + obj[i].csize +'</td><td>'+  obj[i].mname +'</td><td>' +  obj[i].sname +'</td><td>' +  '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].ccode  + ' name='+ obj[i].cname.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td> </tr>')
+				$("#" + LabelChoice[init] + "").append(new Option(obj[i].cname,obj[i].cname));
 				console.log(select[init])		
 				}
 				$("."+ select[init]+"-delete").click(function(){
@@ -66,15 +66,16 @@ function getTable(){
 			} 			
 		})
 		}
-else{	$.ajax({
+else if(init==2){
+	$.ajax({
 			type: 'GET',
 			url: "rest/management/resources?filter=infodatabase" + "&choice=" + labelShow[init],
 			success: function(data){
 				obj = JSON.parse(data)
 				console.log(obj)
 				obj.sort(function(a, b) {
- 					 var nameA = a.Code.toUpperCase(); // bỏ qua hoa thường
- 					 var nameB = b.Code.toUpperCase(); // bỏ qua hoa thường
+ 					 var nameA = a.scode.toUpperCase(); // bỏ qua hoa thường
+ 					 var nameB = b.scode.toUpperCase(); // bỏ qua hoa thường
 					  if (nameA < nameB) {
 					    return -1;
 					  }
@@ -87,9 +88,103 @@ else{	$.ajax({
 					});	
 				for (var i = 0; i<obj.length;i++){
 				console.log(i)
-				console.log(obj[i].Name)
-				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].Code + '</td><td>' + obj[i].Name +'</td><td>'+ '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].Code  + ' name='+ obj[i].Name.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td> </tr>')
-				$("#" + LabelChoice[init] + "").append(new Option(obj[i].Name,obj[i].Name));
+				console.log(obj[i].sname)
+				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].scode + '</td><td>'+ obj[i].sname +'</td><td>' +  obj[i].ayname +'</td><td>' +  '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].scode  + ' name='+ obj[i].sname.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td> </tr>')
+				$("#" + LabelChoice[init] + "").append(new Option(obj[i].sname,obj[i].sname));
+				console.log(select[init])		
+				}
+				$("."+ select[init]+"-delete").click(function(){
+					console.log(`${init}`)
+					
+					var t  = this.name.replaceAll("_"," ")
+					$.ajax({
+						type: 'DELETE',
+						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
+						success: function(data){
+							alert("successfully deleted")
+							getTable()
+						},
+						error: function(data){
+							alert("cannot delete")						
+						}							
+					})
+				})
+			} 			
+		})
+	
+}
+else if(init==6){
+	$.ajax({
+			type: 'GET',
+			url: "rest/management/resources?filter=infodatabase" + "&choice=" + labelShow[init],
+			success: function(data){
+				obj = JSON.parse(data)
+				console.log(obj)
+				obj.sort(function(a, b) {
+ 					 var nameA = a.lcode.toUpperCase(); // bỏ qua hoa thường
+ 					 var nameB = b.lcode.toUpperCase(); // bỏ qua hoa thường
+					  if (nameA < nameB) {
+					    return -1;
+					  }
+					  if (nameA > nameB) {
+					    return 1;
+					  }
+					
+					  // name trùng nhau
+					  return 0;
+					});	
+				for (var i = 0; i<obj.length;i++){
+				console.log(i)
+				console.log(obj[i].lname)
+				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].lcode + '</td><td>'+ obj[i].lname +'</td><td>' +  obj[i].cname +'</td><td>' +  '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].lcode  + ' name='+ obj[i].lname.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td> </tr>')
+				$("#" + LabelChoice[init] + "").append(new Option(obj[i].lname,obj[i].lname));
+				console.log(select[init])		
+				}
+				$("."+ select[init]+"-delete").click(function(){
+					console.log(`${init}`)
+					
+					var t  = this.name.replaceAll("_"," ")
+					$.ajax({
+						type: 'DELETE',
+						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
+						success: function(data){
+							alert("successfully deleted")
+							getTable()
+						},
+						error: function(data){
+							alert("cannot delete")						
+						}							
+					})
+				})
+			} 			
+		})
+	
+}
+
+else{	$.ajax({
+			type: 'GET',
+			url: "rest/management/resources?filter=infodatabase" + "&choice=" + labelShow[init],
+			success: function(data){
+				obj = JSON.parse(data)
+				console.log(obj)
+				obj.sort(function(a, b) {
+ 					 var nameA = a.code.toUpperCase(); // bỏ qua hoa thường
+ 					 var nameB = b.code.toUpperCase(); // bỏ qua hoa thường
+					  if (nameA < nameB) {
+					    return -1;
+					  }
+					  if (nameA > nameB) {
+					    return 1;
+					  }
+					
+					  // name trùng nhau
+					  return 0;
+					});	
+				for (var i = 0; i<obj.length;i++){
+				console.log(i)
+				console.log(obj[i].name)
+				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].code + '</td><td>' + obj[i].name +'</td><td>'+ '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].node  + ' name='+ obj[i].name.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td> </tr>')
+				$("#" + LabelChoice[init] + "").append(new Option(obj[i].name,obj[i].name));
 				console.log(select[init])		
 				}
 				$("."+ select[init]+"-delete").click(function(){
@@ -396,29 +491,55 @@ function InsertPostwithSelection(colName,label,data){
 }
 
 function getSelection(id, code,label){
-	$.ajax({
-				type: 'GET',
-				url: "rest/management/resources?filter=infodatabase" + "&choice=" + label,
-				success: function(data){
-					obj = JSON.parse(data)
-					obj.sort(function(a, b) {
-	 					 var nameA = a.Code.toUpperCase();
-	 					 var nameB = b.Code.toUpperCase();
-						  if (nameA < nameB) {
-						    return -1;
-						  }
-						  if (nameA > nameB) {
-						    return 1;
-						  }
-						  return 0;
-						});	
-						console.log(id + code + label )
-					for (var i = 0; i<obj.length;i++){
-					$("#"+id).append("<option name="+ code +" value="+ obj[i].Code +">"+ obj[i].Name + "</option>")
-							
-					}
-				} 			
-			})	
+	if(label=="semester"){
+		$.ajax({
+					type: 'GET',
+					url: "rest/management/resources?filter=infodatabase" + "&choice=" + label,
+					success: function(data){
+						obj = JSON.parse(data)
+						obj.sort(function(a, b) {
+		 					 var nameA = a.scode.toUpperCase();
+		 					 var nameB = b.scode.toUpperCase();
+							  if (nameA < nameB) {
+							    return -1;
+							  }
+							  if (nameA > nameB) {
+							    return 1;
+							  }
+							  return 0;
+							});	
+							console.log(id + code + label )
+						for (var i = 0; i<obj.length;i++){
+						$("#"+id).append("<option name="+ code +" value="+ obj[i].scode +">"+ obj[i].sname + "</option>")
+								
+						}
+					} 			
+				})	
+	}else{
+		$.ajax({
+					type: 'GET',
+					url: "rest/management/resources?filter=infodatabase" + "&choice=" + label,
+					success: function(data){
+						obj = JSON.parse(data)
+						obj.sort(function(a, b) {
+		 					 var nameA = a.code.toUpperCase();
+		 					 var nameB = b.code.toUpperCase();
+							  if (nameA < nameB) {
+							    return -1;
+							  }
+							  if (nameA > nameB) {
+							    return 1;
+							  }
+							  return 0;
+							});	
+							console.log(id + code + label )
+						for (var i = 0; i<obj.length;i++){
+						$("#"+id).append("<option name="+ code +" value="+ obj[i].code +">"+ obj[i].name + "</option>")
+								
+						}
+					} 			
+				})	
+	}
 }
 function getSelectionofAcaFac(id, code,label){
 	$.ajax({
@@ -426,10 +547,10 @@ function getSelectionofAcaFac(id, code,label){
 				url: "rest/management/resources?filter="+ label,
 				success: function(data){
 					obj = JSON.parse(data)
-					obj.sort(function(a, b){return a.AFCode - b.AFCode;});
+					obj.sort(function(a, b){return a.afcode - b.afcode;});
 					console.log(id + code + label )
 					for (var i = 0; i<obj.length;i++){
-					$("#"+id).append("<option name="+ code +" value="+ obj[i].AFCode +">"+ obj[i].AFCode + "</option>")
+					$("#"+id).append("<option name="+ code +" value="+ obj[i].afcode +">"+ obj[i].afcode + "</option>")
 					}
 				} 			
 			})	
@@ -440,10 +561,10 @@ function getSelectionofProFac(id, code,label){
 				url: "rest/management/resources?filter="+ label,
 				success: function(data){
 					obj = JSON.parse(data)
-					obj.sort(function(a, b){return a.PFCode - b.PFCode;});
+					obj.sort(function(a, b){return a.pfcode - b.pfcode;});
 					console.log(id + code + label )
 					for (var i = 0; i<obj.length;i++){
-					$("#"+id).append("<option name="+ code +" value="+ obj[i].PFCode +">"+ obj[i].PFCode + "</option>")
+					$("#"+id).append("<option name="+ code +" value="+ obj[i].pfcode +">"+ obj[i].pfcode + "</option>")
 					}
 				} 			
 			})	
@@ -469,7 +590,7 @@ function getClass(id, code, label){
 					obj = JSON.parse(data)
 						console.log(id + code + label)
 					for (var i = 0; i<obj.length;i++){
-					$("#"+id).append("<option name="+ code +" value="+ obj[i].CCode +">"+ obj[i].CName + "</option>")
+					$("#"+id).append("<option name="+ code +" value="+ obj[i].ccode +">"+ obj[i].cname + "</option>")
 					}
 				} 			
 			})	

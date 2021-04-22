@@ -51,11 +51,11 @@ public class ManagementGETService {
 						// if there is no row returned 
 						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 					}
-					String cCode = rs.getString(1);
-					String cName = rs.getString(2);
-					String size = rs.getString(3);
-					String mName = rs.getString(4);
-					String sName = rs.getString(5);
+					String ccode = rs.getString(1);
+					String cname = rs.getString(2);
+					String csize = rs.getString(3);
+					String mname = rs.getString(4);
+					String sname = rs.getString(5);
 					
 					if (rs.wasNull()) {
 						// if null values are returned
@@ -63,17 +63,17 @@ public class ManagementGETService {
 					}
 					
 					builder.add(Json.createObjectBuilder()
-							.add("CCode", cCode)
-							.add("CName", cName)
-							.add("Size", size)
-							.add("MName", mName)
-							.add("SName", sName).build());
+							.add("ccode", ccode)
+							.add("cname", cname)
+							.add("csize", csize)
+							.add("mname", mname)
+							.add("sname", sname).build());
 					while (rs.next()) {
-						cCode = rs.getString(1);
-						cName = rs.getString(2);
-						size = rs.getString(3);
-						mName = rs.getString(4);
-						sName = rs.getString(5);
+						ccode = rs.getString(1);
+						cname = rs.getString(2);
+						csize = rs.getString(3);
+						mname = rs.getString(4);
+						sname = rs.getString(5);
 						
 						if (rs.wasNull()) {
 							// if null values are returned
@@ -81,11 +81,11 @@ public class ManagementGETService {
 						}
 						
 						builder.add(Json.createObjectBuilder()
-								.add("CCode", cCode)
-								.add("CName", cName)
-								.add("Size", size)
-								.add("MName", mName)
-								.add("SName", sName).build());
+								.add("ccode", ccode)
+								.add("cname", cname)
+								.add("csize", csize)
+								.add("mname", mname)
+								.add("sname", sname).build());
 					}
 					
 				} else if (choice.equals("semester")) {
@@ -96,9 +96,9 @@ public class ManagementGETService {
 						// if there is no row returned 
 						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 					}
-					String sCode = rs.getString(1);
-					String sName = rs.getString(2);
-					String ayName = rs.getString(3);
+					String scode = rs.getString(1);
+					String sname = rs.getString(2);
+					String ayname = rs.getString(3);
 					
 					
 					if (rs.wasNull()) {
@@ -107,14 +107,14 @@ public class ManagementGETService {
 					}
 					
 					builder.add(Json.createObjectBuilder()
-							.add("SCode", sCode)
-							.add("SName", sName)
-							.add("AYName", ayName).build());
+							.add("scode", scode)
+							.add("sname", sname)
+							.add("ayname", ayname).build());
 					
 					while (rs.next()) {
-						sCode = rs.getString(1);
-						sName = rs.getString(2);
-						ayName = rs.getString(3);
+						scode = rs.getString(1);
+						sname = rs.getString(2);
+						ayname = rs.getString(3);
 						
 						
 						if (rs.wasNull()) {
@@ -123,9 +123,9 @@ public class ManagementGETService {
 						}
 						
 						builder.add(Json.createObjectBuilder()
-								.add("SCode", sCode)
-								.add("SName", sName)
-								.add("AYName", ayName).build());
+								.add("scode", scode)
+								.add("sname", sname)
+								.add("ayname", ayname).build());
 					}
 				} else if (choice.equals("lecturer")) {
 					st = db.prepareStatement("{ call GetLecturerDatabase() }");	
@@ -135,9 +135,9 @@ public class ManagementGETService {
 						// if there is no row returned 
 						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 					}
-					String lCode = rs.getString(1);
-					String lName = rs.getString(2);
-					String cName = rs.getString(3);
+					String lcode = rs.getString(1);
+					String lname = rs.getString(2);
+					String cname = rs.getString(3);
 					
 					
 					if (rs.wasNull()) {
@@ -146,13 +146,13 @@ public class ManagementGETService {
 					}
 					
 					builder.add(Json.createObjectBuilder()
-							.add("LCode", lCode)
-							.add("LName", lName)
-							.add("CName", cName).build());
+							.add("lcode", lcode)
+							.add("lname", lname)
+							.add("cname", cname).build());
 					while (rs.next()) {
-						lCode = rs.getString(1);
-						lName = rs.getString(2);
-						cName = rs.getString(3);
+						lcode = rs.getString(1);
+						lname = rs.getString(2);
+						cname = rs.getString(3);
 						
 						
 						if (rs.wasNull()) {
@@ -161,9 +161,9 @@ public class ManagementGETService {
 						}
 						
 						builder.add(Json.createObjectBuilder()
-								.add("LCode", lCode)
-								.add("LName", lName)
-								.add("CName", cName).build());
+								.add("lcode", lcode)
+								.add("lname", lname)
+								.add("cname", cname).build());
 					}
 				} else if (choice.equals("user")) {
 					st = db.prepareStatement("{ call GetUserDatabase() }");
@@ -214,7 +214,7 @@ public class ManagementGETService {
 						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 					}
 					
-					builder.add(Json.createObjectBuilder().add("Code", code).add("Name", name).build());
+					builder.add(Json.createObjectBuilder().add("code", code).add("name", name).build());
 					while (rs.next()) {
 						code = rs.getString(1);
 						name = rs.getString(2);
@@ -224,7 +224,7 @@ public class ManagementGETService {
 							return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 						}
 						
-						builder.add(Json.createObjectBuilder().add("Code", code).add("Name", name).build());
+						builder.add(Json.createObjectBuilder().add("code", code).add("name", name).build());
 					}						
 				}				
 				break;
