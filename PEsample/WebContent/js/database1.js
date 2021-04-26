@@ -43,7 +43,7 @@ function getTable(){
 				for (var i = 0; i<obj.length;i++){
 				console.log(i)
 				console.log(obj[i].cname)
-				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].ccode + '</td><td>'+ obj[i].cname +'</td><td>' + obj[i].csize +'</td><td>'+  obj[i].mname +'</td><td>' +  obj[i].sname +'</td><td>' +  '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].ccode  + ' name='+ obj[i].cname.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td> </tr>')
+				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].ccode + '</td><td>'+ obj[i].cname +'</td><td><form method="put"><input style="width: 70px" type="number" value="' + obj[i].csize +'" name="csize-modify"></td><td>'+  obj[i].mname +'</td><td>' +  obj[i].sname +'</td><td>' +  '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].ccode  + ' name='+ obj[i].cname.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td><td><td><input type="submit" value="Modify" class="modify-class"></form></td> </tr>');
 				$("#" + LabelChoice[init] + "").append(new Option(obj[i].cname,obj[i].cname));
 				console.log(select[init])		
 				}
