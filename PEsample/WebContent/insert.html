@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>InsertData</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	
+	
+	<button type="submit" id="db-show">Show</button>
+	<button type="submit" id="db-clear">Clear</button>
+	<form method="get" action="./insert.html" style="float:right">
+		<button type="submit">Add Data</button>
+	</form>
+	
+	<div class="clear"></div>
+	<div class="db-tablebox" id="academic_year-db">
+	<h1 for="aca-db">Academic Year</h1>
+	<button type="submit" onclick="display_insert('acad-insert')">Add Data</button>
+	<table class="db-table">
+		<tr>
+			<th>Academic Year Code</th>
+			<th> Academic Year</th>
+		</tr>
+	</table>
+	<table class="db-insert"  id="acad-insert">
+		<tr>
+			<th></th>
+			<th> Academic Year</th>
+		</tr>
+		<tr>
+		<div id="Acad-insert-form">
+			<td></td>
+			<td><input type="text" name="AYName" class="acad-insert-box" id="AYName"></td>
+			<td><button id = "AcadYear" class = "insert-button">Add</button></td>
+		</div>
+		</tr>
+	</table>	
+	</div>
+	<div class="db-tablebox" id="faculty-db">
+		<h1 for="fal-db">Faculty</h1>
+		<button type="submit" onclick="display_insert('faculty-insert')">Add Data</button>
+		<table class="db-table">
+			<tr>
+				<th>Faculty Code</th>
+				<th>Faculty Name</th>
+			</tr>
+		</table>
+	<table class="db-insert"  id="faculty-insert">
+		<tr>
+			<th></th>
+			<th>Faculty Name</th>
+		</tr>
+		<tr>
+		<div id = "Faculty-insert-form">
+			<td></td>
+			<td><input type="text" name="FName" class="Faculty-insert-box" id="FName"></td>
+			<td><button id = "Faculty" class = "insert-button">Add</button></td>
+		</div>
+		</tr>
+	</table>
+		
+	</div>
+	<div class="db-tablebox" id="semester-db">
+		<h1 for="sem-db">Semester</h1>
+		<button type="submit" onclick="display_insert('semester-insert')">Add Data</button>
+		<table class="db-table">
+			<tr>
+				<th>Semester Code</th>
+				<th>Semester Name</th>
+				<th>Academic Year</th>
+			</tr>
+		</table>
+		<table class="db-insert"  id="semester-insert">
+		<tr>
+			<th></th>
+			<th>Semester Name</th>
+			<th>Academic Year <button id="acad-show" type="submit">Choose</button></th>
+			<th></th>
+		</tr>
+		<tr>
+		<div id = "Semester-insert-form">
+			<td></td>
+			<td><input type="text" name="SName" class="semester-insert-box" id="SName"></td>
+			<td>
+				<select name = "AYCode" id="academic_year" class="semester-insert-box"> 
+				</select>
+			</td>
+			<td><button id = "Semester" class = "insert-button">Add</button></td>
+		</div>
+		</tr>
+	</table>
+		
+	</div>
+	<div class="db-tablebox" id="program-db">
+		<h1 for="pro-db">Program</h1>
+		<button type="submit" onclick="display_insert('program-insert')">Add Data</button>
+		<table class="db-table">
+			<tr>
+				<th>Program Code</th>
+				<th>Program Name</th>
+			</tr>
+		</table>
+		<table class="db-insert"  id="program-insert">
+		<tr>
+			<th></th>
+			<th>Program Name</th>
+		</tr>
+		<tr>
+		<div id = "Program-insert-form">
+			<td></td>
+			<td><input type="text" name="PName" class="Program-insert-box" id="PName"></td>
+			<td><button id = "Program" class = "insert-button">Add</button></td>
+		</div>
+
+		</tr>
+	</table>
+	
+		
+	</div>
+	<div class="db-tablebox" id="module-db">
+		<h1 for="mod-db">Module</h1>
+		<button type="submit" onclick="display_insert('module-insert')">Add Data</button>
+		<table class="db-table">
+			<tr>
+				<th>Module Code</th>
+				<th>Module Name</th>
+			</tr>
+		</table>
+		<table class="db-insert"  id="module-insert">
+		<tr>
+			<th></th>
+			<th>Module Name</th>
+		</tr>
+		<tr>
+		<div id = "Module-insert-form">
+			<td></td>
+			<td><input type="text" name="MName" class="Module-insert-box" id="MName"></td>
+			<td><button id = "Module" class = "insert-button">Add</button></td>
+		</div>
+		</tr>
+	</table>
+	
+		
+	</div>
+	<div class="db-tablebox" id="class-db">
+		<h1 for="cla-db">Class</h1>
+		
+		<table class="db-table">
+			<tr>
+				<th>Class Code</th>
+				<th>Class Name</th>
+				<th>Size</th>
+				<th>Module Name</th>
+				<th>Semester</th>
+			</tr>
+		</table>
+		<table class="db-insert"  id="class-insert">
+		<tr>
+			<th></th>
+			<th>Class</th>
+			<th>Module <button id="module-show" type="submit">Choose</button></th>
+			<th>Semester <button id="semester-show" type="submit">Choose</button></th>
+			
+		</tr>
+		<tr>
+		<div id = "Class-insert-form">
+			<td></td>
+			<td><input type="text" name="CName" class="Class-insert-box" id="CName"></td>
+			<td>
+				<select id="module" class="Class-insert-box"> 
+				</select>
+			</td>
+			<td>
+				<select id="semester" class="Class-insert-box"> 
+				</select>
+			</td>
+			<td><button id = "Class" class = "insert-button">Add</button></td>
+		</div>
+		</tr>
+	</table>
+		
+	</div>
+	<div class="db-tablebox" id="lecturer-db">
+		<h1 for="lec-db">Lecturer</h1>
+		
+		<table class="db-table">
+			<tr>
+				<th>Lecturer code</th>
+				<th>Lecturer name</th>
+				<th>Class name</th>
+			</tr>
+		</table>
+		<table class="db-insert"  id="lecturer-insert">
+		<tr>
+			<th></th>
+			<th>Lecturer Name</th>
+			<th>Class Name <button id="lecturer-class-show" type="submit">Choose</button></th>
+			<th></th>
+		</tr>
+		<tr>
+		<div id = "lecturer-insert-form">
+			<td></td>
+			<td>
+				<input name= "LName" id="lecturer-user" class="Lecturer-insert-box"> 
+			</td>
+			<td>
+				<select name= "CCode" id="lecturer-class" class="Lecturer-insert-box"> 
+				</select>
+			</td>
+			<td><button id = "Lecturer" class = "insert-button">Add</button></td>
+		</div>
+		</tr>
+	</table>
+	</div>
+	<div class="db-tablebox" id="aca-fal-db">
+		<h1 for="aca-fal-db">Academic year and Faculty</h1>
+		<table class="db-table">
+			<tr>
+				<th>AFCode</th>
+				<th>Academic Year</th>
+				<th>Faculty</th>
+			</tr>
+		</table>
+		<table class="db-insert"  id="lecturer-insert">
+		<tr>
+			<th></th>
+			<th>Academic Name <button id="AcaFac-acad-show" type="submit">Choose</button></th>
+			<th>Faculty Name <button id="AcaFac-faculty-show" type="submit">Choose</button></th>
+			<th></th>
+		</tr>
+		<tr>
+		<div id = "AcaFac-insert-form">
+			<td></td>
+			<td>
+				<select name= "AYCode" id="AcaFac-academic_year" class="AcaFac-insert-box"> 
+				</select>
+			</td>
+			<td>
+				<select name= "FCode" id="AcaFac-faculty" class="AcaFac-insert-box"> 
+				</select>
+			</td>
+			<td><button id = "AcaFac" class = "insert-button">Add</button></td>
+		</div>
+		</tr>
+	</table>
+		
+	</div>
+	<div class="db-tablebox" id="aca-fal-pro-db">
+		<h1 for="aca-fal-pro-db">Academic year, faculty and program</h1>
+		
+		<table class="db-table">
+			<tr>
+				<th>PFCode</th>
+				<th>Academic Year</th>
+				<th>Faculty</th>
+				<th>Program</th>
+			</tr>
+		</table>
+		<table class="db-insert"  id="AcaFacPro-insert">
+		<tr>
+			<th></th>
+			<th>Choose Aca-Fac Code <button id="AcaFacPro-AcaFac-show" type="submit">Choose</button></th>
+			<th>Program Name <button id="AcaFacPro-program-show" type="submit">Choose</button></th>
+			<th></th>
+		</tr>
+		<tr>
+		<div id = "AcaFacPro-insert-form">
+			<td></td>
+			<td>
+				<select name= "AFCode" id="AcaFacPro-academic_year-faculty" class="AcaFacPro-insert-box"> 
+				</select>
+			</td>
+			<td>
+				<select name= "PCode" id="AcaFacPro-program" class="AcaFacPro-insert-box"> 
+				</select>
+			</td>
+			<td><button id = "AcaFacPro" class = "insert-button">Add</button></td>
+		</div>
+		</tr>
+	</table>
+		
+	</div>
+	<div class="db-tablebox" id="aca-fal-pro-mod-db">
+		<h1 for="lec-db">Academic year, faculty, program and Module</h1>
+			
+		<table class="db-table">
+			<tr>
+				<th>PFCode</th>
+				<th>MCode</th>
+				<th>Academic Year</th>
+				<th>Faculty</th>
+				<th>Program</th>
+				<th>Module</th>
+			</tr>
+		</table>
+		<table class="db-insert"  id="AcaFacProMod-insert">
+		<tr>
+			<th></th>
+			<th>Choose Pro-Fac Code <button id="AcaFacProMod-ProFac-show" type="submit">Choose</button></th>
+			<th>Module Name <button id="AcaFacProMod-module-show" type="submit">Choose</button></th>
+			<th></th>
+		</tr>
+		<tr>
+		<div id = "AcaFacPro-insert-form">
+			<td></td>
+			<td>
+				<select name= "PFCode" id="AcaFacProMod-program-faculty" class="AcaFacProMod-insert-box"> 
+				</select>
+			</td>
+			<td>
+				<select name= "MCode" id="AcaFacProMod-module" class="AcaFacProMod-insert-box"> 
+				</select>
+			</td>
+			<td><button id = "AcaFacProMod" class = "insert-button">Add</button></td>
+		</div>
+		</tr>
+	</table>
+		
+	
+	
+	<br></br>
+	</div>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+		crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+		crossorigin="anonymous"></script>
+	
+	<script src="js/database1.js"></script>
+	
+</body>
+</html>

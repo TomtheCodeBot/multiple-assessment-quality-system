@@ -1,5 +1,4 @@
 graph =[]
-	
 $(document).ready(function() {
     getFilterResources();
 	getInitialize();
@@ -17,7 +16,6 @@ $(document).ready(function() {
 		labelModule = ['Less than 1 hours', '1-2 hours', '2-3 hours', '3-4 hours', 'more than 5 hours']
 for (var init in id){
 		// init = question - 1
-		console.log(init + `${id[init]}`)
 	if(init == 0){
 		var ctx = document.getElementById(`${id[init]}`).getContext('2d');
 		var myChart = new Chart(ctx, {		
@@ -25,12 +23,10 @@ for (var init in id){
 					    data: {
 					        labels: ['Male','Female','Other'],
 					        datasets: [{
-					            label: "percentage",
+					            label: "Percentage",
 					            data: [0,0,0,],
 					            backgroundColor: [
 					                'rgba(255, 159, 64, 0.2)',
-									'rgba(255, 159, 64, 0.2)',
-									'rgba(255, 159, 64, 0.2)',
 									'rgba(255, 159, 64, 0.2)',
 									'rgba(255, 159, 64, 0.2)'
 					            ],
@@ -38,22 +34,61 @@ for (var init in id){
 					                'rgba(255, 159, 64, 1)',
 					                'rgba(255, 159, 64, 1)',
 									'rgba(255, 159, 64, 1)',
-									'rgba(255, 159, 64, 1)',
-									'rgba(255, 159, 64, 1)'
+									
 					            ], 
-					            borderWidth:1}
+					            borderWidth:1},
+								{
+					              type: "scatterWithErrorBars",
+					              label: "Invoice",
+					              data: [
+					                {
+					                  x: 0,
+					                  xMin: 0,
+					                  xMax: 0,
+					                  y: 0,
+					                },
+					              ],
+					              xAxisID: "invoice-time",
+					              backgroundColor: "rgba(75, 00, 150, 0.2)",
+					              borderColor: "rgba(75, 00, 150,1)",
+					              borderWidth: 2,
+					            },
 								]
 					    },
 					    options: {
-							title: {
-								display:true,
-								text: label[init],
-								fontsize: 15,	
-							},
-					        scales: {
-					            yAxes: [{
+						title:{
+							display:true,
+							text: label[init]
+						},
+          scales: {
+            xAxes: [
+              {
+                display: true,
+                stacked: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: "Days",
+                },
+              },
+              {
+                id: "invoice-time",
+                type: "linear",
+                display: true,
+                stacked: false,
+                scaleLabel: {
+                  display: false,
+                  labelString: "Days",
+                },
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: 1,
+                  suggestedMax: 3,
+				  
+                },
+              },
+            ],
+  yAxes: [{
 				ticks: {
-
 					   min: 0,
 					   max: 100,
 					   callback: function(value){return value+ "%"}
@@ -63,9 +98,23 @@ for (var init in id){
 					   labelString: "Percentage"
 					}
 				}]
-					        }
-					    }
-					}
+          },
+          plugins: {
+            datalabels: {
+              formatter: (value, ctx) => {
+                if (ctx.chart.data.datasets.indexOf(ctx.dataset) == 1) {
+                  return value.x.toFixed(2); // for error bar number
+                }
+                return value + "%"; // for bar number
+              },
+              color: "#000",
+              anchor: "end",
+              align: "top",
+              offset: 10,
+            },
+          },
+        },
+		}
 	);	
 	}
 else {
@@ -75,8 +124,8 @@ else {
 					    data: {
 					        labels: ['1','2','3','4','5'],
 					        datasets: [{
-					            label: "percentage",
-					            data: [0,0,0,],
+					            label: "Percentage",
+					            data: [0,0,0,0,0,],
 					            backgroundColor: [
 					                'rgba(255, 159, 64, 0.2)',
 									'rgba(255, 159, 64, 0.2)',
@@ -91,19 +140,61 @@ else {
 									'rgba(255, 159, 64, 1)',
 									'rgba(255, 159, 64, 1)'
 					            ],
-					            borderWidth:1}
+					            borderWidth:1},
+								{
+					              type: "scatterWithErrorBars",
+					              label: "Mean",
+					              data: [
+					                {
+					                  x: 0,
+					                  xMin: 0,
+					                  xMax: 0,
+					                  y: 0,
+					                },
+					              ],
+					              xAxisID: "mean",
+					              backgroundColor: "rgba(75, 00, 150, 0.2)",
+					              borderColor: "rgba(75, 00, 150,1)",
+					              borderWidth: 2,
+					            },
 						]
 					    },
 					    options: {
-							title: {
-								display:true,
-								text: label[init],
-								fontsize: 15,	
-							},
-					        scales: {
-					            yAxes: [{
+				title:{
+					display: true,
+					text: label[init]
+				}
+				
+          ,scales: {
+            xAxes: [
+              {
+                display: true,
+                stacked: true,
+                scaleLabel: {
+                  display: false,
+                  labelString: "",
+                },
+              },
+              {
+                id: "mean",
+                type: "linear",
+                display: false,
+                stacked: false,
+                scaleLabel: {
+                  display: false,
+                  labelString: "Days",
+                },
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: 1,
+                  suggestedMax: 5,
+				  
+                },
+              },
+            ],
+  yAxes: [{
 				ticks: {
-
+					
 					   min: 0,
 					   max: 100,
 					   callback: function(value){return value+ "%"}
@@ -113,13 +204,27 @@ else {
 					   labelString: "Percentage"
 					}
 				}]
-					        }
-					    }
+          },
+          plugins: {
+            datalabels: {
+              formatter: (value, ctx) => {
+                if (ctx.chart.data.datasets.indexOf(ctx.dataset) == 1) {
+                  return value.x.toFixed(2); // for error bar number
+                }
+                return value + "%"; // for bar number
+              },
+              color: "#000",
+              anchor: "end",
+              align: "top",
+              offset: 10,
+            },
+          },
+        },
 					}
 	);
 }
 	graph.push(myChart)
-}
+}	
 	graph[1].data.labels = labelAttend;
 	graph[1].update()
 	for(let i = 6; i < 9;i++){
@@ -369,8 +474,7 @@ function getlname(){
 function getGeneralInfo(){
 		var a = getSelect()
 		removePrevdata()
-		console.log(graph.length)
-		$(".tooltip").show()
+	$(".tooltip").show()
 		$.ajax({
 			type: 'Get',
 				url: "rest/graph/general?filter=gender&cname=" + a[0] + "&ayname="+ a[1] + "&sname=" + a[3] + "&fname=" + a[2] + "&mname=" + a[4] + "&lname=" + a[5] + "&pname=" + a[6],
@@ -378,7 +482,6 @@ function getGeneralInfo(){
 						var obj = JSON.parse(data);
 						var array = [obj.Male, obj.Female, obj.Other]
 						var array1 = getPercentagevalue(array)
-						console.log(array1)
 						graph[0].data.datasets[0].data = array1
 						graph[0].update()
 				}
@@ -398,24 +501,28 @@ function getGeneralInfo(){
 		var k;
 		for (k = 2; k < 19; k++) {
 				let i=k;
-				console.log(k)
 				$.ajax({
 					type: 'Get',
 					url: "rest/graph/question?qname=Q"+(i-1).toString()+"&cname=" + a[0] + "&ayname="+ a[1] + "&sname=" + a[3] + "&fname=" + a[2] + "&mname=" + a[4] + "&lname=" + a[5] + "&pname=" + a[6],
 					success: function(data){
 						var obj = JSON.parse(data);
-						console.log(data);
 						$("#q"+(i-1).toString()+"_count").append(`<span>${obj.Count}<span>`);
 						$("#q"+(i-1).toString()+"_rate").append(`<span>${obj.Rate}<span>`);
 						$("#q"+(i-1).toString()+"_average").append(`<span>${obj.Average}<span>`);
 						$("#q"+(i-1).toString()+"_sd").append(`<span>${obj.Standard_Deviation}<span>`);
 						var array = [obj.Percentage_of_1, obj.Percentage_of_2, obj.Percentage_of_3, obj.Percentage_of_4, obj.Percentage_of_5]
+						var array1 = array.map(function(x){
+							return parseFloat(x)
+								})
+								
+						var max_array = Math.max.apply(Math, array1)
+						var array_bar = [parseFloat(obj.Average), parseFloat(obj.Average) - parseFloat(obj.Standard_Deviation), parseFloat(obj.Average) + parseFloat(obj.Standard_Deviation),  max_array + 10]
 						graph[i].data.datasets[0].data = array
-						graph[i].update()
+						graph[i].data.datasets[1].data = [{x: parseFloat(obj.Average), xMin: parseFloat(obj.Average) - parseFloat(obj.Standard_Deviation), xMax: parseFloat(obj.Average) + parseFloat(obj.Standard_Deviation), y: max_array + 20 }]
+						graph[i].update()						
 						}
 				})
 			}
-			console.log(graph)								
 }
 
 function getInitialize(){
@@ -433,12 +540,15 @@ function getInitialize(){
 // gender location in graph
 		if(i == 0){
 			var array = [0,0,0]
+			var array1 = [0,0,0,0]
 			graph[i].data.datasets[0].data = array
+			graph[i].data.datasets[1].data = [{x:0,xMin:0,xMax:0,y:0}]
 			graph[i].update()}
 //other location
 			else{ 
 			var array = [0,0,0,0,0]
 			graph[i].data.datasets[0].data = array
+			graph[i].data.datasets[1].data = [{x:0,xMin:0,xMax:0,y:0}]
 			graph[i].update()
 		}
 	}
@@ -467,7 +577,6 @@ function getInitialize(){
 			var obj = JSON.parse(data);
 			for (var i = 0; i < obj.length; i++){
 				cla = new String(obj[i][`${resetLabel[init]}`]);
-				console.log(cla)
 				$("#" + `${queryLabel[init]}`+"").append('<option value="'+ cla +'">'+ cla +'</option>')
 			}
 		}
@@ -517,7 +626,6 @@ function getaca(){
 				$(`#aca-select option`).not(":first").remove()
 			for (var i = 0; i < obj.length; i++){
 				a = new String(obj[i].ayname);
-				console.log(a)
 				$("#aca-select").append('<option value="'+ a +'">'+ a +'</option>')
 			}
 			}
@@ -533,7 +641,6 @@ function getcla(){
 				$(`#cla-select option`).not(":first").remove()
 			for (var i = 0; i < obj.length; i++){
 				a = new String(obj[i].cname);
-				console.log(a);
 				$("#cla-select").append('<option value="'+ a +'">'+ a +'</option>')
 			}
 			}
@@ -549,7 +656,6 @@ function getfal(){
 				$(`#fal-select option`).not(":first").remove()
 			for (var i = 0; i < obj.length; i++){
 				a = new String(obj[i].fname);
-				console.log(a);
 				$("#fal-select").append('<option value="'+ a +'">'+ a +'</option>')
 			}
 			}
@@ -565,7 +671,6 @@ function getpro(){
 				$(`#pro-select option`).not(":first").remove()
 			for (var i = 0; i < obj.length; i++){
 				a = new String(obj[i].pname);
-				console.log(a);
 				$("#pro-select").append('<option value="'+ a +'">'+ a +'</option>')
 			}
 			}
@@ -574,7 +679,6 @@ function getpro(){
 function getsem(){
 			// a[0] :cname, a[1]: ayname; a[2]: fname; a[3]: sname; a[4]:mname; a[5]: lname; a[6]: pname		
 		var value = getSelect()
-		console.log(value[0] + "  " + value[1])
 		$.ajax({
 			type: 'Get',
 			url: "rest/graph/resources?selector=sname&cname=" + value[0] + "&ayname=" + value[1] + "&fname=" + value[2] + "&sname=" + value[3] + "&mname=" + value[4] + "&lname=" + value[5] + "&pname=" + value[6],
@@ -583,7 +687,6 @@ function getsem(){
 				$(`#sem-select option`).not(":first").remove()
 			for (var i = 0; i < obj.length; i++){
 				a = new String(obj[i].sname);
-				console.log(a);
 				$("#sem-select").append('<option value="'+ a +'">'+ a +'</option>')
 			}
 			}
@@ -600,7 +703,6 @@ function getmod(){
 			$(`#mod-select option`).not(":first").remove()
 			for (var i = 0; i < obj.length; i++){
 				a = new String(obj[i].mname);
-				console.log(a);
 				$("#mod-select").append('<option value="'+ a +'">'+ a +'</option>')
 			}
 			}
@@ -617,14 +719,12 @@ function getlec(){
 			$(`#lec-select option`).not(":first").remove()
 			for (var i = 0; i < obj.length; i++){
 				a = new String(obj[i].lname);
-				console.log(a);
 				$("#lec-select").append('<option value="'+ a +'">'+ a +'</option>')
 			}
 			}
 		})
 }
- var test = ['1','2','3','4']
-console.log(getPercentagevalue(test))
+// return percentage Array from data array
 function getPercentagevalue(array){
 	var array1 = array.map(function(x){
 		return parseInt(x)
@@ -636,3 +736,7 @@ function getPercentagevalue(array){
 	}
 	return array2;
 }
+// return max of array
+Array.max = function( array ){
+    return Math.max.apply( Math, array );
+};

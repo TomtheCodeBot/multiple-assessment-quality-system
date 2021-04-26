@@ -31,80 +31,365 @@ public class ManagementGETService {
 			@DefaultValue("") @QueryParam("choice") String choice 		
 			)throws SQLException, NamingException {
 		
-		if (filter.isEmpty() || choice.isEmpty()) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave filter and/or choice empty").build();
+		if (filter.isEmpty()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave filter empty").build();
 		}
 		
-		if (filter.equals("infodatabase")) {
-			Connection db = (Connection) Configuration.getAcademiaConnection();
-			try {
-				PreparedStatement st = db.prepareStatement("call GetInfoDatabase(?);");
-				st.setString(1, choice);
-								
+		Connection db = (Connection) Configuration.getAcademiaConnection();
+		ResultSet rs = null;
+		PreparedStatement st = null;
+		JsonArrayBuilder builder = Json.createArrayBuilder();
+		
+		try {
+			switch(filter) {
+			case "infodatabase":				
+				if (choice.equals("class")) {
+					st = db.prepareStatement("{ call GetClassDatabase() }");	
+					rs = st.executeQuery();
+					
+					if (!rs.next()) {
+						// if there is no row returned 
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					String ccode = rs.getString(1);
+					String cname = rs.getString(2);
+					String csize = rs.getString(3);
+					String mname = rs.getString(4);
+					String sname = rs.getString(5);
+					
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
+					builder.add(Json.createObjectBuilder()
+							.add("ccode", ccode)
+							.add("cname", cname)
+							.add("csize", csize)
+							.add("mname", mname)
+							.add("sname", sname).build());
+					while (rs.next()) {
+						ccode = rs.getString(1);
+						cname = rs.getString(2);
+						csize = rs.getString(3);
+						mname = rs.getString(4);
+						sname = rs.getString(5);
+						
+						if (rs.wasNull()) {
+							// if null values are returned
+							return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+						}
+						
+						builder.add(Json.createObjectBuilder()
+								.add("ccode", ccode)
+								.add("cname", cname)
+								.add("csize", csize)
+								.add("mname", mname)
+								.add("sname", sname).build());
+					}
+					
+				} else if (choice.equals("semester")) {
+					st = db.prepareStatement("{ call GetSemesterDatabase() }");	
+					rs = st.executeQuery();
+					
+					if (!rs.next()) {
+						// if there is no row returned 
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					String scode = rs.getString(1);
+					String sname = rs.getString(2);
+					String ayname = rs.getString(3);
+					
+					
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
+					builder.add(Json.createObjectBuilder()
+							.add("scode", scode)
+							.add("sname", sname)
+							.add("ayname", ayname).build());
+					
+					while (rs.next()) {
+						scode = rs.getString(1);
+						sname = rs.getString(2);
+						ayname = rs.getString(3);
+						
+						
+						if (rs.wasNull()) {
+							// if null values are returned
+							return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+						}
+						
+						builder.add(Json.createObjectBuilder()
+								.add("scode", scode)
+								.add("sname", sname)
+								.add("ayname", ayname).build());
+					}
+				} else if (choice.equals("lecturer")) {
+					st = db.prepareStatement("{ call GetLecturerDatabase() }");	
+					rs = st.executeQuery();
+					
+					if (!rs.next()) {
+						// if there is no row returned 
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					String lcode = rs.getString(1);
+					String lname = rs.getString(2);
+					String cname = rs.getString(3);
+					
+					
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
+					builder.add(Json.createObjectBuilder()
+							.add("lcode", lcode)
+							.add("lname", lname)
+							.add("cname", cname).build());
+					while (rs.next()) {
+						lcode = rs.getString(1);
+						lname = rs.getString(2);
+						cname = rs.getString(3);
+						
+						
+						if (rs.wasNull()) {
+							// if null values are returned
+							return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+						}
+						
+						builder.add(Json.createObjectBuilder()
+								.add("lcode", lcode)
+								.add("lname", lname)
+								.add("cname", cname).build());
+					}
+				} else if (choice.equals("user")) {
+					st = db.prepareStatement("{ call GetUserDatabase() }");
+					System.out.print(st);
+					rs = st.executeQuery();
+					
+					if (!rs.next()) {
+						// if there is no row returned 
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					String username = rs.getString(1);						
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
+					builder.add(Json.createObjectBuilder()
+							.add("user", username).build());
+					while (rs.next()) {
+						username = rs.getString(1);						
+						if (rs.wasNull()) {
+							// if null values are returned
+							return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+						}
+						
+						builder.add(Json.createObjectBuilder()
+								.add("user", username).build());
+					}
+				}
+				else {
+					st = db.prepareStatement("{ call GetInfoDatabase(?) }");
+					st.setString(1, choice);
+					
+					if (choice.isEmpty()) {					
+						return Response.status(Response.Status.BAD_REQUEST).entity("Can not leave choice empty").build();					
+					}
+					rs = st.executeQuery();
+					
+					if (!rs.next()) {
+						// if there is no row returned 
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					String code = rs.getString(1);
+					String name = rs.getString(2);
+					
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
+					builder.add(Json.createObjectBuilder().add("code", code).add("name", name).build());
+					while (rs.next()) {
+						code = rs.getString(1);
+						name = rs.getString(2);
+						
+						if (rs.wasNull()) {
+							// if null values are returned
+							return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+						}
+						
+						builder.add(Json.createObjectBuilder().add("code", code).add("name", name).build());
+					}						
+				}				
+				break;
+			case "AcaFac":
+				st = db.prepareStatement("{ call getInfoYearFac() }");			
+				rs = st.executeQuery();
 				
-				ResultSet myRs = st.executeQuery();	
-				JsonArrayBuilder builder = Json.createArrayBuilder();
-				while (myRs.next()) {
-					builder.add(Json.createObjectBuilder().add("Code", myRs.getString(1)).add("Name", myRs.getString(2)).build());
+				if (!rs.next()) {
+					// if there is no row returned 
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
 				}
-				return Response.ok().entity(builder.build().toString()).build();
+				String afCode = rs.getString(1);
+				String ayName = rs.getString(2);
+				String fName = rs.getString(3);
+				
+				if (rs.wasNull()) {
+					// if null values are returned 
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();					
+				}
+				
+				builder.add(Json.createObjectBuilder().add("AFCode", afCode).add("AYName", ayName).add("FName", fName).build());
+				
+				while (rs.next()) {
+					afCode = rs.getString(1);
+					ayName = rs.getString(2);
+					fName = rs.getString(3);
+					
+					if (rs.wasNull()) {
+						// if null values are returned 
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();					
+					}
+					
+					builder.add(Json.createObjectBuilder().add("AFCode", afCode).add("AYName", ayName).add("FName", fName).build());
+				}
+				break;
+			case "AcaFacPro":
+				st = db.prepareStatement("{ call getInfoYearFacPro() }");
+				rs = st.executeQuery();
+				
+				if (!rs.next()) {
+					// if there is no row returned 
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				}
+				String pfCode = rs.getString(1);
+				String ayname = rs.getString(2);
+				String fname = rs.getString(3);
+				String pName = rs.getString(4);
+				
+				if (rs.wasNull()) {
+					// if null values are returned
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				}
+				
+				builder.add(Json.createObjectBuilder().add("PFCode", pfCode).add("AYName", ayname).add("FName", fname).add("PName", pName).build());
+				while (rs.next()) {
+					pfCode = rs.getString(1);
+					ayname = rs.getString(2);
+					fname = rs.getString(3);
+					pName = rs.getString(4);
+					
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					builder.add(Json.createObjectBuilder().add("PFCode", pfCode).add("AYName", ayname).add("FName", fname).add("PName", pName).build());
+				}
+				break;
+			case "AcaFacProMod":
+				st = db.prepareStatement("{ call getInfoYearFacProMod() }");
+				rs = st.executeQuery();
+				
+				if (!rs.next() ) {
+					// if there is no row returned 
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				}
+				String pfcode = rs.getString(1);
+				String mCode = rs.getString(2);
+				String AYname = rs.getString(3);
+				String FName = rs.getString(4);
+				String PName = rs.getString(5);
+				String mName = rs.getString(6);
+				
+				if (rs.wasNull()) {
+					// if null values are returned
+					return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+				}
+				
+				builder.add(Json.createObjectBuilder()
+						.add("PFCode", pfcode )
+						.add("MCode", mCode)
+						.add("AYName", AYname)
+						.add("FName", FName)
+						.add("PName", PName)
+						.add("MName", mName).build());
+				while (rs.next()) {
+					pfcode = rs.getString(1);
+					mCode = rs.getString(2);
+					AYname = rs.getString(3);
+					FName = rs.getString(4);
+					PName = rs.getString(5);
+					mName = rs.getString(6);
+					
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
+					builder.add(Json.createObjectBuilder()
+							.add("PFCode", pfcode )
+							.add("MCode", mCode)
+							.add("AYName", AYname)
+							.add("FName", FName)
+							.add("PName", PName)
+							.add("MName", mName).build());
+				}
+				break;
+			case "combine":
+				if (choice.equals("module")) {
+					st = db.prepareStatement("{ call GetModuleForInsert(?) }");					
+					rs = st.executeQuery();
+															
+					if (!rs.next() ) {
+						// if there is no row returned 
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					String MCode = rs.getString(1);
+					String MName = rs.getString(2);
+					
+					if (rs.wasNull()) {
+						// if null values are returned
+						return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+					}
+					
+					builder.add(Json.createObjectBuilder()
+							.add("MCode", MCode)								
+							.add("MName", MName).build());
+					while (rs.next()) {
+						 MCode = rs.getString(1);
+						 MName = rs.getString(2);
+						
+						if (rs.wasNull()) {
+							// if null values are returned
+							return Response.status(Response.Status.NO_CONTENT).entity("There is nothing to return").build();
+						}
+						
+						builder.add(Json.createObjectBuilder()
+								.add("MCode", MCode)								
+								.add("MName", MName).build());
+					}
+				} else {
+					return Response.status(Response.Status.BAD_REQUEST).entity("Invalid resources").build();	
+				}
+				break;
+			default:
+				// catch invalid resource names.
+				return Response.status(Response.Status.FORBIDDEN).entity("Invalid resources").build();				
+			}
 			
-			}
-			finally {
-				db.close();
-			}
+			System.out.print(builder);
+			return Response.ok().entity(builder.build().toString()).build();
 			
-			} else	if (filter.equals("AcaFac")) {
-				Connection db = (Connection) Configuration.getAcademiaConnection();
-				try {
-					PreparedStatement st = db.prepareStatement("call getInfoYearFac();");
-					ResultSet myRs = st.executeQuery();	
-					JsonArrayBuilder builder = Json.createArrayBuilder();
-					while (myRs.next()) {
-						builder.add(Json.createObjectBuilder().add("AFCode", myRs.getString(1)).add("AYName", myRs.getString(2)).add("FName", myRs.getString(3)).build());
-					}
-					return Response.ok().entity(builder.build().toString()).build();
-				}
-				finally {
-					db.close();
-				}
-			}
-		   else	if (filter.equals("AcaFacPro")) {
-				Connection db = (Connection) Configuration.getAcademiaConnection();
-				try {
-					PreparedStatement st = db.prepareStatement("call getInfoYearFacPro();");
-					ResultSet myRs = st.executeQuery();	
-					JsonArrayBuilder builder = Json.createArrayBuilder();
-					while (myRs.next()) {
-						builder.add(Json.createObjectBuilder().add("PFCode", myRs.getString(1)).add("AYName", myRs.getString(2)).add("FName", myRs.getString(3)).add("PName", myRs.getString(4)).build());
-					}
-					return Response.ok().entity(builder.build().toString()).build();
-				}
-				finally {
-					db.close();
-				}
-			}
-		   else	if (filter.equals("AcaFacProMod")) {
-				Connection db = (Connection) Configuration.getAcademiaConnection();
-				try {
-					PreparedStatement st = db.prepareStatement("call getInfoYearFacProMod();");
-					ResultSet myRs = st.executeQuery();	
-					JsonArrayBuilder builder = Json.createArrayBuilder();
-					while (myRs.next()) {
-						builder.add(Json.createObjectBuilder().add("PFCode", myRs.getString(1))
-								.add("MCode", myRs.getString(2))
-								.add("AYName", myRs.getString(3))
-								.add("FName", myRs.getString(4))
-								.add("PName", myRs.getString(5))
-								.add("MName", myRs.getString(6)).build());
-					}
-					return Response.ok().entity(builder.build().toString()).build();
-				}
-				finally {
-					db.close();
-				}
-		}
-		// catch error when filter pass invalid String 
-		return Response.status(Response.Status.FORBIDDEN).entity("Invalid resources").build();
+		} catch (SQLException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		} finally {
+			db.close();
+		}			
 	}
 }
