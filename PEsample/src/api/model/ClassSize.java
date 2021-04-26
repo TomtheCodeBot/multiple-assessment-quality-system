@@ -1,23 +1,19 @@
 package api.model;
 
 public class ClassSize {
-	private String cCode;
+	private String ccode;
 	private int size;
-	
-	public ClassSize(String code, int size) {
-		this.cCode = code;
+	public String getCcode() {
+		return ccode;
+	}
+	public void setCcode(String ccode) {
+		this.ccode = ccode;
+	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
 		this.size = size;
 	}
-	
-	public ClassSize() {
-		this("",0);
-	}	
-	
-	public String getClassCode() {
-		return this.cCode;
-	}
-	
-	public int getSize() {
-		return this.size;
-	}
+
 }

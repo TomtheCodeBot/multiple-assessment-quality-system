@@ -6,19 +6,12 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-	
-	
+<body>	
 	<button type="submit" id="db-show">Show</button>
 	<button type="submit" id="db-clear">Clear</button>
-	<form method="get" action="./insert.html" style="float:right">
-		<button type="submit">Add Data</button>
-	</form>
-	
 	<div class="clear"></div>
 	<div class="db-tablebox" id="academic_year-db">
 	<h1 for="aca-db">Academic Year</h1>
-	<button type="submit" onclick="display_insert('acad-insert')">Add Data</button>
 	<table class="db-table">
 		<tr>
 			<th>Academic Year Code</th>
@@ -41,7 +34,6 @@
 	</div>
 	<div class="db-tablebox" id="faculty-db">
 		<h1 for="fal-db">Faculty</h1>
-		<button type="submit" onclick="display_insert('faculty-insert')">Add Data</button>
 		<table class="db-table">
 			<tr>
 				<th>Faculty Code</th>
@@ -65,7 +57,6 @@
 	</div>
 	<div class="db-tablebox" id="semester-db">
 		<h1 for="sem-db">Semester</h1>
-		<button type="submit" onclick="display_insert('semester-insert')">Add Data</button>
 		<table class="db-table">
 			<tr>
 				<th>Semester Code</th>
@@ -96,7 +87,6 @@
 	</div>
 	<div class="db-tablebox" id="program-db">
 		<h1 for="pro-db">Program</h1>
-		<button type="submit" onclick="display_insert('program-insert')">Add Data</button>
 		<table class="db-table">
 			<tr>
 				<th>Program Code</th>
@@ -118,11 +108,10 @@
 		</tr>
 	</table>
 	
-		
+
 	</div>
 	<div class="db-tablebox" id="module-db">
 		<h1 for="mod-db">Module</h1>
-		<button type="submit" onclick="display_insert('module-insert')">Add Data</button>
 		<table class="db-table">
 			<tr>
 				<th>Module Code</th>
@@ -196,7 +185,7 @@
 		<table class="db-insert"  id="lecturer-insert">
 		<tr>
 			<th></th>
-			<th>Lecturer Name</th>
+			<th>Lecturer Name <button id="lecturer-user-show" type="submit">Choose</button></th>
 			<th>Class Name <button id="lecturer-class-show" type="submit">Choose</button></th>
 			<th></th>
 		</tr>
@@ -204,7 +193,8 @@
 		<div id = "lecturer-insert-form">
 			<td></td>
 			<td>
-				<input name= "LName" id="lecturer-user" class="Lecturer-insert-box"> 
+				<select name= "LName" id="lecturer-user" class="Lecturer-insert-box"> 
+				</select>
 			</td>
 			<td>
 				<select name= "CCode" id="lecturer-class" class="Lecturer-insert-box"> 
