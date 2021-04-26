@@ -550,7 +550,7 @@ function getSelectionofAcaFac(id, code,label){
 					obj.sort(function(a, b){return a.afcode - b.afcode;});
 					console.log(id + code + label )
 					for (var i = 0; i<obj.length;i++){
-					$("#"+id).append("<option name="+ code +" value="+ obj[i].afcode +">"+ obj[i].afcode + "</option>")
+					$("#"+id).append("<option name="+ code +" value="+ obj[i].AFCode +">"+ obj[i].AFCode + "</option>")
 					}
 				} 			
 			})	
@@ -562,9 +562,8 @@ function getSelectionofProFac(id, code,label){
 				success: function(data){
 					obj = JSON.parse(data)
 					obj.sort(function(a, b){return a.pfcode - b.pfcode;});
-					console.log(id + code + label )
 					for (var i = 0; i<obj.length;i++){
-					$("#"+id).append("<option name="+ code +" value="+ obj[i].pfcode +">"+ obj[i].pfcode + "</option>")
+					$("#"+id).append("<option name="+ code +" value="+ obj[i].PFCode +">"+ obj[i].PFCode + "</option>")
 					}
 				} 			
 			})	
