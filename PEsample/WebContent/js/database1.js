@@ -79,12 +79,12 @@ function getTable(){
 						type: 'DELETE',
 						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${id}` + "&name=" + name,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
 						},
 						error: function(data){
-							alert("cannot delete")						
-						}							
+							alert(data.responseText)						
+						}						
 					})
 				})
 				$("."+ select[init]+"-modify").click(function(){
@@ -110,7 +110,7 @@ function getTable(){
 						data: JSON.stringify(classSize),
 						dataType: "text",
 						success: function(data){
-							alert("modify ok")
+							alert(data)
 					}
 					})
 				})
@@ -152,11 +152,11 @@ else if(init==2){
 						type: 'DELETE',
 						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
 						},
 						error: function(data){
-							alert("cannot delete")						
+							alert(data.responseText)						
 						}							
 					})
 				})
@@ -199,12 +199,12 @@ else if(init==6){
 						type: 'DELETE',
 						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
 						},
 						error: function(data){
-							alert("cannot delete")						
-						}							
+							alert(data.responseText)						
+						}								
 					})
 				})
 			} 			
@@ -246,11 +246,11 @@ else{	$.ajax({
 						type: 'DELETE',
 						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
 						},
 						error: function(data){
-							alert("cannot delete")						
+							alert(data.responseText)						
 						}							
 					})
 				})
@@ -279,9 +279,12 @@ else{	$.ajax({
 							type: 'DELETE',
 							url: "rest/management/resources?filter=combine&col1=year&col2=faculty&col3=&col4=" + "&afcode=" + `${this.id}`,
 							success: function(data){
-								alert("delete succesfully")
-								getTable()
-							}
+							alert(data)
+							getTable()
+						},
+						error: function(data){
+							alert(data.responseText)						
+						}	
 						})
 					})
 			}			
@@ -309,9 +312,12 @@ else{	$.ajax({
 							type: 'DELETE',
 							url: "rest/management/resources?filter=combine&col1=year&col2=faculty&col3=program&col4=" + "&pfcode=" + `${this.id}`,
 							success: function(data){
-								alert("delete succesfully")
-								getTable()
-							}
+							alert(data)
+							getTable()
+						},
+						error: function(data){
+							alert(data.responseText)						
+						}	
 						})
 					})
 			}			
@@ -338,9 +344,12 @@ else{	$.ajax({
 						type: 'DELETE',
 						url: "rest/management/resources?filter=combine&col1=year&col2=faculty&col3=program&col4=module" + "&pfcode=" + `${t[0]}` + "&mcode=" + `${t[1]}`,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
-						}
+						},
+						error: function(data){
+							alert(data.responseText)						
+						}	
 					})
 					})
 			}			
@@ -459,12 +468,12 @@ $(document).ready(function(){
 		$('.Module-insert-box').each(function() { all_data.push($(this).val()); all_id.push(this.id);});
 		InsertPost(this.id,all_id[0],all_data[0])
 	})
-	//$("#class").click(function(){
-//	var all_data = [];
-	//	var all_id  = [];
-	//	$('.class-insert-box').each(function() { all_data.push($(this).val()); all_id.push(this.id);});
-	//	InsertPost(this.id,all_id[0],all_data[0])
-//	})
+	$("#Class").click(function(){
+		var all_data = [];
+		var all_id  = [];
+		$('.Class-insert-box').each(function() { all_data.push($(this).val()); all_id.push(this.id);});
+		InsertClass(all_id,all_data)
+	})
 	$("#Lecturer").click(function(){
 		var all_data = [];
 		var all_name  = [];
@@ -511,11 +520,32 @@ function InsertPost(colName,label,data){
 		url: "rest/management/insert/" + colName + "?" + label + "=" + data,
 		data: JSON.stringify(obj),
 		dataType: "text",
-		error: function(e) {
- 		   console.log(e);
+		error:  function(data, textStatus, jqXHR){
+ 		  alert(data.responseText);
  		 },
 		success : function(data, textStatus, jqXHR){
-			alert("Submit successful");
+			alert(data);
+			getTable()
+			}
+		
+	})
+}
+function InsertClass(label,data){
+	var obj = {}
+	obj[label] = data;
+	console.log(obj)
+	$.ajax({
+		type: 'POST',
+		contentType: "application/json",
+		url: "rest/management/insert/class?" + label[0] + "=" + data[0] +"&" + label[1] + "=" + data[1] +"&MCode=" + data[2] +"&SCode=" + data[3],
+		data: JSON.stringify(obj),
+		dataType: "text",
+		error:  function(data, textStatus, jqXHR){
+ 		  alert(data.responseText);
+ 		 },
+		success : function(data, textStatus, jqXHR){
+			alert(data);
+			getTable()
 			}
 		
 	})
@@ -531,11 +561,12 @@ function InsertPostwithSelection(colName,label,data){
 		url: "rest/management/insert/" + colName + "?" + label[0] + "=" + data[0] +"&" + label[1] + "=" + data[1],
 		data: JSON.stringify(obj),
 		dataType: "text",
-		error: function(e) {
- 		   console.log(e);
+		error:  function(data, textStatus, jqXHR){
+ 		  alert(data.responseText);
  		 },
 		success : function(data, textStatus, jqXHR){
-			alert("Submit successful");
+			alert(data);
+			getTable()
 			}
 		
 	})

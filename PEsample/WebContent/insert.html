@@ -150,6 +150,7 @@
 		<tr>
 			<th></th>
 			<th>Class</th>
+			<th>Size</th>
 			<th>Module <button id="module-show" type="submit">Choose</button></th>
 			<th>Semester <button id="semester-show" type="submit">Choose</button></th>
 			
@@ -158,12 +159,13 @@
 		<div id = "Class-insert-form">
 			<td></td>
 			<td><input type="text" name="CName" class="Class-insert-box" id="CName"></td>
+			<td><input type="int" name="CSize" class="Class-insert-box" id="CSize"></td>
 			<td>
-				<select id="module" class="Class-insert-box"> 
+				<select name="MCode" id="module" class="Class-insert-box"> 
 				</select>
 			</td>
 			<td>
-				<select id="semester" class="Class-insert-box"> 
+				<select name="SCode" id="semester" class="Class-insert-box"> 
 				</select>
 			</td>
 			<td><button id = "Class" class = "insert-button">Add</button></td>
