@@ -124,6 +124,7 @@ hr {
 	width: 40%;
 	height: 30px;
 	margin: 20px;
+	float:left;
 }	
 #visual:hover
 {
@@ -346,18 +347,53 @@ hr {
 	border-radius: 3px;
 
 }
+.db-insert
+{
+	border-collapse: collapse;
+}
 .db-table
 {
 	border-collapse: collapse;
 	width: 80%;
 	border: rgba(97,97,97,1.00) 2px solid;
 }
+table, th,td
+{
+	border: rgba(97,97,97,1.00) 2px solid;
+}
 
-.db-table tr th td
+.db-table tr th
 {
 	
 	font-size: 20px;
 	font-weight: bold;
 	border: rgba(97,97,97,1.00) 2px solid;
 	
+}
+#db-show,#db-clear
+{
+	margin: 0 10%;
+	font-weight: bold;
+	background-color:rgba(209,209,209,1.00);
+	width: 25%;
+	height: 40px;
+	border-radius: 7px;
+	border: rgba(128,128,128,1.00) 1px solid;
+}
+.insert-button,.choose
+{
+	height: 25px;
+	width: 70px;
+	background-color:rgba(209,209,209,1.00);
+	border-radius: 3px;
+	border: rgba(128,128,128,1.00) 1px solid;
+	font-weight: bold;	
+}
+#db-show:hover,#db-clear:hover,.insert-button:hover,.choose:hover
+{
+	background-color: rgba(255,193,103,1.00);
+}
+.insert-box
+{
+	min-width: 90%;
 }

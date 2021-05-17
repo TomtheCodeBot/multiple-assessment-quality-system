@@ -1,0 +1,91 @@
+@charset "utf-8";
+/* CSS Document */
+
+.banner
+{
+	width: 100%;
+	height: 300px;
+	background-image: url("../image/banner.jfif");
+	background:cover no-repeat;
+	position: relative;
+	margin: auto;
+}
+#banner-box
+{
+	width: 80%;
+	height: 80%;
+	background-color: rgba(255,255,255,0.60);
+	position: absolute;
+	top:10%;
+	left: 10%;
+	border-radius: 5px;
+	animation: banner-box 7s 1s ease-out infinite;
+	opacity: 0;
+
+}
+@keyframes banner-box
+{
+	10%,90%{
+		opacity: 1
+	}
+	100%{
+		opacity: 0;
+	}
+}
+#banner-box h1
+{
+	
+}
+#banner-box h1, #banner-box h2
+{
+	text-align: center;
+	font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+	background: -webkit-linear-gradient(rgba(255, 211, 99, 1),rgba(113, 0, 0, 1));
+  	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
+}
+#banner-box h2
+{
+	font-size: 40px;
+	
+	text-shadow: 3px 3px rgba(255,171,47,1.00);
+	border: solid rgba(120,65,0,1.00) 4px;
+	width: 300px;
+	border-radius: 15px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	animation: coming 1.5s 0s linear;
+	animation-iteration-count: infinite;
+}
+@keyframes coming
+{
+	0%{
+		transform: scale(1);
+	}
+	50%{
+		transform: scale(1.1);
+	}
+	100%{
+		transform: scale(1);
+	}
+}
+#banner-logo
+{
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+}
+#border-bot
+{
+	position: absolute;
+	bottom: 5px;
+	left:5px; 
+}
+#border-top
+{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	transform: rotate(180deg);
+}

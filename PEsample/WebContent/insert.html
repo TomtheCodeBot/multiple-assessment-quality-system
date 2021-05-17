@@ -6,16 +6,19 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>	
-	<button type="submit" id="db-show">Show</button>
-	<button type="submit" id="db-clear">Clear</button>
+<body>
+	<div class="container">
+		<button type="submit" id="db-show">Show</button>
+		<button type="submit" id="db-clear">Clear</button>
+	</div>
 	<div class="clear"></div>
 	<div class="db-tablebox" id="academic_year-db">
 	<h1 for="aca-db">Academic Year</h1>
 	<table class="db-table">
 		<tr>
-			<th>Academic Year Code</th>
-			<th> Academic Year</th>
+			<td>Academic Year Code</td>
+			<td> Academic Year</td>
+			<td></td>
 		</tr>
 	</table>
 	<table class="db-insert"  id="acad-insert">
@@ -36,8 +39,9 @@
 		<h1 for="fal-db">Faculty</h1>
 		<table class="db-table">
 			<tr>
-				<th>Faculty Code</th>
-				<th>Faculty Name</th>
+				<td>Faculty Code</td>
+				<td>Faculty Name</td>
+				<td></td>
 			</tr>
 		</table>
 	<table class="db-insert"  id="faculty-insert">
@@ -59,16 +63,17 @@
 		<h1 for="sem-db">Semester</h1>
 		<table class="db-table">
 			<tr>
-				<th>Semester Code</th>
-				<th>Semester Name</th>
-				<th>Academic Year</th>
+				<td>Semester Code</td>
+				<td>Semester Name</td>
+				<td>Academic Year</td>
+				<td></td>
 			</tr>
 		</table>
 		<table class="db-insert"  id="semester-insert">
 		<tr>
 			<th></th>
 			<th>Semester Name</th>
-			<th>Academic Year <button id="acad-show" type="submit">Choose</button></th>
+			<th>Academic Year <button id="acad-show" class="choose" type="submit">Choose</button></th>
 			<th></th>
 		</tr>
 		<tr>
@@ -76,7 +81,7 @@
 			<td></td>
 			<td><input type="text" name="SName" class="semester-insert-box" id="SName"></td>
 			<td>
-				<select name = "AYCode" id="academic_year" class="semester-insert-box"> 
+				<select name = "AYCode" id="academic_year" class="semester-insert-box insert-box"> 
 				</select>
 			</td>
 			<td><button id = "Semester" class = "insert-button">Add</button></td>
@@ -89,8 +94,9 @@
 		<h1 for="pro-db">Program</h1>
 		<table class="db-table">
 			<tr>
-				<th>Program Code</th>
-				<th>Program Name</th>
+				<td>Program Code</td>
+				<td>Program Name</td>
+				<td></td>
 			</tr>
 		</table>
 		<table class="db-insert"  id="program-insert">
@@ -114,8 +120,9 @@
 		<h1 for="mod-db">Module</h1>
 		<table class="db-table">
 			<tr>
-				<th>Module Code</th>
-				<th>Module Name</th>
+				<td>Module Code</td>
+				<td>Module Name</td>
+				<td></td>
 			</tr>
 		</table>
 		<table class="db-insert"  id="module-insert">
@@ -139,11 +146,12 @@
 		
 		<table class="db-table">
 			<tr>
-				<th>Class Code</th>
-				<th>Class Name</th>
-				<th>Size</th>
-				<th>Module Name</th>
-				<th>Semester</th>
+				<td>Class Code</td>
+				<td>Class Name</td>
+				<td>Size</td>
+				<td>Module Name</td>
+				<td>Semester</td>
+				<td></td>
 			</tr>
 		</table>
 		<table class="db-insert"  id="class-insert">
@@ -151,8 +159,8 @@
 			<th></th>
 			<th>Class</th>
 			<th>Size</th>
-			<th>Module <button id="module-show" type="submit">Choose</button></th>
-			<th>Semester <button id="semester-show" type="submit">Choose</button></th>
+			<th>Module <button id="module-show" class="choose" type="submit">Choose</button></th>
+			<th>Semester <button id="semester-show" class="choose" type="submit">Choose</button></th>
 			
 		</tr>
 		<tr>
@@ -161,11 +169,11 @@
 			<td><input type="text" name="CName" class="Class-insert-box" id="CName"></td>
 			<td><input type="int" name="CSize" class="Class-insert-box" id="CSize"></td>
 			<td>
-				<select name="MCode" id="module" class="Class-insert-box"> 
+				<select name="MCode" id="module" class="Class-insert-box insert-box"> 
 				</select>
 			</td>
 			<td>
-				<select name="SCode" id="semester" class="Class-insert-box"> 
+				<select name="SCode" id="semester" class="Class-insert-box insert-box"> 
 				</select>
 			</td>
 			<td><button id = "Class" class = "insert-button">Add</button></td>
@@ -179,27 +187,28 @@
 		
 		<table class="db-table">
 			<tr>
-				<th>Lecturer code</th>
-				<th>Lecturer name</th>
-				<th>Class name</th>
+				<td>Lecturer code</td>
+				<td>Lecturer name</td>
+				<td>Class name</td>
+				<td></td>
 			</tr>
 		</table>
 		<table class="db-insert"  id="lecturer-insert">
 		<tr>
 			<th></th>
-			<th>Lecturer Name <button id="lecturer-user-show" type="submit">Choose</button></th>
-			<th>Class Name <button id="lecturer-class-show" type="submit">Choose</button></th>
+			<th>Lecturer Name <button id="lecturer-user-show" class="choose" type="submit">Choose</button></th>
+			<th>Class Name <button id="lecturer-class-show" class="choose" type="submit">Choose</button></th>
 			<th></th>
 		</tr>
 		<tr>
 		<div id = "lecturer-insert-form">
 			<td></td>
 			<td>
-				<select name= "LName" id="lecturer-user" class="Lecturer-insert-box"> 
+				<select name= "LName" id="lecturer-user" class="Lecturer-insert-box insert-box"> 
 				</select>
 			</td>
 			<td>
-				<select name= "CCode" id="lecturer-class" class="Lecturer-insert-box"> 
+				<select name= "CCode" id="lecturer-class" class="Lecturer-insert-box insert-box"> 
 				</select>
 			</td>
 			<td><button id = "Lecturer" class = "insert-button">Add</button></td>
@@ -211,27 +220,28 @@
 		<h1 for="aca-fal-db">Academic year and Faculty</h1>
 		<table class="db-table">
 			<tr>
-				<th>AFCode</th>
-				<th>Academic Year</th>
-				<th>Faculty</th>
+				<td>AFCode</td>
+				<td>Academic Year</td>
+				<td>Faculty</td>
+				<td></td>
 			</tr>
 		</table>
 		<table class="db-insert"  id="lecturer-insert">
 		<tr>
 			<th></th>
-			<th>Academic Name <button id="AcaFac-acad-show" type="submit">Choose</button></th>
-			<th>Faculty Name <button id="AcaFac-faculty-show" type="submit">Choose</button></th>
+			<th>Academic Name <button id="AcaFac-acad-show" class="choose" type="submit">Choose</button></th>
+			<th>Faculty Name <button id="AcaFac-faculty-show" class="choose" type="submit">Choose</button></th>
 			<th></th>
 		</tr>
 		<tr>
 		<div id = "AcaFac-insert-form">
 			<td></td>
 			<td>
-				<select name= "AYCode" id="AcaFac-academic_year" class="AcaFac-insert-box"> 
+				<select name= "AYCode" id="AcaFac-academic_year" class="AcaFac-insert-box insert-box"> 
 				</select>
 			</td>
 			<td>
-				<select name= "FCode" id="AcaFac-faculty" class="AcaFac-insert-box"> 
+				<select name= "FCode" id="AcaFac-faculty" class="AcaFac-insert-box insert-box"> 
 				</select>
 			</td>
 			<td><button id = "AcaFac" class = "insert-button">Add</button></td>
@@ -243,30 +253,31 @@
 	<div class="db-tablebox" id="aca-fal-pro-db">
 		<h1 for="aca-fal-pro-db">Academic year, faculty and program</h1>
 		
-		<table class="db-table">
+		<table class="db-table" >
 			<tr>
-				<th>PFCode</th>
-				<th>Academic Year</th>
-				<th>Faculty</th>
-				<th>Program</th>
+				<td>PFCode</td>
+				<td>Academic Year</td>
+				<td>Faculty</td>
+				<td>Program</td>
+				<td></td>
 			</tr>
 		</table>
 		<table class="db-insert"  id="AcaFacPro-insert">
 		<tr>
 			<th></th>
-			<th>Choose Aca-Fac Code <button id="AcaFacPro-AcaFac-show" type="submit">Choose</button></th>
-			<th>Program Name <button id="AcaFacPro-program-show" type="submit">Choose</button></th>
+			<th>Choose Aca-Fac Code <button id="AcaFacPro-AcaFac-show" class="choose" type="submit">Choose</button></th>
+			<th>Program Name <button id="AcaFacPro-program-show" class="choose" type="submit">Choose</button></th>
 			<th></th>
 		</tr>
 		<tr>
 		<div id = "AcaFacPro-insert-form">
 			<td></td>
 			<td>
-				<select name= "AFCode" id="AcaFacPro-academic_year-faculty" class="AcaFacPro-insert-box"> 
+				<select name= "AFCode" id="AcaFacPro-academic_year-faculty" class="AcaFacPro-insert-box insert-box"> 
 				</select>
 			</td>
 			<td>
-				<select name= "PCode" id="AcaFacPro-program" class="AcaFacPro-insert-box"> 
+				<select name= "PCode" id="AcaFacPro-program" class="AcaFacPro-insert-box insert-box"> 
 				</select>
 			</td>
 			<td><button id = "AcaFacPro" class = "insert-button">Add</button></td>
@@ -280,30 +291,31 @@
 			
 		<table class="db-table">
 			<tr>
-				<th>PFCode</th>
-				<th>MCode</th>
-				<th>Academic Year</th>
-				<th>Faculty</th>
-				<th>Program</th>
-				<th>Module</th>
+				<td>PFCode</td>
+				<td>MCode</td>
+				<td>Academic Year</td>
+				<td>Faculty</td>
+				<td>Program</td>
+				<td>Module</td>
+				<td></td>
 			</tr>
 		</table>
 		<table class="db-insert"  id="AcaFacProMod-insert">
 		<tr>
 			<th></th>
-			<th>Choose Pro-Fac Code <button id="AcaFacProMod-ProFac-show" type="submit">Choose</button></th>
-			<th>Module Name <button id="AcaFacProMod-module-show" type="submit">Choose</button></th>
+			<th>Choose Pro-Fac Code <button id="AcaFacProMod-ProFac-show" class="choose" type="submit">Choose</button></th>
+			<th>Module Name <button id="AcaFacProMod-module-show" class="choose" type="submit">Choose</button></th>
 			<th></th>
 		</tr>
 		<tr>
 		<div id = "AcaFacPro-insert-form">
 			<td></td>
 			<td>
-				<select name= "PFCode" id="AcaFacProMod-program-faculty" class="AcaFacProMod-insert-box"> 
+				<select name= "PFCode" id="AcaFacProMod-program-faculty" class="AcaFacProMod-insert-box insert-box"> 
 				</select>
 			</td>
 			<td>
-				<select name= "MCode" id="AcaFacProMod-module" class="AcaFacProMod-insert-box"> 
+				<select name= "MCode" id="AcaFacProMod-module" class="AcaFacProMod-insert-box insert-box"> 
 				</select>
 			</td>
 			<td><button id = "AcaFacProMod" class = "insert-button">Add</button></td>
