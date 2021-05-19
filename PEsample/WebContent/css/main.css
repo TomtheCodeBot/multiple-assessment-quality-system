@@ -1,5 +1,8 @@
 /* CSS Document */
 
+html {
+  scroll-behavior: smooth;
+}
 .clear
 {
 	clear: both;
@@ -64,4 +67,34 @@ body, html {
   display: none;
   padding: 100px 20px;
   height: 100%;
+}
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: rgba(130,130,130,1.00);
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 50%;
+	width: 60px;
+	height: 60px;
+}
+
+#myBtn:hover {
+	animation: myBtn 0.5s 0s ease-out;
+	animation-fill-mode: forwards;
+}
+@keyframes myBtn
+{
+	100%{
+		width: 100px;
+		background-color: #FFAC30;
+		border-radius: 10%;
+	}
 }
