@@ -57,7 +57,7 @@ public class GraphGETService {
 			if(rs.next()) {
 				String count = rs.getString(1);
 				String rate = rs.getString(2);
-				String average = rs.getNString(3);
+				String average = rs.getString(3);
 				String standard_deviation = rs.getString(4);
 				String percentage1 = rs.getString(5);
 				String percentage2 = rs.getString(6);

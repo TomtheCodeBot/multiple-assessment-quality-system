@@ -79,7 +79,7 @@ public class QuestionaireGETService {
 				String sName = rs.getString(2);
 				String fName = rs.getString(3);
 				String pName = rs.getString(4);
-				String mName = rs.getNString(5);
+				String mName = rs.getString(5);
 				
 				if (rs.wasNull()) {
 					// if null values are returned

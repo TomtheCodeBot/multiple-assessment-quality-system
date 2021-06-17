@@ -81,7 +81,7 @@ public class ManagementDELETEService {
 					return Response.status(Response.Status.OK).entity("deleted successfully").build();
 				}	
 			}
-			return Response.status(Response.Status.NOT_MODIFIED).entity("There are no affected rows in database").build();
+			return Response.status(Response.Status.OK).entity("There are no affected rows in database").build();
 			
 		}
 		finally {

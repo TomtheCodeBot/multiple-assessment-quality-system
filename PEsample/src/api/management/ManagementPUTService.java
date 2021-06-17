@@ -6,8 +6,10 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -16,7 +18,11 @@ import api.model.ClassSize;
 
 @Path("/management")
 public class ManagementPUTService {
-	
+	@Path("/put")
+	@GET
+	public String getMessage() throws SQLException, NamingException   {
+		return "Hello Package Api.Questionaire POST Service!";
+	}
 	@Path("/class/size")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -24,9 +30,9 @@ public class ManagementPUTService {
 		Connection db = Configuration.getAcademiaConnection();
 		try {
 			PreparedStatement st = db.prepareStatement("{ call ModifyClassSize(?, ?) }");
-			st.setString(1, classSize.getClassCode());
+			st.setString(1, classSize.getCcode());
 			st.setInt(2, classSize.getSize());
-			
+			System.out.println(st);
 			int noOfAffectedRows = st.executeUpdate();
 			if (noOfAffectedRows == 0) {
 				// if null values are returned

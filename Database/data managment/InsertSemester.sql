@@ -8,10 +8,12 @@ BEGIN
 		DO
 			SET SCode = concat('S', floor(rand()*100000));
 		END WHILE;
-	IF AYCode IN (SELECT A.AYCode FROM academic_year A)
-    THEN IF SName NOT IN (SELECT S.SName FROM semester S) 
-		THEN INSERT INTO semester VALUES (SCode, SName, AYCode);
-        SET a = 1;
+	IF SName !="" THEN
+		IF AYCode IN (SELECT A.AYCode FROM academic_year A)
+		THEN IF SName NOT IN (SELECT S.SName FROM semester S) 
+			THEN INSERT INTO semester VALUES (SCode, SName, AYCode);
+			SET a = 1;
+			END IF;
 		END IF;
 	END IF;
     SELECT a;

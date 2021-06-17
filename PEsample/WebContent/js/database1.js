@@ -14,7 +14,25 @@ $(document).ready(function(){
 })
 
 	$("#db-clear").click(function(){
+		let obj = {
+			"ccode" : "C00001",
+			"size" : "46"
+		}
+		console.log(obj)
+		$.ajax({
+			type: 'PUT',
+			contentType: 'application/json',
+			url: "rest/management/class/size",
+			data: JSON.stringify(obj),
+			dataType: 'json',
+			success: function(data){
+					alert("modify ok")
+			},
+			error: function (xhr) { console.log(xhr)}
+		})
+		
 		clear()
+		
 	})
 })
 function getTable(){
@@ -43,24 +61,57 @@ function getTable(){
 				for (var i = 0; i<obj.length;i++){
 				console.log(i)
 				console.log(obj[i].cname)
-				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].ccode + '</td><td>'+ obj[i].cname +'</td><td><form method="put"><input style="width: 70px" type="number" value="' + obj[i].csize +'" name="csize-modify"></td><td>'+  obj[i].mname +'</td><td>' +  obj[i].sname +'</td><td>' +  '<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].ccode  + ' name='+ obj[i].cname.replaceAll(" ","_") +'>' + 'Delete'+ '</button>'+'</td><td><td><input type="submit" value="Modify" class="modify-class"></form></td> </tr>');
+				console.log(obj[i].csize)
+				$("#" + select[init] +"-db").children(".db-table").append('<tr><td>' + obj[i].ccode + '</td><td>'+ obj[i].cname +"</td><td><input style='width: 70px' type='number' value='" + obj[i].csize +"'" + "id="+ obj[i].ccode + '-modify-value'+' name="csize-modify"></td><td>'+  obj[i].mname +'</td><td>' +  obj[i].sname 
+																		+'</td><td>'+'<button type="submit" class ='+ select[init]+ '-delete'  +' id='+ obj[i].ccode + '_delete'  + ' name='+ obj[i].cname.replaceAll(" ","_") +'>' + 'Delete'+ '</button>' 
+																		+'</td><td>'+'<button type="submit" class ='+ select[init]+ '-modify'  +' id='+ obj[i].ccode + '_modify'  + ' name='+ obj[i].cname.replaceAll(" ","_") +'>' + 'Modify'+ '</button>'+ '</td></tr>');
 				$("#" + LabelChoice[init] + "").append(new Option(obj[i].cname,obj[i].cname));
 				console.log(select[init])		
 				}
 				$("."+ select[init]+"-delete").click(function(){
 					console.log(`${init}`)
-					
-					var t  = this.name.replaceAll("_"," ")
+					console.log(this.id)
+					var temp  = this.id.split("_")
+					var id = temp[0]
+					console.log(id)
+					var name  = this.name.replaceAll("_"," ")
 					$.ajax({
 						type: 'DELETE',
-						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
+						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${id}` + "&name=" + name,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
 						},
 						error: function(data){
-							alert("cannot delete")						
-						}							
+							alert(data.responseText)						
+						}						
+					})
+				})
+				$("."+ select[init]+"-modify").click(function(){
+					console.log(`${init}`)
+					console.log(this.id)
+					var temp  = this.id.split("_")
+					var id = temp[0]
+					var modifyvalue = $("#" + id +"-modify-value").val()
+					console.log(modifyvalue)
+					var value = parseInt(modifyvalue)	
+					console.log(typeof(id))
+					console.log(typeof(value) + value)
+					var name  = this.name.replaceAll("_"," ")
+					let classSize = {
+						"ccode" : id,
+						"size" : modifyvalue
+					}				
+					console.log(classSize)
+					$.ajax({
+						type: 'PUT',
+						contentType: "application/json",
+						url: "rest/management/class/size",
+						data: JSON.stringify(classSize),
+						dataType: "text",
+						success: function(data){
+							alert(data)
+					}
 					})
 				})
 			} 			
@@ -101,11 +152,11 @@ else if(init==2){
 						type: 'DELETE',
 						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
 						},
 						error: function(data){
-							alert("cannot delete")						
+							alert(data.responseText)						
 						}							
 					})
 				})
@@ -148,12 +199,12 @@ else if(init==6){
 						type: 'DELETE',
 						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
 						},
 						error: function(data){
-							alert("cannot delete")						
-						}							
+							alert(data.responseText)						
+						}								
 					})
 				})
 			} 			
@@ -195,11 +246,11 @@ else{	$.ajax({
 						type: 'DELETE',
 						url: "rest/management/resources?filter=single&col1="+ `${select[init]}` + "&id=" + `${this.id}` + "&name=" + t,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
 						},
 						error: function(data){
-							alert("cannot delete")						
+							alert(data.responseText)						
 						}							
 					})
 				})
@@ -228,9 +279,12 @@ else{	$.ajax({
 							type: 'DELETE',
 							url: "rest/management/resources?filter=combine&col1=year&col2=faculty&col3=&col4=" + "&afcode=" + `${this.id}`,
 							success: function(data){
-								alert("delete succesfully")
-								getTable()
-							}
+							alert(data)
+							getTable()
+						},
+						error: function(data){
+							alert(data.responseText)						
+						}	
 						})
 					})
 			}			
@@ -258,9 +312,12 @@ else{	$.ajax({
 							type: 'DELETE',
 							url: "rest/management/resources?filter=combine&col1=year&col2=faculty&col3=program&col4=" + "&pfcode=" + `${this.id}`,
 							success: function(data){
-								alert("delete succesfully")
-								getTable()
-							}
+							alert(data)
+							getTable()
+						},
+						error: function(data){
+							alert(data.responseText)						
+						}	
 						})
 					})
 			}			
@@ -287,9 +344,12 @@ else{	$.ajax({
 						type: 'DELETE',
 						url: "rest/management/resources?filter=combine&col1=year&col2=faculty&col3=program&col4=module" + "&pfcode=" + `${t[0]}` + "&mcode=" + `${t[1]}`,
 						success: function(data){
-							alert("successfully deleted")
+							alert(data)
 							getTable()
-						}
+						},
+						error: function(data){
+							alert(data.responseText)						
+						}	
 					})
 					})
 			}			
@@ -408,12 +468,12 @@ $(document).ready(function(){
 		$('.Module-insert-box').each(function() { all_data.push($(this).val()); all_id.push(this.id);});
 		InsertPost(this.id,all_id[0],all_data[0])
 	})
-	//$("#class").click(function(){
-//	var all_data = [];
-	//	var all_id  = [];
-	//	$('.class-insert-box').each(function() { all_data.push($(this).val()); all_id.push(this.id);});
-	//	InsertPost(this.id,all_id[0],all_data[0])
-//	})
+	$("#Class").click(function(){
+		var all_data = [];
+		var all_id  = [];
+		$('.Class-insert-box').each(function() { all_data.push($(this).val()); all_id.push(this.id);});
+		InsertClass(all_id,all_data)
+	})
 	$("#Lecturer").click(function(){
 		var all_data = [];
 		var all_name  = [];
@@ -460,11 +520,32 @@ function InsertPost(colName,label,data){
 		url: "rest/management/insert/" + colName + "?" + label + "=" + data,
 		data: JSON.stringify(obj),
 		dataType: "text",
-		error: function(e) {
- 		   console.log(e);
+		error:  function(data, textStatus, jqXHR){
+ 		  alert(data.responseText);
  		 },
 		success : function(data, textStatus, jqXHR){
-			alert("Submit successful");
+			alert(data);
+			getTable()
+			}
+		
+	})
+}
+function InsertClass(label,data){
+	var obj = {}
+	obj[label] = data;
+	console.log(obj)
+	$.ajax({
+		type: 'POST',
+		contentType: "application/json",
+		url: "rest/management/insert/class?" + label[0] + "=" + data[0] +"&" + label[1] + "=" + data[1] +"&MCode=" + data[2] +"&SCode=" + data[3],
+		data: JSON.stringify(obj),
+		dataType: "text",
+		error:  function(data, textStatus, jqXHR){
+ 		  alert(data.responseText);
+ 		 },
+		success : function(data, textStatus, jqXHR){
+			alert(data);
+			getTable()
 			}
 		
 	})
@@ -480,11 +561,12 @@ function InsertPostwithSelection(colName,label,data){
 		url: "rest/management/insert/" + colName + "?" + label[0] + "=" + data[0] +"&" + label[1] + "=" + data[1],
 		data: JSON.stringify(obj),
 		dataType: "text",
-		error: function(e) {
- 		   console.log(e);
+		error:  function(data, textStatus, jqXHR){
+ 		  alert(data.responseText);
  		 },
 		success : function(data, textStatus, jqXHR){
-			alert("Submit successful");
+			alert(data);
+			getTable()
 			}
 		
 	})

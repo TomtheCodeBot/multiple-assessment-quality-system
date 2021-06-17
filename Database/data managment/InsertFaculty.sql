@@ -8,10 +8,12 @@ BEGIN
 		DO
 			SET FCode = concat('F', floor(rand()*100000));
 		END WHILE;
-	IF FName NOT IN (SELECT F.FName FROM faculty F)
-    THEN IF FCode NOT IN (SELECT F.FCode FROM faculty F) 
-		THEN INSERT INTO faculty VALUES (FCode, FName);
-        SET a = 1;
+	IF FName!=""then
+		IF FName NOT IN (SELECT F.FName FROM faculty F)
+		THEN IF FCode NOT IN (SELECT F.FCode FROM faculty F) 
+			THEN INSERT INTO faculty VALUES (FCode, FName);
+			SET a = 1;
+			END IF;
 		END IF;
 	END IF;
     SELECT a;

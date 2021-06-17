@@ -60,10 +60,13 @@ public class ManagementPOSTService{
 			switch(colName) {
 			  case "class":			  				 
 					st = db.prepareStatement("{ call InsertClass(?,?,?,?) }");
+					if(CSize.isEmpty()) {
+						return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Size should not be NULL").build();
+					}
 					st.setString(1, CName);
 					st.setInt(2, Integer.parseInt(CSize));
 					st.setString(3, MCode);
-					st.setString(4, SCode);						 
+					st.setString(4, SCode);
 					break;
 			  case "semester":	
 					st = db.prepareStatement("{ call InsertSemester(?,?) }");
@@ -121,6 +124,12 @@ public class ManagementPOSTService{
 					if (rs.getInt(1) == 1) {
 						return Response.status(Response.Status.OK).entity("insert successfully").build();
 					}
+					if (rs.getInt(1) == 2) {
+						return Response.status(Response.Status.OK).entity("Name must not be NULL").build();
+					}
+					if (rs.getInt(1) == 3) {
+						return Response.status(Response.Status.OK).entity("Some attributes does not exist in the database").build();
+					}
 				}
 			} catch (SQLException e) {
 				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
@@ -130,7 +139,7 @@ public class ManagementPOSTService{
 			db.close();
 		}
 		
-		
+
 		return Response.status(Response.Status.NOT_MODIFIED).entity("duplicate values").build();
 	}
 }

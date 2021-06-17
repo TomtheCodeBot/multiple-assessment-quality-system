@@ -4,9 +4,9 @@ $(document).ready(function() {
 	getInitialize();
 	let id = ['genderChart','attendChart','question1', 'question2', 'question3', 'question4','question5','question6', 'question7', 'question8', 'question9', 'question10', 'question11', 'question12', 'question13', 'question14', 'question15', 'question16','question17'] 
 	var label=['Percentage of respondents by Gender','Percentage of respondents by class attendance','1. The module have been clear to me','2. The Learning Material have been sufficient and useful',
-			'3. The Content of the module have always been relevant','4. The lesson have been interesting','5. The module workload outside classroom has been'
-			,'6. The overall module workload has been','7. The level of difficulty of module has been','8. Module content have been presented understandably'
-			,'9. Various learning activities have been used to teach the content','10. The learning activities have supported the intended learning outcomes',
+			'3. The Content of the module have always been relevant','4. The lesson have been interesting','5. The module workload outside classroom has been',
+			'6. The overall module workload has been','7. The level of difficulty of module has been','8. Module content have been presented understandably',
+			'9. Various learning activities have been used to teach the content','10. The learning activities have supported the intended learning outcomes',
 			'11. The assessment methods are appropriate','12. Students have been encouraged to apply critical thinking and logics to understand courses ',
 			'13. The lecturer has given feedback (about answers of performances, reports,etc...)','14. The languages skill of the lecturer was excellent',
 			'15. The lecturer has listened to ideas and contributions of students','16. The lecturer has encouraged discussion and questions',
@@ -37,22 +37,6 @@ for (var init in id){
 									
 					            ], 
 					            borderWidth:1},
-								{
-					              type: "scatterWithErrorBars",
-					              label: "Invoice",
-					              data: [
-					                {
-					                  x: 0,
-					                  xMin: 0,
-					                  xMax: 0,
-					                  y: 0,
-					                },
-					              ],
-					              xAxisID: "invoice-time",
-					              backgroundColor: "rgba(75, 00, 150, 0.2)",
-					              borderColor: "rgba(75, 00, 150,1)",
-					              borderWidth: 2,
-					            },
 								]
 					    },
 					    options: {
@@ -117,6 +101,96 @@ for (var init in id){
 		}
 	);	
 	}
+else if(init>5&&init<9||init==1){
+	var ctx = document.getElementById(`${id[init]}`).getContext('2d');
+		var myChart = new Chart(ctx, {		
+					    type: 'bar',
+					    data: {
+					        labels: ['1','2','3','4','5'],
+					        datasets: [{
+					            label: "Percentage",
+					            data: [0,0,0,0,0,],
+					            backgroundColor: [
+					                'rgba(255, 159, 64, 0.2)',
+									'rgba(255, 159, 64, 0.2)',
+									'rgba(255, 159, 64, 0.2)',
+									'rgba(255, 159, 64, 0.2)',
+									'rgba(255, 159, 64, 0.2)'
+					            ],
+					            borderColor: [
+					                'rgba(255, 159, 64, 1)',
+					                'rgba(255, 159, 64, 1)',
+									'rgba(255, 159, 64, 1)',
+									'rgba(255, 159, 64, 1)',
+									'rgba(255, 159, 64, 1)'
+					            ],
+					            borderWidth:1},
+						]
+					    },
+					    options: {
+				title:{
+					display: true,
+					text: label[init]
+				}
+				
+          ,scales: {
+            xAxes: [
+              {
+                display: true,
+                stacked: true,
+                scaleLabel: {
+                  display: false,
+                  labelString: "",
+                },
+              },
+              {
+                id: "mean",
+                type: "linear",
+                display: false,
+                stacked: false,
+                scaleLabel: {
+                  display: false,
+                  labelString: "Days",
+                },
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: 1,
+                  suggestedMax: 5,
+				  
+                },
+              },
+            ],
+  yAxes: [{
+				ticks: {
+					
+					   min: 0,
+					   max: 100,
+					   callback: function(value){return value+ "%"}
+					},  
+									scaleLabel: {
+					   display: true,
+					   labelString: "Percentage"
+					}
+				}]
+          },
+          plugins: {
+            datalabels: {
+              formatter: (value, ctx) => {
+                if (ctx.chart.data.datasets.indexOf(ctx.dataset) == 1) {
+                  return value.x.toFixed(2); // for error bar number
+                }
+                return value + "%"; // for bar number
+              },
+              color: "#000",
+              anchor: "end",
+              align: "top",
+              offset: 10,
+	            },
+	          },
+	        },
+		}
+	);
+}
 else {
 		var ctx = document.getElementById(`${id[init]}`).getContext('2d');
 		var myChart = new Chart(ctx, {		
@@ -141,6 +215,7 @@ else {
 									'rgba(255, 159, 64, 1)'
 					            ],
 					            borderWidth:1},
+								
 								{
 					              type: "scatterWithErrorBars",
 					              label: "Mean",
@@ -217,10 +292,10 @@ else {
               anchor: "end",
               align: "top",
               offset: 10,
-            },
-          },
-        },
-					}
+	            },
+	          },
+	        },
+		}
 	);
 }
 	graph.push(myChart)
@@ -501,7 +576,7 @@ function getGeneralInfo(){
 		var k;
 		for (k = 2; k < 19; k++) {
 				let i=k;
-				$.ajax({
+				if(i-1<5||i-1>7){$.ajax({
 					type: 'Get',
 					url: "rest/graph/question?qname=Q"+(i-1).toString()+"&cname=" + a[0] + "&ayname="+ a[1] + "&sname=" + a[3] + "&fname=" + a[2] + "&mname=" + a[4] + "&lname=" + a[5] + "&pname=" + a[6],
 					success: function(data){
@@ -514,15 +589,33 @@ function getGeneralInfo(){
 						var array1 = array.map(function(x){
 							return parseFloat(x)
 								})
-								
 						var max_array = Math.max.apply(Math, array1)
 						var array_bar = [parseFloat(obj.Average), parseFloat(obj.Average) - parseFloat(obj.Standard_Deviation), parseFloat(obj.Average) + parseFloat(obj.Standard_Deviation),  max_array + 10]
 						graph[i].data.datasets[0].data = array
 						graph[i].data.datasets[1].data = [{x: parseFloat(obj.Average), xMin: parseFloat(obj.Average) - parseFloat(obj.Standard_Deviation), xMax: parseFloat(obj.Average) + parseFloat(obj.Standard_Deviation), y: max_array + 20 }]
 						graph[i].update()						
 						}
-				})
+				})}
+				else{$.ajax({
+					type: 'Get',
+					url: "rest/graph/question?qname=Q"+(i-1).toString()+"&cname=" + a[0] + "&ayname="+ a[1] + "&sname=" + a[3] + "&fname=" + a[2] + "&mname=" + a[4] + "&lname=" + a[5] + "&pname=" + a[6],
+					success: function(data){
+						var obj = JSON.parse(data);
+						var array = [obj.Percentage_of_1, obj.Percentage_of_2, obj.Percentage_of_3, obj.Percentage_of_4, obj.Percentage_of_5]
+						var indexOfMaxValue = array.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+						$("#q"+(i-1).toString()+"_count").append(`<span>${obj.Count}<span>`);
+						$("#q"+(i-1).toString()+"_rate").append(`<span>${obj.Rate}<span>`);
+						$("#q"+(i-1).toString()+"_average").append(`<span>${labelModule[indexOfMaxValue]}<span>`);
+						var array1 = array.map(function(x){
+							return parseFloat(x)
+								})
+						var max_array = Math.max.apply(Math, array1)
+						var array_bar = [parseFloat(obj.Average), parseFloat(obj.Average) - parseFloat(obj.Standard_Deviation), parseFloat(obj.Average) + parseFloat(obj.Standard_Deviation),  max_array + 10]
+						graph[i].data.datasets[0].data = array
+						graph[i].update()						
 			}
+		})}
+	}
 }
 
 function getInitialize(){
@@ -560,13 +653,13 @@ function getInitialize(){
 	lname = ""
 	cname = ""
 	// a[0] :cname, a[1]: ayname; a[2]: fname; a[3]: sname; a[4]:mname; a[5]: lname; a[6]: pname		
-	$("#aca-select").append($('<option>').val("").text("aca_year"));
-	$("#sem-select").append($('<option>').val("").text("semester"));
-	$("#fal-select").append($('<option>').val("").text("faculty"));
-	$("#pro-select").append($('<option>').val("").text("program"));
-	$("#mod-select").append($('<option>').val("").text("module"));
-	$("#cla-select").append($('<option>').val("").text("class"));
-	$("#lec-select").append($('<option>').val("").text("lecturer"));
+	$("#aca-select").append($('<option>').val("").text("--any--"));
+	$("#sem-select").append($('<option>').val("").text("--any--"));
+	$("#fal-select").append($('<option>').val("").text("--any--"));
+	$("#pro-select").append($('<option>').val("").text("--any--"));
+	$("#mod-select").append($('<option>').val("").text("--any--"));
+	$("#cla-select").append($('<option>').val("").text("--any--"));
+	$("#lec-select").append($('<option>').val("").text("--any--"));
 	let resetLabel = ['cname','ayname','sname','fname','mname','pname','lname']
 	let queryLabel = ['cla-select','aca-select','sem-select','fal-select','mod-select','pro-select','lec-select']
 		for(const init in resetLabel){
